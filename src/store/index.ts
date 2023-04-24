@@ -27,9 +27,13 @@ import {
 } from "react-redux";
 
 import rootReducers from "./reducers";
+import { artistsApi } from "./reducers/artist";
+import { setupListeners } from "@reduxjs/toolkit/dist/query";
 
 const store = configureStore({
   reducer: rootReducers,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(artistsApi.middleware),
 });
 
 export type RootState = ReturnType<typeof rootReducers>;
@@ -39,5 +43,7 @@ const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector; // Type I
 const useDispatch = () => useAppDispatch<AppDispatch>(); // Type Inference를 위해 useAppDispatch로 dispatch함수를 만들어준다.
 
 const { dispatch } = store;
+
+setupListeners(dispatch);
 
 export { store, dispatch, useSelector, useDispatch };
