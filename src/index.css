@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  @apply bg-neutral-100;
+}
 #root {
   @apply h-screen;
 }
