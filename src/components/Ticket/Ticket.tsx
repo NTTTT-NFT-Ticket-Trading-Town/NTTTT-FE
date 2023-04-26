@@ -65,7 +65,7 @@ function Ticket({
 
 function Top({ children }: Children) {
   return (
-    <div className="isolate flex max-w-xl flex-col gap-4 bg-white p-6 pb-4 sm:gap-8 sm:p-10 sm:pb-4">
+    <div className="isolate flex max-w-xl flex-col gap-4 bg-white p-6 px-4 sm:gap-8 sm:p-10 sm:px-4">
       {children}
     </div>
   );
