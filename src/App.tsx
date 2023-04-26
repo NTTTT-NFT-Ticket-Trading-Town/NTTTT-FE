@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Gotcha from "./pages/Gotcha";
 import Layout from "./layout/Layout";
+import Test from "./pages/Test";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "gotcha",
         element: <Gotcha />,
+      },
+      {
+        path: "test",
+        element: <Test />,
       },
     ],
   },

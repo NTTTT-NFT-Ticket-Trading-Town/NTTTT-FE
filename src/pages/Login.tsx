@@ -5,12 +5,6 @@ import Image from "../components/Image";
 export default function Login() {
   return (
     <>
-      <div style={{ width: "100px", height: "100px" }}>
-        <Image
-          src="https://www.refactoringui.com/_next/static/media/book.5380927448c9872170bbc9fc9e5828c4.png"
-          alt="image"
-        />
-      </div>
       <main className="relative mx-auto h-full max-w-xl">
         <div className="absolute isolate w-full max-w-xl overflow-hidden">
           <img
