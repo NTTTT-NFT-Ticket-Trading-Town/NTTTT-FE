@@ -16,19 +16,22 @@ function Ticket({
 }) {
   const x = useMotionValue(0);
   const [leaveX, setLeaveX] = useState(0);
-  const rotate = Math.random() > 0.5 ? "rotate-10" : "-rotate-10";
+  const rotate = Math.random() > 0.5 ? " rotate-12 " : " -rotate-12 ";
 
   return (
     <motion.div
-      drag
+      drag="x"
+      dragDirectionLock
       dragSnapToOrigin
-      whileDrag={{ scale: 0.9 }}
+      whileDrag={{ scale: 0.95 }}
+      dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+      dragElastic={{ top: 0, bottom: 0, right: 1, left: 1 }}
       onDragEnd={(event, info) => {
-        if (info.offset.x > 200) {
+        if (info.offset.x > 100) {
           setLeaveX(1000);
           setIndex((prev) => prev + 1);
         }
-        if (info.offset.x < -200) {
+        if (info.offset.x < -100) {
           setLeaveX(-1000);
           setIndex((prev) => prev + 1);
         }
@@ -41,15 +44,17 @@ function Ticket({
         x: 0,
         opacity: 1,
         scale: 1,
-        transition: { duration: 0.2 },
+        transition: { duration: 0.3 },
       }}
       exit={{
         x: leaveX,
         opacity: 0,
         scale: 0.5,
-        transition: { duration: 0.2 },
+        transition: { duration: 0.3 },
       }}
-      className={"absolute pb-8 drop-shadow-2xl " + rotate}
+      className={
+        "absolute left-8 right-8 mx-auto pb-8 drop-shadow-2xl " + rotate
+      }
       style={{ x }}
     >
       <TicketTop className="w-full" />
@@ -60,7 +65,7 @@ function Ticket({
 
 function Top({ children }: Children) {
   return (
-    <div className="isolate -mb-4 flex max-w-xl flex-col gap-4 bg-white p-6 pb-4 sm:gap-8 sm:p-10 sm:pb-4">
+    <div className="isolate flex max-w-xl flex-col gap-4 bg-white p-6 pb-4 sm:gap-8 sm:p-10 sm:pb-4">
       {children}
     </div>
   );
