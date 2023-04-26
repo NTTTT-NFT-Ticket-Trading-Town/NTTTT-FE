@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import TicketTop from "../svg/TicketTop";
 import TicketSplit from "../svg/TicketSplit";
-import { motion, useMotionValue, useVelocity } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 
 interface Children {
   children: ReactNode;
