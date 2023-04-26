@@ -30,11 +30,12 @@ import rootReducers from "./reducers";
 
 import { artistsApi } from "./reducers/artist";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import { gotchaApi } from "./reducers/gotcha";
 
 const store = configureStore({
   reducer: rootReducers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(artistsApi.middleware),
+    getDefaultMiddleware().concat(artistsApi.middleware, gotchaApi.middleware),
 });
 
 export type RootState = ReturnType<typeof rootReducers>;
