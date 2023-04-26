@@ -14,8 +14,8 @@ export default function Gotcha() {
   return (
     <>
       <Header />
-      <main className="relative mx-auto mb-4 max-w-xl px-4">
-        <AnimatePresence>
+      <main className="relative mx-auto mb-4 w-full max-w-xl px-12">
+        <AnimatePresence mode={"sync"}>
           {data.gatcha_list
             .filter((gotcha, idx) => index == idx)
             .map((gotcha) => (
