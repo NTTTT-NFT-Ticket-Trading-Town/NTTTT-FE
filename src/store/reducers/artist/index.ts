@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { ArtistState, SearchType } from "./artistTypes";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const BACKEND_URL = "localhost:8000";
-const searchArguments = "/artists?search=";
+const BACKEND_URL = "";
+const searchArguments = "/";
 
 const initialState: SearchType = "";
 
@@ -23,7 +23,7 @@ export const { setSearch } = searchArtists.actions;
 export const artistsApi = createApi({
   reducerPath: "artistsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: BACKEND_URL,
+    baseUrl: import.meta.env.VITE_API_URL as string,
   }),
   endpoints: (builder) => ({
     getMatchingArtists: builder.query<ArtistState[], SearchType>({

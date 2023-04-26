@@ -1,0 +1,12 @@
+{
+  "0": {
+    "id": "1",
+    "name": "John Doe",
+    "image_url": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+  },
+  "1": {
+    "id": "2",
+    "name": "Jane Doe",
+    "image_url": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+  }
+}
