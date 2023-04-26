@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import TicketTop from "../svg/TicketTop";
 import TicketSplit from "../svg/TicketSplit";
 import { motion, useMotionValue } from "framer-motion";
@@ -7,8 +7,16 @@ interface Children {
   children: ReactNode;
 }
 
-function Ticket({ children }: Children) {
+function Ticket({
+  children,
+  setIndex,
+}: {
+  children: ReactNode;
+  setIndex: Dispatch<SetStateAction<number>>;
+}) {
   const x = useMotionValue(0);
+  const [leaveX, setLeaveX] = useState(0);
+  const rotate = Math.random() > 0.5 ? "rotate-10" : "-rotate-10";
 
   return (
     <motion.div
@@ -16,21 +24,32 @@ function Ticket({ children }: Children) {
       dragSnapToOrigin
       whileDrag={{ scale: 0.9 }}
       onDragEnd={(event, info) => {
-        if (info.offset.x > 100) {
-          x.set(1000);
+        if (info.offset.x > 200) {
+          setLeaveX(1000);
+          setIndex((prev) => prev + 1);
         }
-        if (info.offset.x < -100) {
-          x.set(-1000);
+        if (info.offset.x < -200) {
+          setLeaveX(-1000);
+          setIndex((prev) => prev + 1);
         }
-        console.log(x.get());
+      }}
+      initial={{
+        scale: 0.8,
+        opacity: 0,
+      }}
+      animate={{
+        x: 0,
+        opacity: 1,
+        scale: 1,
+        transition: { duration: 0.2 },
       }}
       exit={{
-        x: x.get(),
+        x: leaveX,
         opacity: 0,
         scale: 0.5,
         transition: { duration: 0.2 },
       }}
-      className="pb-8 drop-shadow-2xl"
+      className={"absolute pb-8 drop-shadow-2xl " + rotate}
       style={{ x }}
     >
       <TicketTop className="w-full" />
