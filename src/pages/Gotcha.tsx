@@ -3,31 +3,72 @@ import BuyButton from "../components/Button/BuyButton";
 import Ticket from "../components/Ticket/Ticket";
 import Header from "../layout/Header";
 import { useGetGotchaQuery } from "../store/reducers/gotcha";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Gotcha() {
   const { data, error, isLoading } = useGetGotchaQuery("gotcha.json");
   const [index, setIndex] = useState(0);
 
+  const showReload = useMemo(() => {
+    if (isLoading || !data) return false;
+    if (index == data.gatcha_list.length) {
+      return true;
+    }
+    return false;
+  }, [index]);
   if (isLoading || !data) return <div>로딩중...</div>;
 
   return (
     <>
       <Header />
       <main className="relative mx-auto mb-4 w-full max-w-xl px-4">
-        <AnimatePresence mode={"sync"}>
+        <AnimatePresence mode={"wait"}>
+          {showReload && (
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.8,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                transition: { duration: 0.3, type: "spring" },
+              }}
+              className="inset-0 flex h-[calc(100vh_-_10rem)] place-content-center place-items-center py-5 text-4xl"
+            >
+              <button
+                className="flex place-content-center place-items-center gap-4 rounded-full bg-white p-6 shadow-lg"
+                onClick={() => setIndex(0)}
+              >
+                <div className="grid aspect-square w-10 place-content-center rounded-full bg-neutral-200 sm:w-12 sm:text-2xl">
+                  ↻
+                </div>
+                <span className="text-center text-lg sm:text-2xl">
+                  다시보기
+                </span>
+              </button>
+            </motion.div>
+          )}
           {data.gatcha_list
             .filter((gotcha, idx) => index == idx)
             .map((gotcha) => (
               <Ticket key={gotcha.image_url} setIndex={setIndex}>
                 <Ticket.Top>
-                  <img
-                    src={gotcha.image_url}
-                    alt=""
-                    width={800}
-                    height={800}
-                    className="aspect-square rounded bg-gray-300 object-cover"
-                  />
+                  <div className="relative">
+                    <img
+                      draggable={false}
+                      src={gotcha.image_url}
+                      alt=""
+                      className="absolute inset-0 -z-10 scale-105 animate-pulse rounded bg-gray-300 object-cover opacity-80 blur-xl"
+                    />
+                    <img
+                      draggable={false}
+                      src={gotcha.image_url}
+                      alt=""
+                      className="rounded bg-gray-300 object-cover"
+                    />
+                  </div>
                   <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">
                     <div className="text-2xl font-bold sm:text-4xl">
                       {gotcha.event.title}

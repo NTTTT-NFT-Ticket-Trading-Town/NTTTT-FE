@@ -28,11 +28,11 @@ function Ticket({
       dragElastic={{ top: 0, bottom: 0, right: 1, left: 1 }}
       onDragEnd={(event, info) => {
         if (info.offset.x > 100) {
-          setLeaveX(1000);
+          setLeaveX(400);
           setIndex((prev) => prev + 1);
         }
         if (info.offset.x < -100) {
-          setLeaveX(-1000);
+          setLeaveX(-400);
           setIndex((prev) => prev + 1);
         }
       }}
@@ -44,16 +44,17 @@ function Ticket({
         x: 0,
         opacity: 1,
         scale: 1,
-        transition: { duration: 0.3 },
+        transition: { duration: 0.3, type: "spring" },
       }}
       exit={{
         x: leaveX,
         opacity: 0,
-        scale: 0.5,
-        transition: { duration: 0.3 },
+        scale: 0.3,
+        transition: { duration: 0.2 },
       }}
       className={
-        "absolute left-8 right-8 mx-auto pb-8 drop-shadow-2xl " + rotate
+        "absolute left-8 right-8 mx-auto select-none pb-8 drop-shadow-2xl" +
+        rotate
       }
       style={{ x }}
     >
@@ -65,7 +66,7 @@ function Ticket({
 
 function Top({ children }: Children) {
   return (
-    <div className="isolate flex max-w-xl flex-col gap-4 bg-white p-6 px-4 sm:gap-8 sm:p-10 sm:px-4">
+    <div className="isolate flex max-w-xl flex-col gap-4 bg-white p-6 py-4 sm:gap-8 sm:p-10 sm:py-4">
       {children}
     </div>
   );
