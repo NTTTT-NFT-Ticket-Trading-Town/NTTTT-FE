@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { GotchaStateInterface } from "./gotchaTypes";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+
+const gotchaEndpoint = "gotcha.json";
 
 const initialState: GotchaStateInterface = {
   refresh_count: 0, // current gatcha index
   gatcha_list: [],
 };
 
-const user = createSlice({
+const gotcha = createSlice({
   name: "gotcha",
   initialState: initialState,
   reducers: {
@@ -19,5 +22,22 @@ const user = createSlice({
   },
 });
 
-export default user.reducer;
+export default gotcha.reducer;
 // export const {  } = user.actions;
+
+// APIs
+
+export const gotchaApi = createApi({
+  reducerPath: "gotchaApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_API_URL as string,
+  }),
+  endpoints: (builder) => ({
+    getGotcha: builder.query<GotchaStateInterface, string>({
+      // FIXME: temporary fake url
+      query: (search) => search || gotchaEndpoint,
+    }),
+  }),
+});
+
+export const { useGetGotchaQuery } = gotchaApi;
