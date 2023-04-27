@@ -6,11 +6,13 @@ export default function Chip(props: ChipPropsInterface) {
 
   // styles
   const basicStyle = [
+    "min-w-[50px]",
+    "inline-block",
+    "text-center",
+    "place-content-center",
     "rounded-full",
     "px-4",
     "py-1",
-    "text-sm",
-    "font-semibold",
   ].join(" ");
 
   // hooks
