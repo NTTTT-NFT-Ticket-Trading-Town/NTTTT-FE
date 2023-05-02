@@ -10,9 +10,11 @@ interface Children {
 function Ticket({
   children,
   setIndex,
+  setShowDetail,
 }: {
   children: ReactNode;
   setIndex: Dispatch<SetStateAction<number>>;
+  setShowDetail: Dispatch<SetStateAction<boolean>>;
 }) {
   const x = useMotionValue(0);
   const [leaveX, setLeaveX] = useState(0);
@@ -35,6 +37,7 @@ function Ticket({
           setLeaveX(-400);
           setIndex((prev) => prev + 1);
         }
+        setShowDetail(false);
       }}
       initial={{
         scale: 0.8,

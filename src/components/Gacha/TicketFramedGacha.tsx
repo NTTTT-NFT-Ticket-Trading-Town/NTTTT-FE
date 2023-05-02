@@ -15,7 +15,11 @@ export default function TicketFramedGacha(
   setShowDetail: SetShowDetailType
 ) {
   return (
-    <Ticket key={gacha.image.url} setIndex={setIndex}>
+    <Ticket
+      key={gacha.image.url}
+      setIndex={setIndex}
+      setShowDetail={setShowDetail}
+    >
       <Ticket.Top>
         {ImageWithDetail(gacha, showDetail, setShowDetail)}
         <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">
