@@ -38,6 +38,7 @@ export default function ImageWithDetail(
           style={{
             aspectRatio: gacha.image.ratio,
             width: "100%",
+            translate: "0 0 10px",
           }}
         >
           <img
@@ -59,6 +60,7 @@ export default function ImageWithDetail(
         <div
           style={{
             rotate: "y 180deg",
+            translate: "0 0 -10px",
             backfaceVisibility: "hidden",
           }}
           className="absolute top-0 h-full w-full overflow-y-scroll rounded-md bg-black/60 p-8 text-xl text-white"
