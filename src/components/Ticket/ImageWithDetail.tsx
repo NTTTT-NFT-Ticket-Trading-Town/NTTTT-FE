@@ -12,7 +12,7 @@ export default function ImageWithDetail(
 
   return (
     <motion.div
-      className="relative cursor-pointer "
+      className="relative cursor-pointer"
       style={{
         perspective: "800px",
       }}
@@ -61,14 +61,10 @@ export default function ImageWithDetail(
           rotateY: showDetail ? 0 : -180,
           opacity: showDetail ? 1 : 0,
         }}
-        className="absolute top-0 h-full w-full rounded-md bg-black/60 p-8 text-xl text-white"
+        className="absolute top-0 h-full w-full overflow-y-scroll rounded-md bg-black/60 p-8 text-xl text-white"
       >
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa porro
-          quam ratione recusandae eius possimus inventore provident distinctio
-          quae consectetur aspernatur vero pariatur nesciunt magni tempora
-          dolore numquam, praesentium ex.
-        </p>
+        <h3 className="mb-4 text-3xl font-bold">상세 설명</h3>
+        <p>{gacha.description}</p>
       </motion.div>
     </motion.div>
   );
