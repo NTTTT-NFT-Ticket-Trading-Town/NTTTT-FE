@@ -7,7 +7,7 @@ export default function Chip(props: ChipPropsInterface) {
   // styles
   // DEVELOP: tailwind snippet을 볼 수 없을까?
   const basicStyle = [
-    "min-w-[50px]",
+    "min-w-[25px]",
     "inline-block",
     "text-center",
     "place-content-center",
@@ -15,6 +15,7 @@ export default function Chip(props: ChipPropsInterface) {
     "px-4",
     "py-1",
     "mx-1",
+    "flex-shrink-0",
   ].join(" ");
 
   return (
