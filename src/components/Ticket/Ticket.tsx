@@ -27,11 +27,11 @@ function Ticket({
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
       dragElastic={{ top: 0, bottom: 0, right: 1, left: 1 }}
       onDragEnd={(event, info) => {
-        if (info.offset.x > 100) {
+        if (info.offset.x > 200) {
           setLeaveX(400);
           setIndex((prev) => prev + 1);
         }
-        if (info.offset.x < -100) {
+        if (info.offset.x < -200) {
           setLeaveX(-400);
           setIndex((prev) => prev + 1);
         }
@@ -53,7 +53,7 @@ function Ticket({
         transition: { duration: 0.2 },
       }}
       className={
-        "absolute left-6 right-6 mx-auto select-none pb-8 drop-shadow-2xl" +
+        "absolute left-6 right-6 mx-auto cursor-grab select-none pb-8 drop-shadow-2xl active:cursor-grabbing" +
         rotate
       }
       style={{ x }}
