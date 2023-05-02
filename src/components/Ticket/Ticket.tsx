@@ -53,7 +53,7 @@ function Ticket({
         transition: { duration: 0.2 },
       }}
       className={
-        "absolute left-8 right-8 mx-auto select-none pb-8 drop-shadow-2xl" +
+        "absolute left-6 right-6 mx-auto select-none pb-8 drop-shadow-2xl" +
         rotate
       }
       style={{ x }}
