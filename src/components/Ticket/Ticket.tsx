@@ -32,12 +32,13 @@ function Ticket({
         if (info.offset.x > 200) {
           setLeaveX(400);
           setIndex((prev) => prev + 1);
+          setShowDetail(false);
         }
         if (info.offset.x < -200) {
           setLeaveX(-400);
           setIndex((prev) => prev + 1);
+          setShowDetail(false);
         }
-        setShowDetail(false);
       }}
       initial={{
         scale: 0.8,

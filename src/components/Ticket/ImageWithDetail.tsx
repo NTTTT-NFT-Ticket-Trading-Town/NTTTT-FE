@@ -15,8 +15,9 @@ export default function ImageWithDetail(
       className="relative cursor-pointer"
       style={{
         perspective: "800px",
+        transformStyle: "preserve-3d",
       }}
-      onTap={() => {
+      onTap={(_) => {
         setShowDetail((prev) => !prev);
       }}
     >
@@ -45,7 +46,7 @@ export default function ImageWithDetail(
           draggable={false}
           src={gacha.image.url}
           alt=""
-          className="rounded bg-gray-300 object-cover"
+          className="absolute inset-0 rounded bg-gray-300 object-cover"
           style={{
             aspectRatio: gacha.image.ratio,
           }}
@@ -56,10 +57,12 @@ export default function ImageWithDetail(
         transition={{
           duration: animationDuration,
           ease: easingFunction,
+          backfaceVisibility: "hidden",
         }}
         animate={{
           rotateY: showDetail ? 0 : -180,
           opacity: showDetail ? 1 : 0,
+          translateZ: 1,
         }}
         className="absolute top-0 h-full w-full overflow-y-scroll rounded-md bg-black/60 p-8 text-xl text-white"
       >
