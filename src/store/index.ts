@@ -30,12 +30,12 @@ import rootReducers from "./reducers";
 
 import { artistsApi } from "./reducers/artist";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { gotchaApi } from "./reducers/gotcha";
+import { gachaApi } from "./reducers/gacha";
 
 const store = configureStore({
   reducer: rootReducers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(artistsApi.middleware, gotchaApi.middleware),
+    getDefaultMiddleware().concat(artistsApi.middleware, gachaApi.middleware),
 });
 
 export type RootState = ReturnType<typeof rootReducers>;
@@ -45,7 +45,6 @@ const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector; // Type I
 const useDispatch = () => useAppDispatch<AppDispatch>(); // Type Inference를 위해 useAppDispatch로 dispatch함수를 만들어준다.
 
 const { dispatch } = store;
-
 
 setupListeners(dispatch);
 

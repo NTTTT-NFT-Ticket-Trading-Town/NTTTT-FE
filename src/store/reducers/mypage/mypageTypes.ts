@@ -1,8 +1,8 @@
-import { GatchaInterface } from "../gotcha/gotchaTypes";
+import { GachaInterface } from "../gacha/gachaTypes";
 
 export interface MypageStateInterface {
   category_list: CategoryType[];
-  gatcha_list: GatchaInterface[];
+  gacha_list: GachaInterface[];
 }
 
 type CategoryType = "string";

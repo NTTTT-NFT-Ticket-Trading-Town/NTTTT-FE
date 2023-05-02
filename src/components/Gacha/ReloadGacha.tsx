@@ -1,7 +1,7 @@
-import { SetIndexType } from "../../pages/Gotcha";
+import { SetIndexType } from "../../pages/Gacha";
 import { motion } from "framer-motion";
 
-export default function ReloadGotcha(setIndex: SetIndexType) {
+export default function ReloadGacha(setIndex: SetIndexType) {
   return (
     <motion.div
       initial={{

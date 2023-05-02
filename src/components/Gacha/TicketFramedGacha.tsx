@@ -2,25 +2,25 @@ import {
   SetIndexType,
   SetShowDetailType,
   ShowDetailType,
-} from "../../pages/Gotcha";
-import { GatchaInterface } from "../../store/reducers/gotcha/gotchaTypes";
+} from "../../pages/Gacha";
+import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
 import BuyButton from "../Button/BuyButton";
 import ImageWithDetail from "../Ticket/ImageWithDetail";
 import Ticket from "../Ticket/Ticket";
 
-export default function TicketFramedGotcha(
-  gotcha: GatchaInterface,
+export default function TicketFramedGacha(
+  gacha: GachaInterface,
   setIndex: SetIndexType,
   showDetail: ShowDetailType,
   setShowDetail: SetShowDetailType
 ) {
   return (
-    <Ticket key={gotcha.image.url} setIndex={setIndex}>
+    <Ticket key={gacha.image.url} setIndex={setIndex}>
       <Ticket.Top>
-        {ImageWithDetail(gotcha, showDetail, setShowDetail)}
+        {ImageWithDetail(gacha, showDetail, setShowDetail)}
         <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">
           <div className="text-2xl font-bold sm:text-4xl">
-            {gotcha.event.title}
+            {gacha.event.title}
           </div>
           <div className="row-span-2 grid place-content-between justify-end">
             <div className="grid place-content-center justify-end gap-1">
@@ -31,20 +31,20 @@ export default function TicketFramedGotcha(
             </div>
             <div className="w-fit place-self-end text-lg font-light text-neutral-400">
               <span className="font-medium text-neutral-800">
-                #{gotcha.token_id}
+                #{gacha.token_id}
               </span>{" "}
               / 100
             </div>
           </div>
           <div>
-            <h2 className="font-light sm:text-lg">{gotcha.event.publisher}</h2>
+            <h2 className="font-light sm:text-lg">{gacha.event.publisher}</h2>
             <h3 className="text-xl font-semibold sm:text-2xl">
-              {gotcha.artist}
+              {gacha.artist}
             </h3>
           </div>
         </div>
         <div className="grow text-2xl sm:text-4xl">
-          {gotcha.price.type} {gotcha.price.amount}
+          {gacha.price.type} {gacha.price.amount}
         </div>
       </Ticket.Top>
       <Ticket.Split />

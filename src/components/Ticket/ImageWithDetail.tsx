@@ -1,9 +1,9 @@
-import { SetShowDetailType, ShowDetailType } from "../../pages/Gotcha";
-import { GatchaInterface } from "../../store/reducers/gotcha/gotchaTypes";
+import { SetShowDetailType, ShowDetailType } from "../../pages/Gacha";
+import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
 import { motion } from "framer-motion";
 
 export default function ImageWithDetail(
-  gotcha: GatchaInterface,
+  gacha: GachaInterface,
   showDetail: ShowDetailType,
   setShowDetail: SetShowDetailType
 ) {
@@ -23,7 +23,7 @@ export default function ImageWithDetail(
       <motion.div
         className="relative"
         style={{
-          aspectRatio: gotcha.image.ratio,
+          aspectRatio: gacha.image.ratio,
           width: "100%",
         }}
         initial={false}
@@ -37,17 +37,17 @@ export default function ImageWithDetail(
       >
         <img
           draggable={false}
-          src={gotcha.image.url}
+          src={gacha.image.url}
           alt=""
           className="absolute inset-0 -z-10 scale-105 animate-pulse rounded bg-gray-300 object-cover opacity-80 blur-xl"
         />
         <img
           draggable={false}
-          src={gotcha.image.url}
+          src={gacha.image.url}
           alt=""
           className="rounded bg-gray-300 object-cover"
           style={{
-            aspectRatio: gotcha.image.ratio,
+            aspectRatio: gacha.image.ratio,
           }}
         />
       </motion.div>

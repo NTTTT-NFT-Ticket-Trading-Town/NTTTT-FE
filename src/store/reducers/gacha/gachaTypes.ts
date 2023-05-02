@@ -10,22 +10,22 @@ export interface EventInfoInterface {
   total_token: number;
 }
 
-export interface GatchaInterface {
+export interface GachaInterface {
   event: EventInfoInterface;
   artist: string;
   price: PriceInterface;
-  image: GatchaImageInterface;
+  image: GachaImageInterface;
   watchers: number;
   description: string;
   token_id: string; // maybe number
 }
 
-interface GatchaImageInterface {
+interface GachaImageInterface {
   url: string;
   ratio: string;
 }
 
-export interface GotchaStateInterface {
+export interface GachaStateInterface {
   refresh_count: number;
-  gatcha_list: GatchaInterface[];
+  gacha_list: GachaInterface[];
 }

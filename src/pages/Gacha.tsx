@@ -1,22 +1,22 @@
 import { AnimatePresence } from "framer-motion";
 import Header from "../layout/Header";
-import { useGetGotchaQuery } from "../store/reducers/gotcha";
+import { useGetGachaQuery } from "../store/reducers/gacha";
 import { useMemo, useState } from "react";
-import TicketFramedGotcha from "../components/Gacha/TicketFramedGacha";
-import ReloadGotcha from "../components/Gacha/ReloadGacha";
+import TicketFramedGacha from "../components/Gacha/TicketFramedGacha";
+import ReloadGacha from "../components/Gacha/ReloadGacha";
 
 export type SetIndexType = React.Dispatch<React.SetStateAction<number>>;
 export type ShowDetailType = boolean;
 export type SetShowDetailType = React.Dispatch<React.SetStateAction<boolean>>;
 
-export default function Gotcha() {
-  const { data, isLoading } = useGetGotchaQuery("gotcha.json");
+export default function Gacha() {
+  const { data, isLoading } = useGetGachaQuery("gacha.json");
   const [index, setIndex] = useState(0);
   const [showDetail, setShowDetail] = useState(false);
 
   const showReload = useMemo(() => {
     if (isLoading || !data) return false;
-    if (index == data.gatcha_list.length) {
+    if (index == data.gacha_list.length) {
       return true;
     }
     return false;
@@ -24,16 +24,19 @@ export default function Gotcha() {
 
   let GachaComponent: JSX.Element | null = null;
 
-  if (showReload || !data) {
+  if (!data) {
     GachaComponent = <div>로딩중...</div>;
-  } else {
-    const gotcha = data.gatcha_list[index];
+  } else if (showReload) {
     GachaComponent = (
-      <AnimatePresence mode={"wait"}>
-        {!showReload
-          ? TicketFramedGotcha(gotcha, setIndex, showDetail, setShowDetail)
-          : ReloadGotcha(setIndex)}
-      </AnimatePresence>
+      <AnimatePresence mode={"wait"}>{ReloadGacha(setIndex)}</AnimatePresence>
+    );
+  } else {
+    const gacha = data.gacha_list[index];
+    GachaComponent = TicketFramedGacha(
+      gacha,
+      setIndex,
+      showDetail,
+      setShowDetail
     );
   }
 

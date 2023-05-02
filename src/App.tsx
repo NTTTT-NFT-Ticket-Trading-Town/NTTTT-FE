@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Gotcha from "./pages/Gotcha";
+import Gacha from "./pages/Gacha";
 import Layout from "./layout/Layout";
 
 const router = createBrowserRouter([
@@ -19,8 +19,8 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "gotcha",
-        element: <Gotcha />,
+        path: "gacha",
+        element: <Gacha />,
       },
     ],
   },
