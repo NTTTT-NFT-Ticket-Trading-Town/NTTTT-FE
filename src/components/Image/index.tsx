@@ -12,7 +12,9 @@ export default function Image(props: ImagePropsInterface) {
 
   // handlers
   const handleOnLoad = () => {
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   };
 
   return (
@@ -20,7 +22,13 @@ export default function Image(props: ImagePropsInterface) {
       <img
         src={src}
         alt={alt}
-        className={isLoading ? "hidden" : "w-full h-full "}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          borderRadius: "5px",
+        }}
+        className={isLoading ? `hidden` : `bg-auto`}
         onLoad={handleOnLoad}
       />
       {isLoading && <Skeleton />}

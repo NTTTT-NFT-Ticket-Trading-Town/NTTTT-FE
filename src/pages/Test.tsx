@@ -1,5 +1,6 @@
 import Chip from "../components/Chip";
 import Image from "../components/Image";
+import MiniTicket from "../components/MiniTicket";
 
 export default function Test() {
   return (
@@ -10,6 +11,7 @@ export default function Test() {
       ></Image>
       <Chip label="label"></Chip>
       <Chip label="label" enabled={true}></Chip>
+      <MiniTicket></MiniTicket>
     </div>
   );
 }
