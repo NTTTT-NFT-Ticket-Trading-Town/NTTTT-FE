@@ -31,12 +31,12 @@
       - image_url
 ```
 
-- Gatcha
+- Gacha
 
 ```
   - refresh_count
-  - gatcha llist
-    - gatcha
+  - gacha llist
+    - gacha
       - event
         - title
         - publisher
@@ -61,6 +61,6 @@
 - Mypage
 
 ```
-  - gatcha list # Gatcha - gatcha list 참고
+  - gacha list # Gacha - gacha list 참고
   - category
 ```

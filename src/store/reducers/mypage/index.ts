@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { MypageStateInterface } from "./mypageTypes";
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { GatchaInterface } from "../gotcha/gotchaTypes";
+import { GachaInterface } from "../gacha/gachaTypes";
 
 const initialState: MypageStateInterface = {
-  category_list: [], // filter gatcha_list by category_list
-  gatcha_list: [],
+  category_list: [], // filter gacha_list by category_list
+  gacha_list: [],
 };
 
 const mypage = createSlice({
@@ -37,7 +37,7 @@ export const mypageApi = createApi({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
   endpoints: (builder) => ({
-    getMyCollection: builder.query<GatchaInterface[], void>({
+    getMyCollection: builder.query<GachaInterface[], void>({
       query: () => "collection",
     }),
   }),

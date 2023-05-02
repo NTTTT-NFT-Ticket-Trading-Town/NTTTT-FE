@@ -31,7 +31,7 @@ export default function Login() {
           </div>
           <div>
             <Link
-              to="/gotcha"
+              to="/gacha"
               className="block rounded bg-neutral-300/30 py-2 text-center transition-all duration-100 hover:bg-neutral-300/40 active:scale-95 active:bg-neutral-300/50"
             >
               토큰 모으러 가기
