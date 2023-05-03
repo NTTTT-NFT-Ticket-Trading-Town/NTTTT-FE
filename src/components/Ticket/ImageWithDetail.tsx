@@ -1,14 +1,11 @@
-import { SetShowDetailType, ShowDetailType } from "../../pages/Gacha";
+import { useState } from "react";
 import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
 import { motion } from "framer-motion";
 
-export default function ImageWithDetail(
-  gacha: GachaInterface,
-  showDetail: ShowDetailType,
-  setShowDetail: SetShowDetailType
-) {
+export default function ImageWithDetail({ gacha }: { gacha: GachaInterface }) {
   const animationDuration = 0.5;
   const easingFunction = "easeInOut";
+  const [showDetail, setShowDetail] = useState(false);
 
   return (
     <motion.div

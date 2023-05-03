@@ -1,27 +1,20 @@
-import {
-  SetIndexType,
-  SetShowDetailType,
-  ShowDetailType,
-} from "../../pages/Gacha";
+import { SetIndexType } from "../../pages/Gacha";
 import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
 import BuyButton from "../Button/BuyButton";
 import ImageWithDetail from "../Ticket/ImageWithDetail";
 import Ticket from "../Ticket/Ticket";
 
-export default function TicketFramedGacha(
-  gacha: GachaInterface,
-  setIndex: SetIndexType,
-  showDetail: ShowDetailType,
-  setShowDetail: SetShowDetailType
-) {
+export default function TicketFramedGacha({
+  gacha,
+  setIndex,
+}: {
+  gacha: GachaInterface;
+  setIndex: SetIndexType;
+}) {
   return (
-    <Ticket
-      key={gacha.image.url}
-      setIndex={setIndex}
-      setShowDetail={setShowDetail}
-    >
+    <Ticket key={gacha.image.url} setIndex={setIndex}>
       <Ticket.Top>
-        {ImageWithDetail(gacha, showDetail, setShowDetail)}
+        {<ImageWithDetail gacha={gacha} />}
         <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">
           <div className="text-2xl font-bold sm:text-4xl">
             {gacha.event.title}
