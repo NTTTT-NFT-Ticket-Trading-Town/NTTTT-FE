@@ -1,14 +1,12 @@
-import { SetShowDetailType, ShowDetailType } from "../../pages/Gacha";
+import { useState } from "react";
 import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
 import { motion } from "framer-motion";
+import Skeleton from "../Image/Skeleton";
 
-export default function ImageWithDetail(
-  gacha: GachaInterface,
-  showDetail: ShowDetailType,
-  setShowDetail: SetShowDetailType
-) {
+export default function ImageWithDetail({ gacha }: { gacha: GachaInterface }) {
   const animationDuration = 0.5;
   const easingFunction = "easeInOut";
+  const [showDetail, setShowDetail] = useState(false);
 
   return (
     <motion.div
@@ -16,10 +14,25 @@ export default function ImageWithDetail(
       style={{
         perspective: "800px",
       }}
-      onTap={(_) => {
+      onTap={() => {
         setShowDetail((prev) => !prev);
       }}
     >
+      <div
+        className="absolute"
+        style={{
+          aspectRatio: gacha.image.ratio,
+          width: "100%",
+          translate: "0 0 10px",
+        }}
+      >
+        <img
+          draggable={false}
+          src={gacha.image.url}
+          alt=""
+          className="absolute inset-0 -z-10 scale-105 animate-pulse rounded object-cover opacity-80 blur-xl"
+        />
+      </div>
       <motion.div
         style={{ transformStyle: "preserve-3d" }}
         initial={{
@@ -41,17 +54,12 @@ export default function ImageWithDetail(
             translate: "0 0 10px",
           }}
         >
+          <Skeleton />
           <img
             draggable={false}
             src={gacha.image.url}
             alt=""
-            className="absolute inset-0 -z-10 scale-105 animate-pulse rounded bg-gray-300 object-cover opacity-80 blur-xl"
-          />
-          <img
-            draggable={false}
-            src={gacha.image.url}
-            alt=""
-            className="absolute inset-0 rounded bg-gray-300 object-cover"
+            className="absolute inset-0 rounded object-cover"
             style={{
               aspectRatio: gacha.image.ratio,
             }}

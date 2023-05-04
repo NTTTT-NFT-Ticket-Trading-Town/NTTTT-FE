@@ -1,5 +1,5 @@
 export default function Skeleton() {
   return (
-    <div className="h-full w-full animate-pulse flex space-x-4 bg-gray-1 roounded"></div>
+    <div className="flex h-full w-full animate-pulse space-x-4 rounded bg-gray-1"></div>
   );
 }

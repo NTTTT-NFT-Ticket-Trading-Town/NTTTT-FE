@@ -12,7 +12,6 @@ export type SetShowDetailType = React.Dispatch<React.SetStateAction<boolean>>;
 export default function Gacha() {
   const { data, isLoading } = useGetGachaQuery("gacha.json");
   const [index, setIndex] = useState(0);
-  const [showDetail, setShowDetail] = useState(false);
 
   const showReload = useMemo(() => {
     if (isLoading || !data) return false;
@@ -32,12 +31,7 @@ export default function Gacha() {
     );
   } else {
     const gacha = data.gacha_list[index];
-    GachaComponent = TicketFramedGacha(
-      gacha,
-      setIndex,
-      showDetail,
-      setShowDetail
-    );
+    GachaComponent = <TicketFramedGacha gacha={gacha} setIndex={setIndex} />;
   }
 
   return (
