@@ -1,7 +1,7 @@
 import { SetIndexType } from "../../pages/Gacha";
 import { motion } from "framer-motion";
 
-export default function ReloadGacha(setIndex: SetIndexType) {
+export default function ReloadGacha({ setIndex }: { setIndex: SetIndexType }) {
   return (
     <motion.div
       initial={{
@@ -16,6 +16,7 @@ export default function ReloadGacha(setIndex: SetIndexType) {
       exit={{
         opacity: 0,
         scale: 0.8,
+        transition: { duration: 0.2 },
       }}
       className="inset-0 flex h-[calc(100vh_-_10rem)] place-content-center place-items-center py-5 text-4xl"
     >
