@@ -26,7 +26,7 @@ function Ticket({
       whileDrag={{ scale: 0.95 }}
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
       dragElastic={{ top: 0, bottom: 0, right: 1, left: 1 }}
-      onDragEnd={(event, info) => {
+      onDragEnd={(_, info) => {
         if (info.offset.x > 200) {
           setLeaveX(400);
           setIndex((prev) => prev + 1);
