@@ -16,6 +16,9 @@ export default function Chip(props: ChipPropsInterface) {
     "py-1",
     "mx-1",
     "flex-shrink-0",
+    "flex",
+    "justify-center",
+    "items-center",
   ].join(" ");
 
   return (
