@@ -10,6 +10,17 @@ export type ShowDetailType = boolean;
 export type SetShowDetailType = React.Dispatch<React.SetStateAction<boolean>>;
 
 export default function Gacha() {
+  return (
+    <>
+      <Header />
+      <main className="relative mx-auto mb-4 w-full max-w-xl grow px-4">
+        <GachaComponent />
+      </main>
+    </>
+  );
+}
+
+function GachaComponent() {
   const { data, isLoading } = useGetGachaQuery("gacha.json");
   const [index, setIndex] = useState(0);
 
@@ -21,25 +32,29 @@ export default function Gacha() {
     return false;
   }, [index, data]);
 
-  let GachaComponent: JSX.Element | null = null;
-
   if (!data) {
-    GachaComponent = <div>로딩중...</div>;
-  } else if (showReload) {
-    GachaComponent = (
-      <AnimatePresence mode={"wait"}>{ReloadGacha(setIndex)}</AnimatePresence>
+    return (
+      <div className="grid h-full w-full place-items-center">
+        <div className="origin-center animate-spin text-9xl">🌼</div>
+      </div>
     );
-  } else {
-    const gacha = data.gacha_list[index];
-    GachaComponent = <TicketFramedGacha gacha={gacha} setIndex={setIndex} />;
   }
+
+  const gacha = data.gacha_list[index];
 
   return (
     <>
-      <Header />
-      <main className="relative mx-auto mb-4 w-full max-w-xl px-4">
-        {GachaComponent}
-      </main>
+      <AnimatePresence mode={"wait"}>
+        {showReload ? (
+          <ReloadGacha key="Reload" setIndex={setIndex} />
+        ) : (
+          <TicketFramedGacha
+            key={gacha.token_id}
+            gacha={gacha}
+            setIndex={setIndex}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

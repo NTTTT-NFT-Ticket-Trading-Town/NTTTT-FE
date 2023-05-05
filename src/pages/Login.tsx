@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Login() {
   return (
     <>
-      <main className="relative mx-auto h-full max-w-xl">
+      <main className="relative mx-auto h-full w-full max-w-xl">
         <div className="absolute isolate w-full max-w-xl overflow-hidden">
           <img
             src="/bg-dark.png"

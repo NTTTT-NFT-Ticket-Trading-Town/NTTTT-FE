@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 export default function Header() {
-
   const navigate = useNavigate();
 
   const handleClickBackBtn = () => {
@@ -10,9 +9,9 @@ export default function Header() {
   };
 
   return (
-    <header className="mx-auto max-w-xl">
+    <header className="mx-auto w-full max-w-xl">
       <nav className="flex items-center font-extrabold italic">
-        <div className="grid grid-cols-3 py-4 sm:py-6 w-full">
+        <div className="grid w-full grid-cols-3 py-4 sm:py-6">
           <div className="ml-7 flex items-center">
             <ArrowBackIosIcon onClick={handleClickBackBtn} />
           </div>
