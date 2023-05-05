@@ -17,6 +17,7 @@ function Ticket({
   const x = useMotionValue(0);
   const [leaveX, setLeaveX] = useState(0);
   const rotate = Math.random() > 0.5 ? " rotate-12 " : " -rotate-12 ";
+  const OUT_ANIMATION_DURATION = 0.2;
 
   return (
     <motion.div
@@ -28,11 +29,11 @@ function Ticket({
       dragElastic={{ top: 0, bottom: 0, right: 1, left: 1 }}
       onDragEnd={(_, info) => {
         if (info.offset.x > 200) {
-          setLeaveX(400);
+          setLeaveX(x.get() + x.getVelocity() * OUT_ANIMATION_DURATION);
           setIndex((prev) => prev + 1);
         }
         if (info.offset.x < -200) {
-          setLeaveX(-400);
+          setLeaveX(x.get() - x.getVelocity() * OUT_ANIMATION_DURATION);
           setIndex((prev) => prev + 1);
         }
       }}
@@ -49,8 +50,8 @@ function Ticket({
       exit={{
         x: leaveX,
         opacity: 0,
-        scale: 0.3,
-        transition: { duration: 0.2 },
+        scale: 0.5,
+        transition: { duration: OUT_ANIMATION_DURATION },
       }}
       className={
         "absolute left-6 right-6 mx-auto cursor-grab select-none pb-8 drop-shadow-2xl active:cursor-grabbing" +
@@ -58,7 +59,7 @@ function Ticket({
       }
       style={{ x }}
     >
-      <TicketTop className="w-full" />
+      <TicketTop className="-mb-1 w-full" />
       {children}
     </motion.div>
   );
@@ -84,7 +85,7 @@ function Bottom({ children }: Children) {
 function Split() {
   return (
     <>
-      <TicketSplit className="-my-1" />
+      <TicketSplit className="-my-2" />
     </>
   );
 }

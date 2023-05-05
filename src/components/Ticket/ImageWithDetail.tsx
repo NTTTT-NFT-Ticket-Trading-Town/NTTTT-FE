@@ -2,6 +2,10 @@ import { useState } from "react";
 import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
 import { motion } from "framer-motion";
 import Skeleton from "../Image/Skeleton";
+import {
+  HorizontalRuleOutlined,
+  RemoveRedEyeOutlined,
+} from "@mui/icons-material";
 
 export default function ImageWithDetail({ gacha }: { gacha: GachaInterface }) {
   const animationDuration = 0.5;
@@ -18,21 +22,6 @@ export default function ImageWithDetail({ gacha }: { gacha: GachaInterface }) {
         setShowDetail((prev) => !prev);
       }}
     >
-      <div
-        className="absolute"
-        style={{
-          aspectRatio: gacha.image.ratio,
-          width: "100%",
-          translate: "0 0 10px",
-        }}
-      >
-        <img
-          draggable={false}
-          src={gacha.image.url}
-          alt=""
-          className="absolute inset-0 -z-10 scale-105 animate-pulse rounded object-cover opacity-80 blur-xl"
-        />
-      </div>
       <motion.div
         style={{ transformStyle: "preserve-3d" }}
         initial={{
@@ -46,6 +35,12 @@ export default function ImageWithDetail({ gacha }: { gacha: GachaInterface }) {
           ease: easingFunction,
         }}
       >
+        <img
+          draggable={false}
+          src={gacha.image.url}
+          alt=""
+          className="absolute inset-0 -z-10 scale-105 animate-pulse rounded object-cover opacity-80 blur-xl"
+        />
         <div
           className="relative"
           style={{

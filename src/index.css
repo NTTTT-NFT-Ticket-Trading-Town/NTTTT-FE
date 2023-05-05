@@ -12,3 +12,9 @@ body {
 #root {
   @apply h-screen;
 }
+
+img {
+  display: block;
+  height: 100%;
+  line-height: 0;
+}
