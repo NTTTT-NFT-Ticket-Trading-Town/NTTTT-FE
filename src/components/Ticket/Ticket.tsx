@@ -10,11 +10,9 @@ interface Children {
 function Ticket({
   children,
   setIndex,
-  setShowDetail,
 }: {
   children: ReactNode;
   setIndex: Dispatch<SetStateAction<number>>;
-  setShowDetail: Dispatch<SetStateAction<boolean>>;
 }) {
   const x = useMotionValue(0);
   const [leaveX, setLeaveX] = useState(0);
@@ -28,7 +26,7 @@ function Ticket({
       whileDrag={{ scale: 0.95 }}
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
       dragElastic={{ top: 0, bottom: 0, right: 1, left: 1 }}
-      onDragEnd={(event, info) => {
+      onDragEnd={(_, info) => {
         if (info.offset.x > 200) {
           setLeaveX(400);
           setIndex((prev) => prev + 1);
@@ -37,7 +35,6 @@ function Ticket({
           setLeaveX(-400);
           setIndex((prev) => prev + 1);
         }
-        setShowDetail(false);
       }}
       initial={{
         scale: 0.8,

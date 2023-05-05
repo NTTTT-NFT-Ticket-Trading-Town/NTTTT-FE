@@ -17,7 +17,8 @@ const imgs = [
   "https://img.hankyung.com/photo/202112/03.28304862.1.jpg",
 ];
 const img_len = imgs.length;
-const artists = new Array(7).fill(null).map((e, idx) => {
+const artists = new Array(7).fill(null).map((_, idx) => {
+  console.log(imgs[idx % img_len]);
   return {
     title: `아티스트 ${idx + 1}`,
     img_url: imgs[idx % img_len],
