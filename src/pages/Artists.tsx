@@ -3,6 +3,8 @@ import Chip from "../components/Chip";
 import Finder from "../components/Finder";
 import MiniTicket from "../components/MiniTicket";
 import Header from "../layout/Header";
+import Button from "../components/Button";
+import MiniImage from "../components/MiniImage";
 
 // TODO: store에서 처리.
 const imgs = [
@@ -58,7 +60,14 @@ export default function Artists() {
             })}
           </div>
           {/* article - footer */}
-          <div>푸터</div>
+          <div className=" fixed bottom-0 flex w-full max-w-[36rem] items-center justify-between bg-opacity-10 bg-gradient-to-t from-white to-transparent">
+            <div className="flex gap-3">
+              <MiniImage src={imgs[0]} alt="image" onClick={() => {}} />
+              <MiniImage src={imgs[0]} alt="image" onClick={() => {}} />
+              <MiniImage src={imgs[0]} alt="image" onClick={() => {}} />
+            </div>
+            <Button>저장</Button>
+          </div>
         </div>
       </main>
     </>
