@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { ArtistState, SearchType } from "./artistTypes";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const BACKEND_URL = "";
+// const BACKEND_URL = "";
 const searchArguments = "/";
 
 const initialState: SearchType = "";
@@ -11,7 +11,7 @@ const searchArtists = createSlice({
   name: "search",
   initialState: initialState,
   reducers: {
-    setSearch(state, action: PayloadAction<SearchType>) {
+    setSearch(_, action: PayloadAction<SearchType>) {
       return action.payload;
     },
   },
