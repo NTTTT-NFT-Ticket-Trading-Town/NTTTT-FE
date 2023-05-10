@@ -2,68 +2,108 @@
   "refresh_count": 0,
   "gacha_list": [
     {
+      "id": 1,
+      "seq": 1,
       "event": {
-        "title": "SM TOWN LIVE 2022 in SEOUL",
+        "id": 1,
+        "name": "SM TOWN LIVE 2022 in SEOUL",
         "publisher": "SM ENTERTAINMENT",
-        "total_token": 100
+        "quantity": 100,
+        "description": "2022년 서울에 SM TOWN LIVE가 개최되었습니다."
       },
-      "artist": "AESPA - Winter",
-      "price": { "type": "ETH", "amount": 0.12342563 },
+      "artist": {
+        "id": "1",
+        "group": "AESPA",
+        "name": "WINTER",
+        "image_url": "https://kpopping.com/documents/50/1/1821/220829-Aespa-Winter-at-Smtown-live-2022-documents-3.jpeg?v=adaf2"
+      },
+      "price": { "amount": "10000" },
       "image": {
         "url": "https://kpopping.com/documents/50/1/1821/220829-Aespa-Winter-at-Smtown-live-2022-documents-3.jpeg?v=adaf2",
         "ratio": "2 / 3"
       },
       "watchers": 56,
       "description": "2022년 서울에서 열린 SM TOWN LIVE에서 에스파의 멤버인 윈터는 뛰어난 무대 퍼포먼스를 선보였습니다. 그녀는 'Next Level', 'Savage' 등을 비롯한 에스파의 대표곡을 역동적인 안무와 함께 선보였으며, 대중들로부터 큰 환호를 받았습니다. 특히, 윈터의 무대 위 파워풀한 춤과 강렬한 보이스는 관객들의 눈과 귀를 사로잡았습니다. 공연장 내부는 윈터의 섹시하면서도 동시에 카리스마 넘치는 매력으로 가득했습니다. 이번 공연을 통해 윈터는 에스파 멤버로서 뛰어난 예술적 재능과 탁월한 무대 퍼포먼스를 선보였으며, 대중들로부터 많은 사랑을 받을 예정입니다.",
-      "token_id": "1"
+      "paymentState": "ON_SALE",
+      "publishedAt": "2023-05-08T12:43:21.056Z"
     },
     {
+      "id": 2,
+      "seq": 2,
       "event": {
-        "title": "SM TOWN LIVE 2022 in SEOUL",
+        "id": 1,
+        "name": "SM TOWN LIVE 2022 in SEOUL",
         "publisher": "SM ENTERTAINMENT",
-        "total_token": 100
+        "quantity": 100,
+        "description": "2022년 서울에 SM TOWN LIVE가 개최되었습니다."
       },
-      "artist": "AESPA - Karina",
-      "price": { "type": "ETH", "amount": 0.12534657234 },
+      "artist": {
+        "id": "2",
+        "group": "AESPA",
+        "name": "KARINA",
+        "image_url": "https://kpopping.com/documents/f1/4/2048/220827-aespa-Karina-SMTOWN-in-JAPAN-documents-5.jpeg?v=c8dfd"
+      },
+      "price": { "amount": "10000" },
       "image": {
         "url": "https://kpopping.com/documents/f1/4/2048/220827-aespa-Karina-SMTOWN-in-JAPAN-documents-5.jpeg?v=c8dfd",
         "ratio": "1 / 1"
       },
       "watchers": 33,
       "description": "카리나 역시 SM TOWN LIVE 2022에서 뛰어난 무대 퍼포먼스를 선보였습니다. 카리나는 에스파의 대표곡 중 'Next Level'과 'Black Mamba'를 비롯한 몇 가지 곡을 선보였으며, 화려하고 파워풀한 안무와 함께 관객들의 눈과 귀를 사로잡았습니다. 또한, 카리나는 강렬한 보이스와 카리스마 넘치는 무대 매너로 인기를 얻었습니다. 그녀의 무대 의상 역시 화려하면서도 세련된 디자인으로 눈길을 끌었습니다. 이번 공연을 통해 카리나는 뛰어난 예술적 재능과 무대 퍼포먼스를 선보이며, 대중들로부터 많은 사랑을 받을 예정입니다.",
-      "token_id": "2"
+      "paymentState": "ON_SALE",
+      "publishedAt": "2023-05-08T12:43:21.056Z"
     },
     {
+      "id": 3,
+      "seq": 3,
       "event": {
-        "title": "SM TOWN LIVE 2022 in SEOUL",
+        "id": 1,
+        "name": "SM TOWN LIVE 2022 in SEOUL",
         "publisher": "SM ENTERTAINMENT",
-        "total_token": 100
+        "quantity": 100,
+        "description": "2022년 서울에 SM TOWN LIVE가 개최되었습니다."
       },
-      "artist": "AESPA - Karina",
-      "price": { "type": "ETH", "amount": 0.1345645763 },
+      "artist": {
+        "id": "3",
+        "group": "AESPA",
+        "name": "KARINA",
+        "image_url": "https://kpopping.com/documents/f1/4/2048/220827-aespa-Karina-SMTOWN-in-JAPAN-documents-5.jpeg?v=c8dfd"
+      },
+      "price": { "amount": "10000" },
       "image": {
         "url": "https://kpopping.com/documents/4a/1/2048/220827-aespa-Karina-SMTOWN-in-JAPAN-documents-1.jpeg?v=57391",
         "ratio": "224 / 149"
       },
       "watchers": 19,
       "description": "카리나 역시 SM TOWN LIVE 2022에서 뛰어난 무대 퍼포먼스를 선보였습니다. 카리나는 에스파의 대표곡 중 'Next Level'과 'Black Mamba'를 비롯한 몇 가지 곡을 선보였으며, 화려하고 파워풀한 안무와 함께 관객들의 눈과 귀를 사로잡았습니다. 또한, 카리나는 강렬한 보이스와 카리스마 넘치는 무대 매너로 인기를 얻었습니다. 그녀의 무대 의상 역시 화려하면서도 세련된 디자인으로 눈길을 끌었습니다. 이번 공연을 통해 카리나는 뛰어난 예술적 재능과 무대 퍼포먼스를 선보이며, 대중들로부터 많은 사랑을 받을 예정입니다.",
-      "token_id": "3"
+      "paymentState": "ON_SALE",
+      "publishedAt": "2023-05-08T12:43:21.056Z"
     },
     {
+      "id": 4,
+      "seq": 4,
       "event": {
-        "title": "SM TOWN LIVE 2022 in SEOUL",
+        "id": 1,
+        "name": "SM TOWN LIVE 2022 in SEOUL",
         "publisher": "SM ENTERTAINMENT",
-        "total_token": 100
+        "quantity": 100,
+        "description": "2022년 서울에 SM TOWN LIVE가 개최되었습니다."
       },
-      "artist": "AESPA - Winter",
-      "price": { "type": "ETH", "amount": 0.1345457568 },
+      "artist": {
+        "id": "1",
+        "group": "AESPA",
+        "name": "WINTER",
+        "image_url": "https://kpopping.com/documents/50/1/1821/220829-Aespa-Winter-at-Smtown-live-2022-documents-3.jpeg?v=adaf2"
+      },
+      "price": { "amount": "10000" },
       "image": {
         "url": "https://kpopping.com/documents/43/2/2210/220820-aespa-Winter-at-SMTOWN-LIVE-2022-SMCU-EXPRESS-documents-6.jpeg?v=1a84e",
         "ratio": "2 / 3"
       },
       "watchers": 23,
       "description": "2022년 서울에서 열린 SM TOWN LIVE에서 에스파의 멤버인 윈터는 뛰어난 무대 퍼포먼스를 선보였습니다. 그녀는 'Next Level', 'Savage' 등을 비롯한 에스파의 대표곡을 역동적인 안무와 함께 선보였으며, 대중들로부터 큰 환호를 받았습니다. 특히, 윈터의 무대 위 파워풀한 춤과 강렬한 보이스는 관객들의 눈과 귀를 사로잡았습니다. 공연장 내부는 윈터의 섹시하면서도 동시에 카리스마 넘치는 매력으로 가득했습니다. 이번 공연을 통해 윈터는 에스파 멤버로서 뛰어난 예술적 재능과 탁월한 무대 퍼포먼스를 선보였으며, 대중들로부터 많은 사랑을 받을 예정입니다.",
-      "token_id": "4"
+      "paymentState": "ON_SALE",
+      "publishedAt": "2023-05-08T12:43:21.056Z"
     }
   ]
 }

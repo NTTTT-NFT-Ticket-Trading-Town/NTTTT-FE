@@ -1,5 +1,6 @@
 export interface ArtistState {
   id: ArtistIDType;
+  group: string;
   name: string;
   image_url: string;
 }

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
 import { AnimatePresence, motion } from "framer-motion";
-import Skeleton from "../Image/Skeleton";
 import {
   HorizontalRuleOutlined,
   RemoveRedEyeOutlined,
 } from "@mui/icons-material";
+import ImageWithSkeleton from "../Common/ImageWithSkeleton";
 
 export default function ImageWithDetail({ gacha }: { gacha: GachaInterface }) {
   const animationDuration = 0.5;
@@ -41,35 +41,17 @@ export default function ImageWithDetail({ gacha }: { gacha: GachaInterface }) {
           alt=""
           className="absolute inset-0 -z-10 scale-105 animate-pulse rounded object-cover opacity-80 blur-xl"
         />
-        <div
-          className="relative"
-          style={{
-            aspectRatio: gacha.image.ratio,
-            width: "100%",
-            translate: "0 0 10px",
-          }}
-        >
-          <Skeleton />
-          <img
-            draggable={false}
-            src={gacha.image.url}
-            alt=""
-            className="absolute inset-0 rounded object-cover"
-            style={{
-              aspectRatio: gacha.image.ratio,
-            }}
-          />
-        </div>
+        <ImageWithSkeleton gacha={gacha} />
         <div
           style={{
             rotate: "y 180deg",
             translate: "0 0 -10px",
             backfaceVisibility: "hidden",
           }}
-          className="absolute top-0 h-full w-full overflow-y-scroll rounded-md bg-black/60 p-8 text-xl text-white"
+          className="absolute top-0 h-full w-full overflow-y-scroll rounded-md bg-black/60 p-6 text-xl text-white sm:p-8"
         >
-          <h3 className="mb-4 text-3xl font-bold">상세 설명</h3>
-          <p>{gacha.description}</p>
+          <h3 className="mb-4 text-xl font-bold sm:text-3xl">상세 설명</h3>
+          <p className="text-base sm:text-xl">{gacha.description}</p>
         </div>
         <ShowWatchers gacha={gacha} />
       </motion.div>
@@ -104,7 +86,7 @@ function ShowWatchers({ gacha }: { gacha: GachaInterface }) {
   return (
     <motion.div
       style={{ translate: "0 0 30px" }}
-      className="absolute left-3 top-4 flex items-center rounded-full bg-black/40 px-3 py-2 text-white sm:left-6 sm:top-6"
+      className="absolute left-3 top-4 flex items-center rounded-full bg-black/40 px-3 py-2 text-sm text-white sm:left-6 sm:top-6 sm:text-base"
       onMouseOver={() => {
         setShowWatchers(true);
       }}
@@ -122,9 +104,17 @@ function ShowWatchers({ gacha }: { gacha: GachaInterface }) {
     >
       <>
         {blink ? (
-          <RemoveRedEyeOutlined style={{ marginRight: "0.5rem" }} />
+          <RemoveRedEyeOutlined
+            sx={{ fontSize: { xs: "1.5rem", sm: "1.75rem", lg: "2rem" } }}
+            className="text-xs sm:text-lg"
+            style={{ marginRight: "0.5rem" }}
+          />
         ) : (
-          <HorizontalRuleOutlined style={{ marginRight: "0.5rem" }} />
+          <HorizontalRuleOutlined
+            sx={{ fontSize: { xs: "1.5rem", sm: "1.75rem", lg: "2rem" } }}
+            className="text-sm sm:text-base"
+            style={{ marginRight: "0.5rem" }}
+          />
         )}
       </>
       <AnimatePresence>
@@ -136,7 +126,7 @@ function ShowWatchers({ gacha }: { gacha: GachaInterface }) {
             transition={{
               duration: 0.3,
             }}
-            animate={{ opacity: 1, width: "28px", margin: "0 0.3rem 0 0" }}
+            animate={{ opacity: 1, width: "auto", margin: "0 0.3rem 0 0" }}
             exit={{ opacity: 0, width: 0, margin: 0 }}
           >
             현재
@@ -155,7 +145,7 @@ function ShowWatchers({ gacha }: { gacha: GachaInterface }) {
             }}
             animate={{
               opacity: 1,
-              width: "122px",
+              width: "auto",
               margin: "0 0 0 0.3rem",
             }}
             exit={{ opacity: 0, width: 0, margin: 0 }}

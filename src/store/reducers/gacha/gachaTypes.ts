@@ -1,23 +1,29 @@
+import { ArtistState } from "../artist/artistTypes";
+
 type PriceType = "ethereum" | "won";
 export interface PriceInterface {
-  type: PriceType;
   amount: number;
 }
 
 export interface EventInfoInterface {
-  title: string;
+  id: number;
+  name: string;
   publisher: string;
-  total_token: number;
+  quantity: number;
+  description: string;
 }
 
 export interface GachaInterface {
+  id: number;
+  seq: number; // gacha index
   event: EventInfoInterface;
-  artist: string;
+  artist: ArtistState;
   price: PriceInterface;
   image: GachaImageInterface;
   watchers: number;
   description: string;
-  token_id: string; // maybe number
+  paymentState: string;
+  publishedAt: string;
 }
 
 interface GachaImageInterface {
