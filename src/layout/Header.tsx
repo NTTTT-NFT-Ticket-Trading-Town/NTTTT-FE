@@ -15,7 +15,7 @@ export default function Header() {
           <div className="ml-7 flex items-center">
             <ArrowBackIosIcon onClick={handleClickBackBtn} />
           </div>
-          <p className="-rotate-2 border-2 border-dotted border-black bg-purple-300/50 text-center text-lg text-black backdrop-blur sm:text-2xl">
+          <p className="z-10 -rotate-2 border-2 border-dotted border-black bg-purple-300/50 text-center text-lg text-black backdrop-blur sm:text-2xl">
             NTTTT
           </p>
         </div>

@@ -3,8 +3,9 @@ import Header from "../layout/Header";
 import { useGetDailyGachaQuery } from "../store/reducers/gacha";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
-import { MouseEventHandler, useEffect, useMemo, useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import ErrorContent from "../components/Common/ErrorContent";
+import { useAmount } from "../utils/currency";
 
 export default function Buy() {
   return (
@@ -48,41 +49,11 @@ function useGacha(gachaID: number) {
   };
 }
 
-function useCurrencyRate() {
-  const [rate, setRate] = useState(0);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setRate(1 / 3246800);
-    }, 1000);
-  }, []);
-
-  return rate;
-}
-
-const Format = Intl.NumberFormat("ko-KR").format;
-
 function Payment() {
   const gachaID = useGachaID();
   const { data: gacha, isLoading } = useGacha(gachaID);
-  const currencyRate = useCurrencyRate();
   const [currency, setCurrency] = useState<"won" | "eth">("won");
-  const amount = useMemo(() => {
-    if (!gacha)
-      return {
-        won: `가격 정보 불러오기에 실패했습니다`,
-        eth: `가격 정보 불러오기에 실패했습니다`,
-      };
-    if (currencyRate === 0)
-      return {
-        won: `₩ ${Format(gacha.price.amount)}`,
-        eth: `로딩중..`,
-      };
-    return {
-      won: `₩ ${Format(gacha.price.amount)}`,
-      eth: `${String(gacha.price.amount * currencyRate).slice(0, 8)} ETH`,
-    };
-  }, [currencyRate, gacha]);
+  const amount = useAmount(gacha);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -214,12 +185,14 @@ function Payment() {
         </div>
       </main>
 
-      <div className="sticky bottom-0 flex grow flex-col justify-center pt-4 sm:gap-8">
+      <div className="group sticky bottom-0 flex grow flex-col justify-center pt-4 sm:gap-8">
         <button
           onClick={proceedPayment}
-          className="h-16 w-full self-end rounded-t-lg bg-purple-600 py-4 text-center text-2xl font-bold text-purple-100 transition-all duration-100  hover:bg-purple-500 active:bg-purple-700 active:text-lg sm:py-4 sm:text-2xl"
+          className="w-full self-end rounded-t-lg bg-purple-600 pb-8 pt-4 text-center text-2xl font-bold text-purple-100 transition-all duration-100  hover:bg-purple-500 active:bg-purple-700 sm:py-4"
         >
-          {amount[currency]} 결제하기
+          <p className="select-none transition-transform group-active:scale-90">
+            {amount[currency]} 결제하기
+          </p>
         </button>
         <div className="absolute -inset-0 -z-10 animate-pulse bg-purple-300 blur-xl"></div>
       </div>

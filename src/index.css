@@ -10,7 +10,7 @@ body {
   @apply bg-neutral-100;
 }
 #root {
-  @apply flex  min-h-screen w-full flex-col;
+  @apply flex  min-h-screen w-full flex-col items-center;
 }
 
 img {
