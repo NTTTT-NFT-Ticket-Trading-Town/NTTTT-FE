@@ -3,13 +3,13 @@ import "./index.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Gacha from "./pages/Gacha";
-import Artists from "./pages/Artists"
+import Artists from "./pages/Artists";
 import Layout from "./layout/Layout";
 import Test from "./pages/Test";
+import Buy from "./pages/Buy";
 
 const router = createBrowserRouter([
   {
-    path: "/",
     element: <Layout />,
     children: [
       {
@@ -31,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "test",
         element: <Test />,
+      },
+      {
+        path: "buy/:gacha_id",
+        element: <Buy />,
       },
     ],
   },
