@@ -1,9 +1,10 @@
 import { AnimatePresence } from "framer-motion";
 import Header from "../layout/Header";
-import { useGetGachaQuery } from "../store/reducers/gacha";
+import { useGetDailyGachaQuery } from "../store/reducers/gacha";
 import { useMemo, useState } from "react";
 import TicketFramedGacha from "../components/Gacha/TicketFramedGacha";
 import ReloadGacha from "../components/Gacha/ReloadGacha";
+import LoadingSpinner from "../components/Common/LoadingSpinner";
 
 export type SetIndexType = React.Dispatch<React.SetStateAction<number>>;
 export type ShowDetailType = boolean;
@@ -13,15 +14,17 @@ export default function Gacha() {
   return (
     <>
       <Header />
-      <main className="relative mx-auto mb-4 w-full max-w-xl grow px-4">
-        <GachaComponent />
+      <main className="relative mx-auto mb-4 flex w-full max-w-xl grow px-4">
+        <AnimatePresence mode={"wait"}>
+          <GachaComponent />
+        </AnimatePresence>
       </main>
     </>
   );
 }
 
 function GachaComponent() {
-  const { data, isLoading } = useGetGachaQuery("gacha.json");
+  const { data, isLoading } = useGetDailyGachaQuery("gacha.json");
   const [index, setIndex] = useState(0);
 
   const showReload = useMemo(() => {
@@ -32,29 +35,19 @@ function GachaComponent() {
     return false;
   }, [index, data]);
 
-  if (!data) {
-    return (
-      <div className="grid h-full w-full place-items-center">
-        <div className="origin-center animate-spin text-9xl">🌼</div>
-      </div>
-    );
+  if (!data || isLoading) {
+    return <LoadingSpinner />;
   }
 
   const gacha = data.gacha_list[index];
 
   return (
     <>
-      <AnimatePresence mode={"wait"}>
-        {showReload ? (
-          <ReloadGacha key="Reload" setIndex={setIndex} />
-        ) : (
-          <TicketFramedGacha
-            key={gacha.token_id}
-            gacha={gacha}
-            setIndex={setIndex}
-          />
-        )}
-      </AnimatePresence>
+      {showReload ? (
+        <ReloadGacha key="Reload" setIndex={setIndex} />
+      ) : (
+        <TicketFramedGacha key={gacha.id} gacha={gacha} setIndex={setIndex} />
+      )}
     </>
   );
 }

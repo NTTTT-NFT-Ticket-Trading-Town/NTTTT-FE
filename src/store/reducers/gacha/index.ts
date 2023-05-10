@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { GachaStateInterface } from "./gachaTypes";
+import { GachaInterface, GachaStateInterface } from "./gachaTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 const gachaEndpoint = "gacha.json";
@@ -33,11 +33,11 @@ export const gachaApi = createApi({
     baseUrl: import.meta.env.VITE_API_URL as string,
   }),
   endpoints: (builder) => ({
-    getGacha: builder.query<GachaStateInterface, string>({
+    getDailyGacha: builder.query<GachaStateInterface, string>({
       // FIXME: temporary fake url
       query: (search) => search || gachaEndpoint,
     }),
   }),
 });
 
-export const { useGetGachaQuery } = gachaApi;
+export const { useGetDailyGachaQuery } = gachaApi;
