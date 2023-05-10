@@ -156,8 +156,12 @@ function Payment() {
 
           <div>
             <div className="flex items-center">
-              <input type="checkbox" className="h-6 w-6 accent-purple-600" />
-              <label className="ml-2 text-lg font-semibold">
+              <input
+                type="checkbox"
+                id="check"
+                className="h-6 w-6 accent-purple-600"
+              />
+              <label htmlFor="check" className="ml-2 text-lg font-semibold">
                 다음의 약관에 동의하며, 주문을 진행합니다.
               </label>
             </div>
@@ -188,7 +192,7 @@ function Payment() {
       <div className="group sticky bottom-0 flex grow flex-col justify-center pt-4 sm:gap-8">
         <button
           onClick={proceedPayment}
-          className="w-full self-end rounded-t-lg bg-purple-600 py-6 text-center text-2xl font-bold text-purple-100 transition-all duration-100  hover:bg-purple-500 active:bg-purple-700 sm:py-6"
+          className="w-full self-end rounded-t-lg bg-purple-600 pb-6 pt-3 text-center text-2xl font-bold text-purple-100 transition-all duration-100  hover:bg-purple-500 active:bg-purple-700 sm:pt-3"
         >
           <p className="select-none transition-transform group-active:scale-90">
             {amount[currency]} 결제하기

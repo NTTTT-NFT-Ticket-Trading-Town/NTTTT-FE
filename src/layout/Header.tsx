@@ -10,7 +10,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 isolate z-20 mx-auto w-full max-w-xl bg-transparent">
-      <nav className="flex items-center font-extrabold italic">
+      <nav className="z-10 flex items-center font-extrabold italic">
         <div className="grid w-full grid-cols-3 py-4 sm:py-6">
           <div className="ml-7 flex items-center">
             <ArrowBackIosIcon onClick={handleClickBackBtn} />

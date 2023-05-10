@@ -12,7 +12,6 @@ export default function ImageWithSkeleton({
       style={{
         aspectRatio: gacha.image.ratio,
         width: "100%",
-        translate: "0 0 10px",
       }}
     >
       <Skeleton />
