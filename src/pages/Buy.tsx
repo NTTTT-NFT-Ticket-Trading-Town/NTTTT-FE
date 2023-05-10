@@ -188,7 +188,7 @@ function Payment() {
       <div className="group sticky bottom-0 flex grow flex-col justify-center pt-4 sm:gap-8">
         <button
           onClick={proceedPayment}
-          className="w-full self-end rounded-t-lg bg-purple-600 pb-8 pt-4 text-center text-2xl font-bold text-purple-100 transition-all duration-100  hover:bg-purple-500 active:bg-purple-700 sm:py-4"
+          className="w-full self-end rounded-t-lg bg-purple-600 py-6 text-center text-2xl font-bold text-purple-100 transition-all duration-100  hover:bg-purple-500 active:bg-purple-700 sm:py-6"
         >
           <p className="select-none transition-transform group-active:scale-90">
             {amount[currency]} 결제하기
