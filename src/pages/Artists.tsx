@@ -1,10 +1,12 @@
-import { useState } from "react";
-import Chip from "../components/Chip";
 import Finder from "../components/Finder";
 import MiniTicket from "../components/MiniTicket";
 import Header from "../layout/Header";
 import Button from "../components/Button";
 import MiniImage from "../components/MiniImage";
+import { dispatch, useSelector } from "../store";
+import { toggleFavoriteArtist } from "../store/reducers/artist";
+import { setSearch } from "../store/reducers/artist";
+import { AnimatePresence, motion } from "framer-motion";
 
 // TODO: store에서 처리.
 const imgs = [
@@ -20,17 +22,20 @@ const img_len = imgs.length;
 const artists = new Array(7).fill(null).map((_, idx) => {
   console.log(imgs[idx % img_len]);
   return {
-    title: `아티스트 ${idx + 1}`,
-    img_url: imgs[idx % img_len],
+    id: idx,
+    name: `아티스트 ${idx + 1}`,
+    image_url: imgs[idx % img_len],
   };
 });
 
 export default function Artists() {
-  const [searchValue, setSearchValue] = useState<string>("");
+  // states
+  const selectedArtists = useSelector((state) => state.artist.artists);
+  const search = useSelector((state) => state.artist.search);
 
   // handlers
   const handleOnChange = (value: string) => {
-    setSearchValue(value);
+    dispatch(setSearch(value));
   };
 
   return (
@@ -54,18 +59,34 @@ export default function Artists() {
 
           {/* article - body */}
           <div className="grid grid-cols-3 gap-3">
-            {artists.map((artist) => {
-              return (
-                <MiniTicket title={artist.title} img_url={artist.img_url} />
-              );
-            })}
+            {artists
+              .filter((artist) => artist.name.includes(search))
+              .map((artist) => {
+                return (
+                  <MiniTicket
+                    onClick={() => dispatch(toggleFavoriteArtist(artist))}
+                    clicked={!!selectedArtists.find((e) => e.id === artist.id)}
+                    title={artist.name}
+                    img_url={artist.image_url}
+                  />
+                );
+              })}
           </div>
           {/* article - footer */}
           <div className=" fixed bottom-0 flex w-full max-w-[36rem] items-center justify-between bg-opacity-10 bg-gradient-to-t from-white to-transparent">
             <div className="flex gap-3">
-              <MiniImage src={imgs[0]} alt="image" onClick={() => {}} />
-              <MiniImage src={imgs[0]} alt="image" onClick={() => {}} />
-              <MiniImage src={imgs[0]} alt="image" onClick={() => {}} />
+              <AnimatePresence>
+                {selectedArtists.map((artist) => (
+                  <MiniImage
+                    key={artist.id}
+                    src={artist.image_url}
+                    alt="image"
+                    onClick={() => {
+                      dispatch(toggleFavoriteArtist(artist));
+                    }}
+                  />
+                ))}
+              </AnimatePresence>
             </div>
             <Button>저장</Button>
           </div>
