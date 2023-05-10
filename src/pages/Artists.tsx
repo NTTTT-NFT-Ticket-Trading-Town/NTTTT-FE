@@ -6,7 +6,7 @@ import MiniImage from "../components/MiniImage";
 import { dispatch, useSelector } from "../store";
 import { toggleFavoriteArtist } from "../store/reducers/artist";
 import { setSearch } from "../store/reducers/artist";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 // TODO: store에서 처리.
 const imgs = [
@@ -73,8 +73,8 @@ export default function Artists() {
               })}
           </div>
           {/* article - footer */}
-          <div className=" fixed bottom-0 flex w-full max-w-[36rem] items-center justify-between bg-opacity-10 bg-gradient-to-t from-white to-transparent">
-            <div className="flex gap-3">
+          <div className=" fixed bottom-0 flex w-full max-w-[36rem] items-center justify-between bg-opacity-10 bg-gradient-to-t from-white to-transparent p-4">
+            <div className="flex max-w-[calc(100%-200px)] gap-3 overflow-x-scroll">
               <AnimatePresence>
                 {selectedArtists.map((artist) => (
                   <MiniImage
