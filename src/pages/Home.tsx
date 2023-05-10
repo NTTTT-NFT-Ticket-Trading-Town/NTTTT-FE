@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Home() {
   return (
     <>
-      <div className="absolute isolate w-full max-w-xl overflow-hidden">
+      <div className="absolute isolate flex w-full max-w-xl flex-col overflow-hidden">
         <img
           src="/bg-dark.png"
           alt=""
@@ -13,7 +13,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="isolate grid h-full place-content-evenly justify-center pt-10 text-white">
+      <div className="isolate grid grow  place-content-evenly justify-center pt-10 text-white">
         <div className="relative grid gap-2">
           <h1 className="mx-auto text-6xl font-bold italic">NTTTT</h1>
           <span className="mx-auto text-2xl font-semibold">

@@ -9,15 +9,15 @@ export default function Header() {
   };
 
   return (
-    <header className="mx-auto w-full max-w-xl">
+    <header className="sticky top-0 z-20 mx-auto w-full max-w-xl bg-transparent">
       <nav className="flex items-center font-extrabold italic">
         <div className="grid w-full grid-cols-3 py-4 sm:py-6">
           <div className="ml-7 flex items-center">
             <ArrowBackIosIcon onClick={handleClickBackBtn} />
           </div>
-          <div className="text-center text-lg text-neutral-400 sm:text-2xl">
+          <p className="-rotate-2 border-2 border-dotted border-black bg-purple-300/50 text-center text-lg text-black backdrop-blur sm:text-2xl">
             NTTTT
-          </div>
+          </p>
         </div>
       </nav>
     </header>
