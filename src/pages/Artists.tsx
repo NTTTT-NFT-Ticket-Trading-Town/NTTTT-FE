@@ -6,7 +6,8 @@ import MiniImage from "../components/MiniImage";
 import { dispatch, useSelector } from "../store";
 import { toggleFavoriteArtist } from "../store/reducers/artist";
 import { setSearch } from "../store/reducers/artist";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, animate, motion } from "framer-motion";
+import { useState } from "react";
 
 // TODO: store에서 처리.
 const imgs = [
@@ -28,6 +29,19 @@ const artists = new Array(7).fill(null).map((_, idx) => {
   };
 });
 
+function Test() {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ width: "100%", opacity: 1 }}
+      exit={{ width: "50px", opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="h-10 bg-gray-1">{/* Hello */}</div>
+    </motion.div>
+  );
+}
+
 export default function Artists() {
   // states
   const selectedArtists = useSelector((state) => state.artist.artists);
@@ -37,6 +51,8 @@ export default function Artists() {
   const handleOnChange = (value: string) => {
     dispatch(setSearch(value));
   };
+
+  const [click, setClick] = useState(true);
 
   return (
     <>
@@ -50,15 +66,24 @@ export default function Artists() {
           </div>
           {/* article - categorory */}
           {/* TODO: scroll-bar 없애기 */}
+          <button
+            onClick={() => {
+              setClick(!click);
+            }}
+          >
+            click
+          </button>
           <div className="my-3 flex h-9 w-full flex-row overflow-scroll">
-            <Finder onChange={handleOnChange} />
+            <AnimatePresence>{click ? <Test /> : null}</AnimatePresence>
+
+            {/* <Finder onChange={handleOnChange} /> */}
             {/* {new Array(5).fill(null).map((_, idx) => (
               <Chip label={`카테고리${idx + 1}`} enabled={false} />
             ))} */}
           </div>
 
           {/* article - body */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-3 xs:gap-0">
             {artists
               .filter((artist) => artist.name.includes(search))
               .map((artist) => {
@@ -74,7 +99,7 @@ export default function Artists() {
           </div>
           {/* article - footer */}
           <div className=" fixed bottom-0 flex w-full max-w-[36rem] items-center justify-between bg-opacity-10 bg-gradient-to-t from-white to-transparent p-4">
-            <div className="flex max-w-[calc(100%-200px)] gap-3 overflow-x-scroll">
+            <div className="flex max-w-[calc(100%-200px)] gap-3 overflow-x-scroll scrollbar-hide">
               <AnimatePresence>
                 {selectedArtists.map((artist) => (
                   <MiniImage
