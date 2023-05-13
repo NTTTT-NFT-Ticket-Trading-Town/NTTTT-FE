@@ -1,0 +1,17 @@
+{
+  "result": {
+    "code": 0,
+    "message": "string"
+  },
+  "data": {
+    "group": "BTS",
+    "members": [
+      {
+        "id": 0,
+        "group": "BTS",
+        "name": "string",
+        "imgUrl": "string"
+      }
+    ]
+  }
+}
