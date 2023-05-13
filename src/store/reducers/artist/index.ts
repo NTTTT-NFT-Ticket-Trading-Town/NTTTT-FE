@@ -2,17 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import {
   ArtistInterface,
   ArtistStateInterface,
+  GroupInterface,
   SearchType,
 } from "./artistTypes";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-
-// const BACKEND_URL = "";
-const searchArguments = "/";
+import { ServerResponseInterface } from "../indexTypes";
 
 const initialState: ArtistStateInterface = {
   searchActive: false,
   search: "",
   artists: [],
+  groups: [],
 };
 
 const searchArtists = createSlice({
@@ -24,6 +24,14 @@ const searchArtists = createSlice({
     },
     setSearch(state, action: PayloadAction<SearchType>) {
       state.search = action.payload;
+    },
+    toggleFavoriteGroups(state, action: PayloadAction<string>) {
+      const group = action.payload;
+      const hasGroup = state.groups.find((item) => item === group);
+
+      if (hasGroup)
+        state.groups = state.groups.filter((item) => item !== group);
+      else state.groups = [...state.groups, group];
     },
     toggleFavoriteArtist(state, action: PayloadAction<ArtistInterface>) {
       const artist = action.payload;
@@ -39,19 +47,32 @@ const searchArtists = createSlice({
 });
 
 export default searchArtists.reducer;
-export const { toggleSearchActive, setSearch, toggleFavoriteArtist } =
-  searchArtists.actions;
+export const {
+  toggleSearchActive,
+  setSearch,
+  toggleFavoriteArtist,
+  toggleFavoriteGroups,
+} = searchArtists.actions;
 
 export const artistsApi = createApi({
   reducerPath: "artistsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL as string,
+    baseUrl: [import.meta.env.VITE_API_URL, "artist"].join("/") as string,
   }),
   endpoints: (builder) => ({
-    getMatchingArtists: builder.query<ArtistInterface[], SearchType>({
-      query: (search) => searchArguments + search,
+    getAllArtists: builder.query<
+      ServerResponseInterface<GroupInterface[]>,
+      void
+    >({
+      query: () => `/all`,
+    }),
+    getMatchingArtists: builder.query<
+      ServerResponseInterface<GroupInterface[]>,
+      SearchType
+    >({
+      query: (search) => `/${search}`,
     }),
   }),
 });
 
-export const { useGetMatchingArtistsQuery } = artistsApi;
+export const { useGetAllArtistsQuery, useGetMatchingArtistsQuery } = artistsApi;
