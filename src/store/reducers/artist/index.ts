@@ -10,6 +10,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 const searchArguments = "/";
 
 const initialState: ArtistStateInterface = {
+  searchActive: false,
   search: "",
   artists: [],
 };
@@ -18,6 +19,9 @@ const searchArtists = createSlice({
   name: "search",
   initialState: initialState,
   reducers: {
+    toggleSearchActive(state) {
+      state.searchActive = !state.searchActive;
+    },
     setSearch(state, action: PayloadAction<SearchType>) {
       state.search = action.payload;
     },
@@ -35,7 +39,8 @@ const searchArtists = createSlice({
 });
 
 export default searchArtists.reducer;
-export const { setSearch, toggleFavoriteArtist } = searchArtists.actions;
+export const { toggleSearchActive, setSearch, toggleFavoriteArtist } =
+  searchArtists.actions;
 
 export const artistsApi = createApi({
   reducerPath: "artistsApi",

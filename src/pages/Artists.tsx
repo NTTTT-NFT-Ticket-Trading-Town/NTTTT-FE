@@ -8,6 +8,7 @@ import { toggleFavoriteArtist } from "../store/reducers/artist";
 import { setSearch } from "../store/reducers/artist";
 import { AnimatePresence, animate, motion } from "framer-motion";
 import { useState } from "react";
+import Chip from "../components/Chip";
 
 // TODO: store에서 처리.
 const imgs = [
@@ -47,11 +48,6 @@ export default function Artists() {
   const selectedArtists = useSelector((state) => state.artist.artists);
   const search = useSelector((state) => state.artist.search);
 
-  // handlers
-  const handleOnChange = (value: string) => {
-    dispatch(setSearch(value));
-  };
-
   return (
     <>
       <Header />
@@ -63,11 +59,11 @@ export default function Artists() {
             선택하신 아티스트의 NFT토큰을 확인하세요!
           </div>
           {/* article - categorory */}
-          <div className="my-3 flex h-9 w-full flex-row overflow-scroll">
-            <Finder onChange={handleOnChange} />
-            {/* {new Array(5).fill(null).map((_, idx) => (
+          <div className="my-3 flex h-9 w-full flex-row overflow-scroll scrollbar-hide">
+            <Finder />
+            {new Array(5).fill(null).map((_, idx) => (
               <Chip label={`카테고리${idx + 1}`} enabled={false} />
-            ))} */}
+            ))}
           </div>
 
           {/* article - body */}
@@ -85,6 +81,7 @@ export default function Artists() {
                 );
               })}
           </div>
+
           {/* article - footer */}
           <div className=" fixed bottom-0 flex w-full max-w-[36rem] items-center justify-between bg-opacity-10 bg-gradient-to-t from-white to-transparent p-4">
             <div className="flex max-w-[calc(100%-200px)] gap-3 overflow-x-scroll scrollbar-hide">

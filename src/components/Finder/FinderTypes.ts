@@ -1,3 +1,1 @@
-export interface FinderPropsInterface {
-  onChange: (value: string) => void;
-}
+export interface FinderPropsInterface {}

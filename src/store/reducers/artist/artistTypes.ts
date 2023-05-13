@@ -1,4 +1,5 @@
 export interface ArtistStateInterface {
+  searchActive: boolean;
   search: SearchType;
   artists: ArtistInterface[];
 }
