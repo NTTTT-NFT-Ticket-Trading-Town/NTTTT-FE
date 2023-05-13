@@ -2,7 +2,7 @@ import { ChipPropsInterface } from "./ChipTypes";
 
 export default function Chip(props: ChipPropsInterface) {
   // props
-  const { label, enabled = false } = props;
+  const { handleClick, label, active } = props;
 
   // styles
   // DEVELOP: tailwind snippet을 볼 수 없을까?
@@ -23,8 +23,9 @@ export default function Chip(props: ChipPropsInterface) {
 
   return (
     <div
+      onClick={handleClick}
       className={`${
-        enabled ? "bg-primary text-white" : "bg-gray-1"
+        active ? "bg-primary text-white" : "bg-gray-1"
       } ${basicStyle} `}
     >
       {label}
