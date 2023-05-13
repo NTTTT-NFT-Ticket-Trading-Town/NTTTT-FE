@@ -44,7 +44,9 @@ export default function Finder() {
             className="ml-3 w-full bg-transparent outline-none"
           />
         )}
-        <SearchIcon className={searchActive && "mr-2"} />
+        <div className={searchActive ? "mr-2" : ""}>
+          <SearchIcon />
+        </div>
       </motion.div>
     </>
   );

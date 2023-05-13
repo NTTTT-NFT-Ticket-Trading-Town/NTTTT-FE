@@ -14,7 +14,7 @@ export interface ArtistInterface {
   id: ArtistIDType;
   group: string;
   name: string;
-  image_url: string;
+  imgUrl: string;
 }
 
 export type SearchType = string;

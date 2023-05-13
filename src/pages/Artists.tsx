@@ -23,7 +23,6 @@ export default function Artists() {
 
   // preprocess
   if (isLoading) {
-    console.log("loading");
     return <div>loading...</div>;
   }
   if (error) {
@@ -50,6 +49,7 @@ export default function Artists() {
             <Finder />
             {groups.map((group) => (
               <Chip
+                key={group}
                 handleClick={() => dispatch(toggleFavoriteGroups(group))}
                 label={group}
                 active={selectedGroups.includes(group)}
@@ -64,10 +64,11 @@ export default function Artists() {
               .map((artist) => {
                 return (
                   <MiniTicket
+                    key={artist.id}
                     onClick={() => dispatch(toggleFavoriteArtist(artist))}
                     clicked={!!selectedArtists.find((e) => e.id === artist.id)}
                     title={artist.name}
-                    img_url={artist.image_url}
+                    img_url={artist.imgUrl}
                   />
                 );
               })}
@@ -80,7 +81,7 @@ export default function Artists() {
                 {selectedArtists.map((artist) => (
                   <MiniImage
                     key={artist.id}
-                    src={artist.image_url}
+                    src={artist.imgUrl}
                     alt="image"
                     onClick={() => {
                       dispatch(toggleFavoriteArtist(artist));
