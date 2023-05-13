@@ -52,8 +52,6 @@ export default function Artists() {
     dispatch(setSearch(value));
   };
 
-  const [click, setClick] = useState(true);
-
   return (
     <>
       <Header />
@@ -65,18 +63,8 @@ export default function Artists() {
             선택하신 아티스트의 NFT토큰을 확인하세요!
           </div>
           {/* article - categorory */}
-          {/* TODO: scroll-bar 없애기 */}
-          <button
-            onClick={() => {
-              setClick(!click);
-            }}
-          >
-            click
-          </button>
           <div className="my-3 flex h-9 w-full flex-row overflow-scroll">
-            <AnimatePresence>{click ? <Test /> : null}</AnimatePresence>
-
-            {/* <Finder onChange={handleOnChange} /> */}
+            <Finder onChange={handleOnChange} />
             {/* {new Array(5).fill(null).map((_, idx) => (
               <Chip label={`카테고리${idx + 1}`} enabled={false} />
             ))} */}
