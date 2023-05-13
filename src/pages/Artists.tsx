@@ -61,6 +61,10 @@ export default function Artists() {
           <div className="grid grid-cols-3 gap-3 xs:gap-0">
             {artists
               .filter((artist) => artist.name.includes(search))
+              .filter((artist) => {
+                if (selectedGroups.length === 0) return true;
+                return selectedGroups.includes(artist.group);
+              })
               .map((artist) => {
                 return (
                   <MiniTicket
