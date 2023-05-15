@@ -68,7 +68,7 @@ function MyPageContent() {
                 style={{
                   top: `${index * 50 + 80}px`,
                   position: "sticky",
-                  width: "70%",
+                  width: "80%",
                   marginInline: "auto",
                 }}
               >

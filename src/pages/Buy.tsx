@@ -252,7 +252,7 @@ const SwipeToPay: FC = () => {
 
   useEffect(() => {
     dragX.onChange((v) => {
-      if (v > 85) {
+      if (v > 80) {
         setStatus("놓아서 결제 완료");
       } else {
         setStatus("오른쪽으로 미세요");
@@ -279,7 +279,7 @@ const SwipeToPay: FC = () => {
         dragSnapToOrigin
         dragConstraints={swipeBox}
         onDragEnd={buyToken}
-        className="pointer-events-auto z-10 cursor-grab bg-purple-600 p-4 active:cursor-grabbing"
+        className="pointer-events-auto z-10 grid aspect-square w-16 cursor-grab place-items-center bg-purple-600 active:cursor-grabbing"
         style={{ x, background }}
       >
         <DoubleArrowOutlined />
