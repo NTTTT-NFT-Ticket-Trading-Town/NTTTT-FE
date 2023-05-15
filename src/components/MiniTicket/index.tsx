@@ -1,12 +1,17 @@
 import Image from "../Image";
 import { MiniticketPropsInterface } from "./MiniTicketTypes";
 import TicketFrame from "./TicketFrame.svg";
+import TicketFrameClicked from "./TicketFrameClicked.svg";
 
 export default function MiniTicket(props: MiniticketPropsInterface) {
-  const { title = "Default", img_url } = props;
+  const { title = "Default", img_url, clicked = false, onClick } = props;
+
+  const svg = clicked ? TicketFrameClicked : TicketFrame;
 
   return (
     <div
+      onClick={onClick}
+      className="transition-all duration-100 hover:scale-95 active:scale-90"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -14,7 +19,7 @@ export default function MiniTicket(props: MiniticketPropsInterface) {
         alignItems: "center",
         width: 124,
         height: 165,
-        backgroundImage: "url(" + TicketFrame + ")",
+        backgroundImage: "url(" + svg + ")",
         backgroundRepeat: "no-repeat",
       }}
     >

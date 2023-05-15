@@ -1,4 +1,5 @@
 export interface ChipPropsInterface {
   label: string;
-  enabled?: boolean;
+  active?: boolean;
+  handleClick?: () => void;
 }

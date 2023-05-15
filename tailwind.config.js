@@ -2,7 +2,10 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend:{
+    extend: {
+      screens: {
+        xs: "320px",
+      },
       colors: {
         // you can use it like this: bg-primary, bg-gray-1
         primary: "#9E00FF",
@@ -15,7 +18,7 @@ export default {
           4: "#3E3E3E",
         },
       },
-    }
+    },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };

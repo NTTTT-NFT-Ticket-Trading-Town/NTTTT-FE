@@ -1,0 +1,36 @@
+{
+  "result": {
+    "code": 0,
+    "message": "string"
+  },
+  "data": [
+    {
+      "group": "BTS",
+      "members": [
+        {
+          "id": 0,
+          "group": "BTS",
+          "name": "진",
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Jin_for_Dispatch_%22Boy_With_Luv%22_MV_behind_the_scene_shooting%2C_15_March_2019_01_%28cropped%29.jpg/250px-Jin_for_Dispatch_%22Boy_With_Luv%22_MV_behind_the_scene_shooting%2C_15_March_2019_01_%28cropped%29.jpg"
+        }
+      ]
+    },
+    {
+      "group": "IVE",
+      "members": [
+        {
+          "id": 1,
+          "group": "IVE",
+          "name": "장원영",
+          "imgUrl": "https://i.namu.wiki/i/Pmt-X4ekyEZoJL003elEka-ePn1YUsaHlJps0EXgy92xgYISoP6lZptPuC1xcnvUkB09IFqNttUpyKSRjNVNUA.webp"
+        },
+        {
+          "id": 2,
+          "group": "IVE",
+          "name": "안유진",
+          "imgUrl": "https://cdn.mhnse.com/news/photo/202212/161470_156801_1259.jpg"
+        }
+      ]
+    }
+  ]
+}
