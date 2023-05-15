@@ -243,7 +243,6 @@ const SwipeToPay: FC = () => {
   const [status, setStatus] = useState("오른쪽으로 미세요");
 
   const x = useMotionValue(0);
-  const dragX = useTransform(x, [0, boxWidth], [0, 100]);
   const background = useTransform(x, [0, boxWidth], ["#7700ff", "#ff008c"]);
 
   useEffect(() => {
@@ -251,14 +250,15 @@ const SwipeToPay: FC = () => {
   }, [swipeBox]);
 
   useEffect(() => {
-    dragX.onChange((v) => {
-      if (v > 80) {
+    if (boxWidth === 0) return;
+    x.onChange((v) => {
+      if (v + 64 >= boxWidth - 10) {
         setStatus("놓아서 결제 완료");
       } else {
         setStatus("오른쪽으로 미세요");
       }
     });
-  }, []);
+  }, [boxWidth]);
 
   const buyToken = () => {
     if (status === "놓아서 결제 완료") {
