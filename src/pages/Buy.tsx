@@ -220,17 +220,17 @@ const BuyModal: FC<{ setShowModal: Dispatch<SetStateAction<boolean>> }> = ({
 }) => {
   return (
     <div className="fixed inset-0 isolate z-50 flex items-center justify-center bg-black/50">
-      <section className="relative flex w-[80%] max-w-lg flex-col divide-y-4 overflow-hidden rounded-lg border-4 ">
+      <section className="relative flex w-[80%] max-w-lg flex-col overflow-hidden rounded-lg border-4 ">
+        <div className="text-semibold relative w-full border-b-4 bg-white px-4 pb-8 pt-12 text-center text-2xl">
+          밀어서 결제 완료
+        </div>
+        <SwipeToPay />
         <button
-          className="absolute right-0 top-0 z-10 p-4"
+          className="absolute right-0 top-0 z-10 border-0 p-4"
           onClick={() => setShowModal(false)}
         >
           <CloseSharp fontSize="large" />
         </button>
-        <div className="text-semibold relative w-full bg-white px-4 pb-8 pt-12 text-center text-2xl">
-          밀어서 결제 완료
-        </div>
-        <SwipeToPay />
       </section>
     </div>
   );
@@ -271,7 +271,7 @@ const SwipeToPay: FC = () => {
       className="relative flex w-full bg-gray-300 text-lg font-semibold text-white"
       ref={swipeBox}
     >
-      <div className="absolute grid h-full w-full place-content-center">
+      <div className="absolute grid h-full w-full place-content-center border-0">
         {status}
       </div>
       <motion.div
