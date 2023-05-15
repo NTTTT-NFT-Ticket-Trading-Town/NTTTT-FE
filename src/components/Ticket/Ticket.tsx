@@ -54,7 +54,7 @@ function Ticket({
         transition: { duration: OUT_ANIMATION_DURATION },
       }}
       className={
-        "absolute left-6 right-6 mx-auto cursor-grab select-none pb-8 drop-shadow-2xl active:cursor-grabbing" +
+        "relative mx-auto cursor-grab select-none pb-8 drop-shadow-2xl active:cursor-grabbing" +
         rotate
       }
       style={{ x }}
