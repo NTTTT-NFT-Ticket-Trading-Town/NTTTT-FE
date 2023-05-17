@@ -1,22 +1,25 @@
 import { useState } from "react";
-import { SetIndexType } from "../../pages/Gacha";
-import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
 import { useAmount } from "../../utils/currency";
 import BuyButton from "../Button/BuyButton";
 import ImageWithDetail from "../Ticket/ImageWithDetail";
 import Ticket from "../Ticket/Ticket";
+import { useGetDailyGachaMutation } from "../../store/reducers/gacha";
+import LoadingSpinner from "../Common/LoadingSpinner";
 
-export default function TicketFramedGacha({
-  gacha,
-  setIndex,
-}: {
-  gacha: GachaInterface;
-  setIndex: SetIndexType;
-}) {
-  const amount = useAmount(gacha);
+export default function TicketFramedGacha() {
+  const [getDailyGacha, { data, isLoading, isSuccess, isError }] =
+    useGetDailyGachaMutation();
+
+  if (!data || !data.gacha) {
+    return <button onClick={() => getDailyGacha()}>토큰 받기</button>;
+  }
+
+  const gacha = data.gacha;
+
+  const amount = useAmount(data);
   const [currency, setCurrency] = useState<"won" | "eth">("won");
   return (
-    <Ticket key={gacha.image.url} setIndex={setIndex}>
+    <Ticket key={gacha.image.url} getNextToken={getDailyGacha}>
       <Ticket.Top>
         <ImageWithDetail gacha={gacha} />
         <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">

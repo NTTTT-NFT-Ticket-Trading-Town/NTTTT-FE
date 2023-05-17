@@ -9,10 +9,10 @@ interface Children {
 
 function Ticket({
   children,
-  setIndex,
+  getNextToken,
 }: {
   children: ReactNode;
-  setIndex: Dispatch<SetStateAction<number>>;
+  getNextToken: any;
 }) {
   const x = useMotionValue(0);
   const [leaveX, setLeaveX] = useState(0);
@@ -30,11 +30,11 @@ function Ticket({
       onDragEnd={(_, info) => {
         if (info.offset.x > 200) {
           setLeaveX(x.get() + x.getVelocity() * OUT_ANIMATION_DURATION);
-          setIndex((prev) => prev + 1);
+          getNextToken();
         }
         if (info.offset.x < -200) {
           setLeaveX(x.get() - x.getVelocity() * OUT_ANIMATION_DURATION);
-          setIndex((prev) => prev + 1);
+          getNextToken();
         }
       }}
       initial={{

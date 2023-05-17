@@ -1,6 +1,21 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { useLoginMutation } from "../store/reducers/user";
+import { useState } from "react";
 
 export default function Login() {
+  const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
+  const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  if (isSuccess) {
+    navigate("/gacha");
+  }
+
+  const onClick = async () => {
+    await login({ nickname, password });
+  };
+
   return (
     <>
       <main className="relative flex w-full max-w-xl grow">
@@ -23,17 +38,27 @@ export default function Login() {
               아이돌 토큰을 모아보세요!
             </span>
             <div className="grid gap-4 pt-4">
-              <input className="block w-full rounded bg-neutral-300/30 px-2 py-2" />
-              <input className="block w-full rounded bg-neutral-300/30 px-2 py-2" />
+              <input
+                onChange={(e) => setNickname(e.target.value)}
+                value={nickname}
+                className="block w-full rounded bg-neutral-300/30 px-2 py-2"
+              />
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                className="block w-full rounded bg-neutral-300/30 px-2 py-2"
+              />
             </div>
           </div>
           <div>
-            <Link
-              to="/gacha"
-              className="block rounded bg-neutral-300/30 py-2 text-center transition-all duration-100 hover:bg-neutral-300/40 active:scale-95 active:bg-neutral-300/50"
+            <button
+              onClick={onClick}
+              className="block w-full rounded bg-neutral-300/30 py-2 text-center transition-all duration-100 hover:bg-neutral-300/40 active:scale-95 active:bg-neutral-300/50"
             >
-              토큰 모으러 가기
-            </Link>
+              로그인
+              {isLoading && " 중..."}
+              {isSuccess && " 성공!"}
+            </button>
           </div>
         </div>
       </main>

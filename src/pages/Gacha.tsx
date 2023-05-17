@@ -1,10 +1,6 @@
 import { AnimatePresence } from "framer-motion";
-import Header from "../layout/Header";
-import { useGetDailyGachaQuery } from "../store/reducers/gacha";
-import { useMemo, useState } from "react";
 import TicketFramedGacha from "../components/Gacha/TicketFramedGacha";
-import ReloadGacha from "../components/Gacha/ReloadGacha";
-import LoadingSpinner from "../components/Common/LoadingSpinner";
+import Header from "../layout/Header";
 
 export type SetIndexType = React.Dispatch<React.SetStateAction<number>>;
 export type ShowDetailType = boolean;
@@ -24,30 +20,5 @@ export default function Gacha() {
 }
 
 function GachaComponent() {
-  const { data, isLoading } = useGetDailyGachaQuery("gacha.json");
-  const [index, setIndex] = useState(0);
-
-  const showReload = useMemo(() => {
-    if (isLoading || !data) return false;
-    if (index == data.gacha_list.length) {
-      return true;
-    }
-    return false;
-  }, [index, data]);
-
-  if (!data || isLoading) {
-    return <LoadingSpinner />;
-  }
-
-  const gacha = data.gacha_list[index];
-
-  return (
-    <>
-      {showReload ? (
-        <ReloadGacha key="Reload" setIndex={setIndex} />
-      ) : (
-        <TicketFramedGacha key={gacha.id} gacha={gacha} setIndex={setIndex} />
-      )}
-    </>
-  );
+  return <TicketFramedGacha />;
 }

@@ -13,8 +13,8 @@ import ErrorContent from "../components/Common/ErrorContent";
 import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import Header from "../layout/Header";
-import { useGetDailyGachaQuery } from "../store/reducers/gacha";
 import { useAmount } from "../utils/currency";
+import { useGetDailyGachaMutation } from "../store/reducers/gacha";
 
 export default function Buy() {
   return (
@@ -34,7 +34,7 @@ function useGachaID() {
 }
 
 function useGacha(gachaID: number) {
-  const { data, isLoading } = useGetDailyGachaQuery("/gacha.json");
+  const [getDailyGacha, { data, isLoading }] = useGetDailyGachaMutation();
 
   if (isLoading) {
     return {
@@ -50,7 +50,7 @@ function useGacha(gachaID: number) {
     };
   }
 
-  const gacha = data.gacha_list[gachaID];
+  const gacha = data;
 
   return {
     data: gacha,
@@ -60,18 +60,20 @@ function useGacha(gachaID: number) {
 
 function Payment() {
   const gachaID = useGachaID();
-  const { data: gacha, isLoading } = useGacha(gachaID);
+  const { data, isLoading } = useGacha(gachaID);
   const [currency, setCurrency] = useState<"won" | "eth">("won");
-  const amount = useAmount(gacha);
+  const amount = useAmount(data);
   const [showModal, setShowModal] = useState(false);
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (!gacha) {
+  if (!data || !data.gacha) {
     return <ErrorContent />;
   }
+
+  const gacha = data.gacha;
 
   return (
     <>
