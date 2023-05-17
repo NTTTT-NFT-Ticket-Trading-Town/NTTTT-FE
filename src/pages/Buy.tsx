@@ -1,10 +1,19 @@
-import { Navigate, useLocation } from "react-router";
+import { CloseSharp, DoubleArrowOutlined } from "@mui/icons-material";
+import { motion, useMotionValue, useTransform } from "framer-motion";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useLocation, Navigate, useNavigate } from "react-router";
+import ErrorContent from "../components/Common/ErrorContent";
+import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
+import LoadingSpinner from "../components/Common/LoadingSpinner";
 import Header from "../layout/Header";
 import { useGetDailyGachaQuery } from "../store/reducers/gacha";
-import LoadingSpinner from "../components/Common/LoadingSpinner";
-import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
-import { MouseEventHandler, useState } from "react";
-import ErrorContent from "../components/Common/ErrorContent";
 import { useAmount } from "../utils/currency";
 
 export default function Buy() {
@@ -55,6 +64,7 @@ function Payment() {
   const { data: gacha, isLoading } = useGacha(gachaID);
   const [currency, setCurrency] = useState<"won" | "eth">("won");
   const amount = useAmount(gacha);
+  const [showModal, setShowModal] = useState(false);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -192,7 +202,7 @@ function Payment() {
 
       <div className="group sticky bottom-0 flex grow flex-col justify-center pt-4 sm:gap-8">
         <button
-          onClick={proceedPayment}
+          onClick={() => setShowModal(true)}
           className="w-full self-end rounded-t-lg bg-purple-600 pb-6 pt-3 text-center text-2xl font-bold text-purple-100 transition-all duration-100  hover:bg-purple-500 active:bg-purple-700 sm:pt-3"
         >
           <p className="select-none transition-transform group-active:scale-90">
@@ -201,8 +211,80 @@ function Payment() {
         </button>
         <div className="absolute -inset-0 -z-10 animate-pulse bg-purple-300 blur-xl"></div>
       </div>
+      {showModal && <BuyModal setShowModal={setShowModal} />}
     </>
   );
 }
 
-const proceedPayment: MouseEventHandler<HTMLButtonElement> = (e) => {};
+const BuyModal: FC<{ setShowModal: Dispatch<SetStateAction<boolean>> }> = ({
+  setShowModal,
+}) => {
+  return (
+    <div className="fixed inset-0 isolate z-50 flex items-center justify-center bg-black/50">
+      <section className="relative flex w-[80%] max-w-lg flex-col overflow-hidden rounded-lg border-4 ">
+        <div className="text-semibold relative w-full border-b-4 bg-white px-4 pb-8 pt-12 text-center text-2xl">
+          밀어서 결제 완료
+        </div>
+        <SwipeToPay />
+        <button
+          className="absolute right-0 top-0 z-10 border-0 p-4"
+          onClick={() => setShowModal(false)}
+        >
+          <CloseSharp fontSize="large" />
+        </button>
+      </section>
+    </div>
+  );
+};
+
+const SwipeToPay: FC = () => {
+  const swipeBox = useRef<HTMLDivElement>(null);
+  const [boxWidth, setBoxWidth] = useState(0);
+  const navigate = useNavigate();
+  const [status, setStatus] = useState("오른쪽으로 미세요");
+
+  const x = useMotionValue(0);
+  const background = useTransform(x, [0, boxWidth], ["#7700ff", "#ff008c"]);
+
+  useEffect(() => {
+    if (swipeBox.current) setBoxWidth(swipeBox.current.clientWidth);
+  }, [swipeBox]);
+
+  useEffect(() => {
+    if (boxWidth === 0) return;
+    x.onChange((v) => {
+      if (v + 64 >= boxWidth - 10) {
+        setStatus("놓아서 결제 완료");
+      } else {
+        setStatus("오른쪽으로 미세요");
+      }
+    });
+  }, [boxWidth]);
+
+  const buyToken = () => {
+    if (status === "놓아서 결제 완료") {
+      navigate("/mypage");
+    }
+  };
+
+  return (
+    <footer
+      className="relative flex w-full bg-gray-300 text-lg font-semibold text-white"
+      ref={swipeBox}
+    >
+      <div className="absolute grid h-full w-full place-content-center border-0">
+        {status}
+      </div>
+      <motion.div
+        drag="x"
+        dragSnapToOrigin
+        dragConstraints={swipeBox}
+        onDragEnd={buyToken}
+        className="pointer-events-auto z-10 grid aspect-square w-16 cursor-grab place-items-center bg-purple-600 active:cursor-grabbing"
+        style={{ x, background }}
+      >
+        <DoubleArrowOutlined />
+      </motion.div>
+    </footer>
+  );
+};

@@ -11,6 +11,8 @@ import {
 } from "../store/reducers/artist";
 import { AnimatePresence } from "framer-motion";
 import Chip from "../components/Chip";
+import ErrorContent from "../components/Common/ErrorContent";
+import LoadingSpinner from "../components/Common/LoadingSpinner";
 
 export default function Artists() {
   // apis
@@ -23,12 +25,12 @@ export default function Artists() {
 
   // preprocess
   if (isLoading) {
-    return <div>loading...</div>;
+    return <LoadingSpinner />;
   }
   if (error) {
     console.log("error", error);
   }
-  if (!data) return;
+  if (!data) return <ErrorContent />;
 
   const groupsDTO = data.data;
   const groups = groupsDTO.map((groupDTO) => groupDTO.group);

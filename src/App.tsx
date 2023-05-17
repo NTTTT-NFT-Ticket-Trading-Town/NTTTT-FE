@@ -7,6 +7,7 @@ import Artists from "./pages/Artists";
 import Layout from "./layout/Layout";
 import Test from "./pages/Test";
 import Buy from "./pages/Buy";
+import MyPage from "./pages/MyPage";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "buy/:gacha_id",
         element: <Buy />,
+      },
+      {
+        path: "mypage",
+        element: <MyPage />,
       },
     ],
   },
