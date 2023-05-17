@@ -1,4 +1,4 @@
-import { useLocation } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import Header from "../layout/Header";
 import { useGetDailyGachaQuery } from "../store/reducers/gacha";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
@@ -19,7 +19,8 @@ export default function Buy() {
 function useGachaID() {
   const offset = 1;
   const unprocessedGachaID = Number(useLocation().pathname.split("/").pop());
-  if (unprocessedGachaID < 0 || !unprocessedGachaID) throw Error();
+  if (unprocessedGachaID < 0 || !unprocessedGachaID)
+    return <Navigate to="/gacha" />;
   const gachaID = unprocessedGachaID - offset;
   return gachaID;
 }

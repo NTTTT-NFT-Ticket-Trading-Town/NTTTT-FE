@@ -19,7 +19,3 @@ export default function Layout() {
     </AnimatePresence>
   );
 }
-
-// <div className="relative mx-auto flex min-h-full w-full max-w-xl grow flex-col">
-// <Outlet />
-// </div>
