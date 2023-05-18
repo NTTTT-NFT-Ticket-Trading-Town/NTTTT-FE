@@ -1,24 +1,57 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { UserState } from "./userTypes";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { UserInterface, UserState } from "./userTypes";
+import { ServerResponseInterface } from "../indexTypes";
+
+const getLocalStorageSession = () => {
+  return localStorage.getItem("ntttt-user-session");
+};
+const setLocalStorageSession = (session: string) => {
+  localStorage.setItem("ntttt-user-session", session);
+};
 
 const initialState: UserState = {
-  session: "",
+  session: getLocalStorageSession() || "",
 };
 
 const user = createSlice({
   name: "user",
   initialState: initialState,
   reducers: {
-    loginUser(state, action) {
-      const session = action.payload;
-      state.session = session;
+    setToken(state, action) {
+      state.session = action.payload;
+      setLocalStorageSession(action.payload);
     },
-    logoutUser(state) {
+    logout(state) {
       state.session = "";
+      setLocalStorageSession("");
     },
   },
 });
 
 export default user.reducer;
-export const { loginUser, logoutUser } = user.actions;
+export const { setToken, logout } = user.actions;
+
+export const userApi = createApi({
+  reducerPath: "userApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "/api/user",
+  }),
+  endpoints: (builder) => ({
+    login: builder.mutation<
+      ServerResponseInterface<UserInterface>,
+      UserInterface
+    >({
+      query(userData) {
+        return {
+          url: "/login",
+          method: "POST",
+          body: { ...userData },
+        };
+      },
+    }),
+  }),
+});
+
+export const { useLoginMutation } = userApi;

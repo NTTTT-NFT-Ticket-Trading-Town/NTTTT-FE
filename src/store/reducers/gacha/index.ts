@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import { GachaInterface, GachaStateInterface } from "./gachaTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-
-const gachaEndpoint = "gacha.json";
+import { ServerResponseInterface } from "../indexTypes";
 
 const initialState: GachaStateInterface = {
   refresh_count: 0, // current gacha index
-  gacha_list: [],
+  gacha: null,
 };
 
 const gacha = createSlice({
@@ -15,29 +13,56 @@ const gacha = createSlice({
   initialState: initialState,
   reducers: {
     setGachaStateFromDTO: (state, action) => {
-      const { refresh_count, gacha_list } = action.payload;
+      const { refresh_count, gacha } = action.payload;
       state.refresh_count = refresh_count;
-      state.gacha_list = gacha_list;
+      state.gacha = gacha;
     },
   },
 });
 
 export default gacha.reducer;
-// export const {  } = user.actions;
 
 // APIs
 
 export const gachaApi = createApi({
   reducerPath: "gachaApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL as string,
+    baseUrl: "api/gacha",
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as any).user.session;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
-    getDailyGacha: builder.query<GachaStateInterface, string>({
-      // FIXME: temporary fake url
-      query: (search) => search || gachaEndpoint,
+    postDailyGacha: builder.mutation<
+      ServerResponseInterface<GachaStateInterface>,
+      void
+    >({
+      query() {
+        return {
+          url: "",
+          method: "POST",
+        };
+      },
+      transformErrorResponse: (error) => {
+        console.log(error.data);
+        return error.data;
+      },
     }),
+    getDailyGacha: builder.query<ServerResponseInterface<GachaInterface>, void>(
+      {
+        query() {
+          return {
+            url: "",
+            method: "GET",
+          };
+        },
+      }
+    ),
   }),
 });
 
-export const { useGetDailyGachaQuery } = gachaApi;
+export const { usePostDailyGachaMutation, useGetDailyGachaQuery } = gachaApi;

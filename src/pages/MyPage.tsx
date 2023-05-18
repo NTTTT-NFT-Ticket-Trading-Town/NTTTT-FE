@@ -1,7 +1,6 @@
 import ErrorContent from "../components/Common/ErrorContent";
 import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
-import MiniTicket from "../components/MiniTicket";
 import Ticket from "../components/Ticket/Ticket";
 import Header from "../layout/Header";
 import { useGetDailyGachaQuery } from "../store/reducers/gacha";
@@ -25,7 +24,7 @@ const useUserQuery = () => {
 };
 
 const useCollectionQuery = () => {
-  return useGetDailyGachaQuery("/gacha.json");
+  return useGetDailyGachaQuery();
 };
 
 function MyPageContent() {
@@ -35,7 +34,7 @@ function MyPageContent() {
   if (isLoading) {
     return <LoadingSpinner />;
   }
-  if (!data) {
+  if (!data || !data.data) {
     return <ErrorContent />;
   }
 
@@ -62,30 +61,33 @@ function MyPageContent() {
         </header>
         <section className="pt-10">
           <div className="relative flex flex-col gap-10">
-            {data.gacha_list.map((gacha, index) => (
-              <div
-                key={gacha.id}
-                style={{
-                  top: `${index * 50 + 80}px`,
-                  position: "sticky",
-                  width: "80%",
-                  marginInline: "auto",
-                }}
-              >
-                <Ticket setIndex={() => null}>
-                  <div className="bg-white px-6 pt-4">
-                    <ImageWithSkeleton gacha={gacha} />
-                  </div>
-                  <Ticket.Split />
-                  <div className="flex justify-between rounded-b-lg bg-white px-8 pb-8 pt-4 text-xl text-black">
-                    <span className="font-semibold">{gacha.artist.name}</span>
-                    <span>
-                      {gacha.seq} / {gacha.event.quantity}
-                    </span>
-                  </div>
-                </Ticket>
-              </div>
-            ))}
+            {[data.data].map((gacha, index) => {
+              if (!gacha) return null;
+              return (
+                <div
+                  key={gacha.id}
+                  style={{
+                    top: `${index * 50 + 80}px`,
+                    position: "sticky",
+                    width: "80%",
+                    marginInline: "auto",
+                  }}
+                >
+                  <Ticket getNextToken={() => null}>
+                    <div className="bg-white px-6 pt-4">
+                      <ImageWithSkeleton gacha={gacha.image} />
+                    </div>
+                    <Ticket.Split />
+                    <div className="flex justify-between rounded-b-lg bg-white px-8 pb-8 pt-4 text-xl text-black">
+                      <span className="font-semibold">{gacha.artist.name}</span>
+                      <span>
+                        {gacha.seq} / {gacha.event.quantity}
+                      </span>
+                    </div>
+                  </Ticket>
+                </div>
+              );
+            })}
             <div className="h-[50vh]"></div>
           </div>
         </section>

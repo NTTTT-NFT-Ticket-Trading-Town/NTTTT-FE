@@ -10,7 +10,7 @@ export default function Test() {
         alt="image"
       ></Image>
       <Chip label="label"></Chip>
-      <Chip label="label" enabled={true}></Chip>
+      <Chip label="label"></Chip>
       {/* <MiniTicket ></MiniTicket> */}
     </div>
   );

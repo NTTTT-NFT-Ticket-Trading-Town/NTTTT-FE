@@ -7,6 +7,9 @@ import {
   WalletType,
 } from "./paymentTypes";
 import { WritableDraft } from "immer/dist/internal.js";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { TokenInterface } from "../token/tokenType";
+import { ServerResponseInterface } from "../indexTypes";
 
 const initialState: PaymentState = {
   option: "card",
@@ -66,3 +69,37 @@ function phoneChecker(phone: string): boolean {
 export const { setOption, setPhone, setWallet, setAgree } = payment.actions;
 
 export default payment.reducer;
+
+export const paymentApi = createApi({
+  reducerPath: "paymentApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "api/payment",
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as any).user.session;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    getToken: builder.query<ServerResponseInterface<TokenInterface>, number>({
+      query(id) {
+        return {
+          url: "/token/" + id,
+          method: "GET",
+        };
+      },
+    }),
+    postPayment: builder.mutation<ServerResponseInterface<PaymentState>, void>({
+      query() {
+        return {
+          url: "",
+          method: "POST",
+        };
+      },
+    }),
+  }),
+});
+
+export const { useGetTokenQuery, usePostPaymentMutation } = paymentApi;

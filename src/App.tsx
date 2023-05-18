@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         element: <Test />,
       },
       {
-        path: "buy/:gacha_id",
+        path: "buy",
         element: <Buy />,
       },
       {
