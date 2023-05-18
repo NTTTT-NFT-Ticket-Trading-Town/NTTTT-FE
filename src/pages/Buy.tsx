@@ -8,14 +8,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import ErrorContent from "../components/Common/ErrorContent";
 import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import Header from "../layout/Header";
-import { useAmount } from "../utils/currency";
-import { useGetTokenQuery } from "../store/reducers/payment";
 import { useGetDailyGachaQuery } from "../store/reducers/gacha";
+import { useAmount } from "../utils/currency";
 
 export default function Buy() {
   return (

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { ResponseInterface, UserInterface, UserState } from "./userTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { UserInterface, UserState } from "./userTypes";
+import { ServerResponseInterface } from "../indexTypes";
 
 const getLocalStorageSession = () => {
   return localStorage.getItem("ntttt-user-session");
@@ -38,7 +39,10 @@ export const userApi = createApi({
     baseUrl: "/api/user",
   }),
   endpoints: (builder) => ({
-    login: builder.mutation<ResponseInterface<UserInterface>, UserInterface>({
+    login: builder.mutation<
+      ServerResponseInterface<UserInterface>,
+      UserInterface
+    >({
       query(userData) {
         return {
           url: "/login",

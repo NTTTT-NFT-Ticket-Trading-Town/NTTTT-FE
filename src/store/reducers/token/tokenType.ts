@@ -1,4 +1,3 @@
-import { ImagePropsInterface } from "../../../components/Image/ImageTypes";
 import { ArtistInterface } from "../artist/artistTypes";
 import { EventInfoInterface, ImageInterface } from "../gacha/gachaTypes";
 

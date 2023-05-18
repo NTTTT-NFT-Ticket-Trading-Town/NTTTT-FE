@@ -1,4 +1,4 @@
-import { ArtistInterface, ArtistStateInterface } from "../artist/artistTypes";
+import { ArtistInterface } from "../artist/artistTypes";
 
 export interface PriceInterface {
   amount: number;

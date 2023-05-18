@@ -34,7 +34,7 @@ function MyPageContent() {
   if (isLoading) {
     return <LoadingSpinner />;
   }
-  if (!data || !data.gacha) {
+  if (!data || !data.data) {
     return <ErrorContent />;
   }
 
@@ -61,7 +61,7 @@ function MyPageContent() {
         </header>
         <section className="pt-10">
           <div className="relative flex flex-col gap-10">
-            {[data.gacha].map((gacha, index) => {
+            {[data.data].map((gacha, index) => {
               if (!gacha) return null;
               return (
                 <div
@@ -73,9 +73,9 @@ function MyPageContent() {
                     marginInline: "auto",
                   }}
                 >
-                  <Ticket getNextToken={null}>
+                  <Ticket getNextToken={() => null}>
                     <div className="bg-white px-6 pt-4">
-                      <ImageWithSkeleton gacha={gacha} />
+                      <ImageWithSkeleton gacha={gacha.image} />
                     </div>
                     <Ticket.Split />
                     <div className="flex justify-between rounded-b-lg bg-white px-8 pb-8 pt-4 text-xl text-black">
