@@ -1,8 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  GachaInterface,
-  GachaStateInterface,
-} from "../store/reducers/gacha/gachaTypes";
 
 export function useCurrencyRate() {
   const [rate, setRate] = useState(0);
@@ -18,24 +14,23 @@ export function useCurrencyRate() {
 
 export const Format = Intl.NumberFormat("ko-KR").format;
 
-export function useAmount(data: GachaStateInterface | null) {
+export function useAmount(data: number | null | undefined) {
   const currencyRate = useCurrencyRate();
 
   return useMemo(() => {
-    if (!data || !data.gacha)
+    if (!data)
       return {
         won: `가격 정보 불러오기에 실패했습니다`,
         eth: `가격 정보 불러오기에 실패했습니다`,
       };
-    const gacha = data.gacha;
     if (currencyRate === 0)
       return {
-        won: `₩ ${Format(gacha.price.amount)}`,
+        won: `₩ ${Format(data)}`,
         eth: `로딩중..`,
       };
     return {
-      won: `₩ ${Format(gacha.price.amount)}`,
-      eth: `${String(gacha.price.amount * currencyRate).slice(0, 8)} ETH`,
+      won: `₩ ${Format(data)}`,
+      eth: `${String(data * currencyRate).slice(0, 8)} ETH`,
     };
   }, [currencyRate, data]);
 }

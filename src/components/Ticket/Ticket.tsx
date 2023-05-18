@@ -12,7 +12,7 @@ function Ticket({
   getNextToken,
 }: {
   children: ReactNode;
-  getNextToken: any;
+  getNextToken: Dispatch<SetStateAction<boolean>>;
 }) {
   const x = useMotionValue(0);
   const [leaveX, setLeaveX] = useState(0);
@@ -30,11 +30,11 @@ function Ticket({
       onDragEnd={(_, info) => {
         if (info.offset.x > 200) {
           setLeaveX(x.get() + x.getVelocity() * OUT_ANIMATION_DURATION);
-          getNextToken();
+          getNextToken(true);
         }
         if (info.offset.x < -200) {
           setLeaveX(x.get() - x.getVelocity() * OUT_ANIMATION_DURATION);
-          getNextToken();
+          getNextToken(true);
         }
       }}
       initial={{
@@ -54,7 +54,7 @@ function Ticket({
         transition: { duration: OUT_ANIMATION_DURATION },
       }}
       className={
-        "relative mx-auto h-fit cursor-grab select-none pb-8 drop-shadow-2xl active:cursor-grabbing" +
+        "relative mx-auto h-fit w-full cursor-grab select-none pb-8 drop-shadow-2xl active:cursor-grabbing" +
         rotate
       }
       style={{ x }}

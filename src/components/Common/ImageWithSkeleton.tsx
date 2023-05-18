@@ -1,27 +1,29 @@
-import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
+import { ImageInterface } from "../../store/reducers/gacha/gachaTypes";
 import Skeleton from "../Image/Skeleton";
 
 export default function ImageWithSkeleton({
   gacha,
 }: {
-  gacha: GachaInterface;
+  gacha: ImageInterface;
 }) {
+  const imageRatio =
+    gacha.ratio === "string" || !gacha.ratio ? "1" : gacha.ratio;
   return (
     <div
       className="relative"
       style={{
-        aspectRatio: gacha.image.ratio,
+        aspectRatio: imageRatio,
         width: "100%",
       }}
     >
       <Skeleton />
       <img
         draggable={false}
-        src={gacha.image.url}
+        src={gacha.url}
         alt=""
         className="absolute inset-0 rounded object-cover"
         style={{
-          aspectRatio: gacha.image.ratio,
+          aspectRatio: gacha.ratio,
         }}
       />
     </div>

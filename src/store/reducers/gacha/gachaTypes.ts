@@ -17,15 +17,15 @@ export interface GachaInterface {
   seq: number; // gacha index
   event: EventInfoInterface;
   artist: ArtistInterface;
-  price: PriceInterface;
-  image: GachaImageInterface;
+  price: number;
+  image: ImageInterface;
   watchers: number;
-  description: string;
+  desc: string;
   paymentState: string;
   publishedAt: string;
 }
 
-interface GachaImageInterface {
+export interface ImageInterface {
   url: string;
   ratio: string;
 }
