@@ -15,7 +15,7 @@ jobs:
           host: ${{ secrets.REMOTE_IP }}
           username: ${{ secrets.REMOTE_USERNAME }}
           key: ${{ secrets.REMOTE_SSH_KEY }}
-          port: ${{ secrets.REMOTE_SSH_PORT }}
+          port: ${{ secrets.REMOTE_SSH_PORT_FIRST }}
           script: |
             cd /home/ubuntu/NTTTT-FE
             sudo ./run.sh
