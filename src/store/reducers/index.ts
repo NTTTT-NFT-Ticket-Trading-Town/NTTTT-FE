@@ -4,6 +4,7 @@ import { combineReducers } from "redux";
 import user, { userApi } from "./user";
 import artist, { artistsApi } from "./artist";
 import { gachaApi } from "./gacha";
+import { paymentApi } from "./payment";
 
 const rootReducer = combineReducers({
   user: user,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   [userApi.reducerPath]: userApi.reducer,
   [artistsApi.reducerPath]: artistsApi.reducer,
   [gachaApi.reducerPath]: gachaApi.reducer,
+  [paymentApi.reducerPath]: paymentApi.reducer,
 });
 
 export default rootReducer;

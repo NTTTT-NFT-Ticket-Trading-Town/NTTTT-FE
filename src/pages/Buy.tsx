@@ -14,7 +14,8 @@ import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import Header from "../layout/Header";
 import { useAmount } from "../utils/currency";
-import { useGetDailyGachaMutation } from "../store/reducers/gacha";
+import { useGetTokenQuery } from "../store/reducers/payment";
+import { useGetDailyGachaQuery } from "../store/reducers/gacha";
 
 export default function Buy() {
   return (
@@ -25,60 +26,28 @@ export default function Buy() {
   );
 }
 
-function useGachaID() {
-  const offset = 1;
-  const unprocessedGachaID = Number(useLocation().pathname.split("/").pop());
-  if (unprocessedGachaID < 0 || !unprocessedGachaID) throw Error();
-  const gachaID = unprocessedGachaID - offset;
-  return gachaID;
-}
-
-function useGacha(gachaID: number) {
-  const [getDailyGacha, { data, isLoading }] = useGetDailyGachaMutation();
-
-  if (isLoading) {
-    return {
-      data: null,
-      isLoading,
-    };
-  }
-
-  if (!data) {
-    return {
-      data: null,
-      isLoading,
-    };
-  }
-
-  const gacha = data;
-
-  return {
-    data: gacha,
-    isLoading,
-  };
-}
-
 function Payment() {
-  const gachaID = useGachaID();
-  const { data, isLoading } = useGacha(gachaID);
+  const { data, isLoading } = useGetDailyGachaQuery();
   const [currency, setCurrency] = useState<"won" | "eth">("won");
-  const amount = useAmount(data);
+  const amount = useAmount(data?.data.price);
   const [showModal, setShowModal] = useState(false);
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (!data || !data.gacha) {
+  if (!data || !data.data) {
     return <ErrorContent />;
   }
 
-  const gacha = data.gacha;
+  const gacha = data.data;
+
+  console.log(data.data.price);
 
   return (
     <>
       <main className="relative mx-auto mb-4 w-full max-w-xl grow px-4">
-        <ImageWithSkeleton gacha={gacha} />
+        <ImageWithSkeleton gacha={gacha.image} />
         <div className="flex w-full flex-col gap-6 py-6">
           <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">
             <div className="col-span-2 text-2xl font-bold sm:text-4xl">
@@ -95,7 +64,7 @@ function Payment() {
                 <span className="font-medium text-neutral-800">
                   #{gacha.seq}
                 </span>{" "}
-                / 100
+                / {gacha.event.quantity}
               </div>
             </div>
           </div>
@@ -103,7 +72,7 @@ function Payment() {
 
           <div className="border-[1.5px] border-dashed border-neutral-300" />
 
-          <div>{gacha.description}</div>
+          <div>{gacha.desc}</div>
 
           <div className="border-[1.5px] border-dashed border-neutral-300" />
 

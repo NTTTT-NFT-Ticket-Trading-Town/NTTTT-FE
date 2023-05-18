@@ -3,8 +3,7 @@ import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import Ticket from "../components/Ticket/Ticket";
 import Header from "../layout/Header";
-import { useGetDailyGachaMutation } from "../store/reducers/gacha";
-import { GachaInterface } from "../store/reducers/gacha/gachaTypes";
+import { useGetDailyGachaQuery } from "../store/reducers/gacha";
 
 export default function MyPage() {
   return (
@@ -25,12 +24,12 @@ const useUserQuery = () => {
 };
 
 const useCollectionQuery = () => {
-  return useGetDailyGachaMutation();
+  return useGetDailyGachaQuery();
 };
 
 function MyPageContent() {
   const { name, tags, profileImage } = useUserQuery();
-  const [getDailyGacha, { data, isLoading }] = useCollectionQuery();
+  const { data, isLoading } = useCollectionQuery();
 
   if (isLoading) {
     return <LoadingSpinner />;
