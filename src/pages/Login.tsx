@@ -4,7 +4,10 @@ import { useNavigate } from "react-router";
 import { setToken, useLoginMutation } from "../store/reducers/user";
 
 export default function Login() {
-  const [login, { data: response, isLoading, isSuccess }] = useLoginMutation();
+  const [login, { data, error, isLoading, isSuccess, status }] =
+    useLoginMutation();
+  const response = data;
+  const errorRes = error as any;
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
@@ -51,6 +54,9 @@ export default function Login() {
                 value={password}
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
               />
+              <div className="text-center text-base text-red-500">
+                {status === "rejected" && errorRes.data.result.message}
+              </div>
             </div>
           </div>
           <div>
