@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
+import { ImageInterface } from "../../store/reducers/gacha/gachaTypes";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   HorizontalRuleOutlined,
@@ -7,14 +7,22 @@ import {
 } from "@mui/icons-material";
 import ImageWithSkeleton from "../Common/ImageWithSkeleton";
 
-export default function ImageWithDetail({ gacha }: { gacha: GachaInterface }) {
+export default function ImageWithDetail({
+  image,
+  description,
+  watchers,
+}: {
+  image: ImageInterface;
+  description: string;
+  watchers: number;
+}) {
   const animationDuration = 0.5;
   const easingFunction = "easeInOut";
   const [showDetail, setShowDetail] = useState(false);
 
   return (
     <motion.div
-      className="relative cursor-pointer"
+      className="relative w-full cursor-pointer"
       style={{
         perspective: "800px",
       }}
@@ -37,11 +45,11 @@ export default function ImageWithDetail({ gacha }: { gacha: GachaInterface }) {
       >
         <img
           draggable={false}
-          src={gacha.image.url}
+          src={image.url}
           alt=""
           className="absolute inset-0 -z-10 scale-105 animate-pulse rounded object-cover opacity-80 blur-xl"
         />
-        <ImageWithSkeleton gacha={gacha} />
+        <ImageWithSkeleton gacha={image} />
         <div
           style={{
             rotate: "y 180deg",
@@ -51,15 +59,15 @@ export default function ImageWithDetail({ gacha }: { gacha: GachaInterface }) {
           className="absolute top-0 h-full w-full overflow-y-scroll rounded-md bg-black/60 p-6 text-xl text-white sm:p-8"
         >
           <h3 className="mb-4 text-xl font-bold sm:text-3xl">상세 설명</h3>
-          <p className="text-base sm:text-xl">{gacha.description}</p>
+          <p className="text-base sm:text-xl">{description}</p>
         </div>
-        <ShowWatchers gacha={gacha} />
+        <ShowWatchers watchers={watchers} />
       </motion.div>
     </motion.div>
   );
 }
 
-function ShowWatchers({ gacha }: { gacha: GachaInterface }) {
+function ShowWatchers({ watchers }: { watchers: number }) {
   const [showWatchers, setShowWatchers] = useState(false);
   const [blink, setBlink] = useState(true);
 
@@ -133,7 +141,7 @@ function ShowWatchers({ gacha }: { gacha: GachaInterface }) {
           </motion.span>
         )}
       </AnimatePresence>
-      <span>{gacha.watchers}</span>
+      <span>{watchers}</span>
       <AnimatePresence>
         {showWatchers && (
           <motion.span

@@ -60,24 +60,27 @@ function useGacha(gachaID: number) {
 }
 
 function Payment() {
-  const gachaID = useGachaID();
-  const { data: gacha, isLoading } = useGacha(gachaID);
+  const { data, isLoading } = useGetDailyGachaQuery();
   const [currency, setCurrency] = useState<"won" | "eth">("won");
-  const amount = useAmount(gacha);
+  const amount = useAmount(data?.data.price);
   const [showModal, setShowModal] = useState(false);
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (!gacha) {
+  if (!data || !data.data) {
     return <ErrorContent />;
   }
+
+  const gacha = data.data;
+
+  console.log(data.data.price);
 
   return (
     <>
       <main className="relative mx-auto mb-4 w-full max-w-xl grow px-4">
-        <ImageWithSkeleton gacha={gacha} />
+        <ImageWithSkeleton gacha={gacha.image} />
         <div className="flex w-full flex-col gap-6 py-6">
           <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">
             <div className="col-span-2 text-2xl font-bold sm:text-4xl">
@@ -94,7 +97,7 @@ function Payment() {
                 <span className="font-medium text-neutral-800">
                   #{gacha.seq}
                 </span>{" "}
-                / 100
+                / {gacha.event.quantity}
               </div>
             </div>
           </div>
@@ -102,7 +105,7 @@ function Payment() {
 
           <div className="border-[1.5px] border-dashed border-neutral-300" />
 
-          <div>{gacha.description}</div>
+          <div>{gacha.desc}</div>
 
           <div className="border-[1.5px] border-dashed border-neutral-300" />
 

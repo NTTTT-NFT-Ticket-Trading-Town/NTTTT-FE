@@ -31,11 +31,18 @@ import rootReducers from "./reducers";
 import { artistsApi } from "./reducers/artist";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { gachaApi } from "./reducers/gacha";
+import { userApi } from "./reducers/user";
+import { paymentApi } from "./reducers/payment";
 
 const store = configureStore({
   reducer: rootReducers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(artistsApi.middleware, gachaApi.middleware),
+    getDefaultMiddleware().concat(
+      userApi.middleware,
+      artistsApi.middleware,
+      gachaApi.middleware,
+      paymentApi.middleware
+    ),
 });
 
 export type RootState = ReturnType<typeof rootReducers>;
