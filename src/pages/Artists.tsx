@@ -96,7 +96,7 @@ export default function Artists() {
                 ))}
               </AnimatePresence>
             </div>
-            <Button>저장</Button>
+            <Button to="/gacha">저장</Button>
           </div>
         </div>
       </main>

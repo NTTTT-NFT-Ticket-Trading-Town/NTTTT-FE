@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, Navigate, useNavigate } from "react-router";
 import ErrorContent from "../components/Common/ErrorContent";
 import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
@@ -23,6 +23,40 @@ export default function Buy() {
       <Payment />
     </>
   );
+}
+
+function useGachaID() {
+  const offset = 1;
+  const unprocessedGachaID = Number(useLocation().pathname.split("/").pop());
+  if (unprocessedGachaID < 0 || !unprocessedGachaID)
+    return <Navigate to="/gacha" />;
+  const gachaID = unprocessedGachaID - offset;
+  return gachaID;
+}
+
+function useGacha(gachaID: number) {
+  const { data, isLoading } = useGetDailyGachaQuery("/gacha.json");
+
+  if (isLoading) {
+    return {
+      data: null,
+      isLoading,
+    };
+  }
+
+  if (!data) {
+    return {
+      data: null,
+      isLoading,
+    };
+  }
+
+  const gacha = data.gacha_list[gachaID];
+
+  return {
+    data: gacha,
+    isLoading,
+  };
 }
 
 function Payment() {
