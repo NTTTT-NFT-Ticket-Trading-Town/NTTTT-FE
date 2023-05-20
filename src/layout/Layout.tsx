@@ -8,10 +8,10 @@ export default function Layout() {
     <AnimatePresence mode="popLayout">
       <motion.div
         key={location.pathname}
-        initial={{ opacity: 0, x: 100 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -100 }}
-        transition={{ type: "spring", stiffness: 100 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ type: "spring", stiffness: 50 }}
         className="relative mx-auto flex min-h-full w-full max-w-xl grow flex-col"
       >
         <AnimatedOutlet />

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { setToken, useLoginMutation } from "../store/reducers/user";
+import { motion } from "framer-motion";
 
 export default function Login() {
   const [login, { data, error, isLoading, isSuccess, status }] =
@@ -55,7 +56,14 @@ export default function Login() {
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
               />
               <div className="text-center text-base text-red-500">
-                {status === "rejected" && errorRes.data.result.message}
+                {status === "rejected" && (
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    {errorRes.data.result.message}
+                  </motion.span>
+                )}
               </div>
             </div>
           </div>
