@@ -15,31 +15,45 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />,
+        async lazy() {
+          const index = await import("./pages/Home");
+          return { Component: index.default };
+        },
       },
       {
         path: "login",
-        element: <Login />,
+        async lazy() {
+          const index = await import("./pages/Login");
+          return { Component: index.default };
+        },
       },
       {
         path: "gacha",
-        element: <Gacha />,
+        async lazy() {
+          const index = await import("./pages/Gacha");
+          return { Component: index.default };
+        },
       },
       {
         path: "artists",
-        element: <Artists />,
-      },
-      {
-        path: "test",
-        element: <Test />,
+        async lazy() {
+          const index = await import("./pages/Artists");
+          return { Component: index.default };
+        },
       },
       {
         path: "buy",
-        element: <Buy />,
+        async lazy() {
+          const index = await import("./pages/Buy");
+          return { Component: index.default };
+        },
       },
       {
         path: "mypage",
-        element: <MyPage />,
+        async lazy() {
+          const index = await import("./pages/MyPage");
+          return { Component: index.default };
+        },
       },
     ],
   },
