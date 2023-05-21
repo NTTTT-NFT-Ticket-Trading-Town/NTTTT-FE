@@ -3,7 +3,7 @@ import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import Ticket from "../components/Ticket/Ticket";
 import Header from "../layout/Header";
-import { useGetDailyGachaQuery } from "../store/reducers/gacha";
+import { useGetMyCollectionQuery } from "../store/reducers/mypage";
 
 export default function MyPage() {
   return (
@@ -23,13 +23,9 @@ const useUserQuery = () => {
   };
 };
 
-const useCollectionQuery = () => {
-  return useGetDailyGachaQuery();
-};
-
 function MyPageContent() {
   const { name, tags, profileImage } = useUserQuery();
-  const { data, isLoading } = useCollectionQuery();
+  const { data, isLoading } = useGetMyCollectionQuery();
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -67,7 +63,7 @@ function MyPageContent() {
                 <div
                   key={gacha.id}
                   style={{
-                    top: `${index * 50 + 80}px`,
+                    top: `${index * 50}px`,
                     position: "sticky",
                     width: "80%",
                     marginInline: "auto",
@@ -88,7 +84,7 @@ function MyPageContent() {
                 </div>
               );
             })}
-            <div className="h-[50vh]"></div>
+            <div className="h-[10vh]"></div>
           </div>
         </section>
       </main>

@@ -91,11 +91,17 @@ export const paymentApi = createApi({
         };
       },
     }),
-    postPayment: builder.mutation<ServerResponseInterface<PaymentState>, void>({
-      query() {
+    postPayment: builder.mutation<
+      ServerResponseInterface<PaymentState>,
+      number
+    >({
+      query(id) {
         return {
           url: "",
           method: "POST",
+          body: {
+            tokenId: id,
+          },
         };
       },
     }),
