@@ -8,12 +8,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { useLocation, Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import ErrorContent from "../components/Common/ErrorContent";
 import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import Header from "../layout/Header";
 import { useGetDailyGachaQuery } from "../store/reducers/gacha";
+import { usePostPaymentMutation } from "../store/reducers/payment";
 import { useAmount } from "../utils/currency";
 
 export default function Buy() {
@@ -23,40 +24,6 @@ export default function Buy() {
       <Payment />
     </>
   );
-}
-
-function useGachaID() {
-  const offset = 1;
-  const unprocessedGachaID = Number(useLocation().pathname.split("/").pop());
-  if (unprocessedGachaID < 0 || !unprocessedGachaID)
-    return <Navigate to="/gacha" />;
-  const gachaID = unprocessedGachaID - offset;
-  return gachaID;
-}
-
-function useGacha(gachaID: number) {
-  const { data, isLoading } = useGetDailyGachaQuery("/gacha.json");
-
-  if (isLoading) {
-    return {
-      data: null,
-      isLoading,
-    };
-  }
-
-  if (!data) {
-    return {
-      data: null,
-      isLoading,
-    };
-  }
-
-  const gacha = data.gacha_list[gachaID];
-
-  return {
-    data: gacha,
-    isLoading,
-  };
 }
 
 function Payment() {
@@ -74,8 +41,6 @@ function Payment() {
   }
 
   const gacha = data.data;
-
-  console.log(data.data.price);
 
   return (
     <>
@@ -214,21 +179,22 @@ function Payment() {
         </button>
         <div className="absolute -inset-0 -z-10 animate-pulse bg-purple-300 blur-xl"></div>
       </div>
-      {showModal && <BuyModal setShowModal={setShowModal} />}
+      {showModal && <BuyModal tokenId={gacha.id} setShowModal={setShowModal} />}
     </>
   );
 }
 
-const BuyModal: FC<{ setShowModal: Dispatch<SetStateAction<boolean>> }> = ({
-  setShowModal,
-}) => {
+const BuyModal: FC<{
+  tokenId: number;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+}> = ({ tokenId, setShowModal }) => {
   return (
     <div className="fixed inset-0 isolate z-50 flex items-center justify-center bg-black/50">
       <section className="relative flex w-[80%] max-w-lg flex-col overflow-hidden rounded-lg border-4 ">
         <div className="text-semibold relative w-full border-b-4 bg-white px-4 pb-8 pt-12 text-center text-2xl">
           밀어서 결제 완료
         </div>
-        <SwipeToPay />
+        <SwipeToPay tokenId={tokenId} />
         <button
           className="absolute right-0 top-0 z-10 border-0 p-4"
           onClick={() => setShowModal(false)}
@@ -240,11 +206,13 @@ const BuyModal: FC<{ setShowModal: Dispatch<SetStateAction<boolean>> }> = ({
   );
 };
 
-const SwipeToPay: FC = () => {
+const SwipeToPay: FC<{ tokenId: number }> = ({ tokenId }) => {
   const swipeBox = useRef<HTMLDivElement>(null);
   const [boxWidth, setBoxWidth] = useState(0);
   const navigate = useNavigate();
   const [status, setStatus] = useState("오른쪽으로 미세요");
+  const [processPayment, { isLoading, isError, isSuccess }] =
+    usePostPaymentMutation();
 
   const x = useMotionValue(0);
   const background = useTransform(x, [0, boxWidth], ["#7700ff", "#ff008c"]);
@@ -264,9 +232,15 @@ const SwipeToPay: FC = () => {
     });
   }, [boxWidth]);
 
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/mypage");
+    }
+  }, [isSuccess]);
+
   const buyToken = () => {
     if (status === "놓아서 결제 완료") {
-      navigate("/mypage");
+      processPayment(tokenId);
     }
   };
 

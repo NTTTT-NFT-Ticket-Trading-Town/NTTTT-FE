@@ -3,6 +3,8 @@ import { MypageStateInterface } from "./mypageTypes";
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { GachaInterface } from "../gacha/gachaTypes";
+import { ServerResponseInterface } from "../indexTypes";
+import { TokenInterface } from "../token/tokenType";
 
 const initialState: MypageStateInterface = {
   category_list: [], // filter gacha_list by category_list
@@ -34,11 +36,19 @@ export const { toggleCategory } = mypage.actions;
 export const mypageApi = createApi({
   reducerPath: "mypageApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL,
+    baseUrl: "/api/user/mypage/token",
   }),
   endpoints: (builder) => ({
-    getMyCollection: builder.query<GachaInterface[], void>({
-      query: () => "collection",
+    getMyCollection: builder.query<
+      ServerResponseInterface<TokenInterface>,
+      void
+    >({
+      query() {
+        return {
+          url: "",
+          method: "GET",
+        };
+      },
     }),
   }),
 });

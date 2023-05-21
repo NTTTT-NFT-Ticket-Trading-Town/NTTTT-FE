@@ -33,6 +33,7 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { gachaApi } from "./reducers/gacha";
 import { userApi } from "./reducers/user";
 import { paymentApi } from "./reducers/payment";
+import { mypageApi } from "./reducers/mypage";
 
 const store = configureStore({
   reducer: rootReducers,
@@ -41,7 +42,8 @@ const store = configureStore({
       userApi.middleware,
       artistsApi.middleware,
       gachaApi.middleware,
-      paymentApi.middleware
+      paymentApi.middleware,
+      mypageApi.middleware
     ),
 });
 
