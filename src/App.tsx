@@ -1,13 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Gacha from "./pages/Gacha";
-import Artists from "./pages/Artists";
 import Layout from "./layout/Layout";
-import Test from "./pages/Test";
-import Buy from "./pages/Buy";
-import MyPage from "./pages/MyPage";
 
 const router = createBrowserRouter([
   {

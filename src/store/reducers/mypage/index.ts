@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { MypageStateInterface } from "./mypageTypes";
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { GachaInterface } from "../gacha/gachaTypes";
 import { ServerResponseInterface } from "../indexTypes";
 import { TokenInterface } from "../token/tokenType";
 

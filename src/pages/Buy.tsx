@@ -211,8 +211,7 @@ const SwipeToPay: FC<{ tokenId: number }> = ({ tokenId }) => {
   const [boxWidth, setBoxWidth] = useState(0);
   const navigate = useNavigate();
   const [status, setStatus] = useState("오른쪽으로 미세요");
-  const [processPayment, { isLoading, isError, isSuccess }] =
-    usePostPaymentMutation();
+  const [processPayment, { isSuccess }] = usePostPaymentMutation();
 
   const x = useMotionValue(0);
   const background = useTransform(x, [0, boxWidth], ["#7700ff", "#ff008c"]);

@@ -3,7 +3,6 @@ import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import Ticket from "../components/Ticket/Ticket";
 import Header from "../layout/Header";
-import { useGetDailyGachaQuery } from "../store/reducers/gacha";
 import { useGetMyCollectionQuery } from "../store/reducers/mypage";
 
 export default function MyPage() {
