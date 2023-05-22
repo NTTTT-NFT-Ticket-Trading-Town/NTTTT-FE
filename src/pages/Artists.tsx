@@ -13,11 +13,12 @@ import { AnimatePresence } from "framer-motion";
 import Chip from "../components/Chip";
 import ErrorContent from "../components/Common/ErrorContent";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
+import { usePostFavoriteArtistsMutation } from "../store/reducers/user";
 
 export default function Artists() {
   // apis
   const { data, error, isLoading } = useGetAllArtistsQuery();
-
+  const [postFavoriteArtists] = usePostFavoriteArtistsMutation();
   // states
   const search = useSelector((state) => state.artist.search);
   const selectedArtists = useSelector((state) => state.artist.artists);
@@ -35,6 +36,20 @@ export default function Artists() {
   const groupsDTO = data.data;
   const groups = groupsDTO.map((groupDTO) => groupDTO.group);
   const artists = groupsDTO.map((groupDTO) => groupDTO.members).flat();
+
+  // handlers
+  const handleOnClickSave = async () => {
+    try {
+      const payload = await postFavoriteArtists(
+        selectedArtists.map((artist) => {
+          return { artistId: artist.id };
+        })
+      ).unwrap();
+      console.log("fulfilled", payload);
+    } catch (error) {
+      console.error("rejected", error);
+    }
+  };
 
   return (
     <>
@@ -96,7 +111,7 @@ export default function Artists() {
                 ))}
               </AnimatePresence>
             </div>
-            <Button to="/gacha">저장</Button>
+            <Button onClick={handleOnClickSave}>저장</Button>
           </div>
         </div>
       </main>

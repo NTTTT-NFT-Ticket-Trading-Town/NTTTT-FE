@@ -17,5 +17,9 @@ export interface ArtistInterface {
   img_url: string;
 }
 
+export interface FavoriteArtistInterface {
+  artistId: number;
+}
+
 export type SearchType = string;
 export type ArtistIDType = number;
