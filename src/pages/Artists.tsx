@@ -74,7 +74,7 @@ export default function Artists() {
                     onClick={() => dispatch(toggleFavoriteArtist(artist))}
                     clicked={!!selectedArtists.find((e) => e.id === artist.id)}
                     title={artist.name}
-                    img_url={artist.imgUrl}
+                    img_url={artist.img_url}
                   />
                 );
               })}
@@ -87,7 +87,7 @@ export default function Artists() {
                 {selectedArtists.map((artist) => (
                   <MiniImage
                     key={artist.id}
-                    src={artist.imgUrl}
+                    src={artist.img_url}
                     alt="image"
                     onClick={() => {
                       dispatch(toggleFavoriteArtist(artist));
