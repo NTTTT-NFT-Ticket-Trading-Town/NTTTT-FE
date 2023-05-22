@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { setToken, useLoginMutation } from "../store/reducers/user";
@@ -14,13 +14,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  if (isSuccess && response) {
-    dispatch(setToken(response.data));
-    navigate("/gacha");
-  }
+  useEffect(() => {
+    if (isSuccess && response) {
+      dispatch(setToken(response.data));
+      navigate("/gacha");
+    }
+  }, [isSuccess, response]);
 
-  const onClick = async () => {
-    await login({ nickname, password });
+  const onClick = () => {
+    login({ nickname, password });
   };
 
   return (
