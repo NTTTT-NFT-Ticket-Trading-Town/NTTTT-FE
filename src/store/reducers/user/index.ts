@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { UserInterface, UserState } from "./userTypes";
+import { SignupInterface, UserInterface, UserState } from "./userTypes";
 import { ServerResponseInterface } from "../indexTypes";
 
 const getLocalStorageSession = () => {
@@ -51,7 +51,19 @@ export const userApi = createApi({
         };
       },
     }),
+    signup: builder.mutation<
+      ServerResponseInterface<UserInterface>,
+      SignupInterface
+    >({
+      query(userData) {
+        return {
+          url: "/join",
+          method: "POST",
+          body: { ...userData },
+        };
+      },
+    }),
   }),
 });
 
-export const { useLoginMutation } = userApi;
+export const { useSignupMutation, useLoginMutation } = userApi;
