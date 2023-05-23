@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { useSignupMutation } from "../../store/reducers/user";
 import metamask from "../../assets/metamask.svg";
@@ -7,7 +6,6 @@ import { useMetaMask } from "./useMetaMask";
 import { motion } from "framer-motion";
 
 export default function Signup() {
-  const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");

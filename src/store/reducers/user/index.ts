@@ -74,6 +74,7 @@ export const userApi = createApi({
         console.log(error.data);
         return error.data;
       },
+    }),
     signup: builder.mutation<
       ServerResponseInterface<UserInterface>,
       SignupInterface
@@ -89,4 +90,8 @@ export const userApi = createApi({
   }),
 });
 
-export const { useSignupMutation, usePostFavoriteArtistsMutation, useLoginMutation } = userApi;
+export const {
+  useSignupMutation,
+  usePostFavoriteArtistsMutation,
+  useLoginMutation,
+} = userApi;
