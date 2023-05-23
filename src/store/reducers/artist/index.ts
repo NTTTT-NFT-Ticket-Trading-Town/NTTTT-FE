@@ -57,7 +57,7 @@ export const {
 export const artistsApi = createApi({
   reducerPath: "artistsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: [import.meta.env.VITE_API_URL, "artist"].join("/") as string,
+    baseUrl: "/api/artist",
   }),
   endpoints: (builder) => ({
     getAllArtists: builder.query<

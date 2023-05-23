@@ -13,12 +13,17 @@ import {
   toggleFavoriteGroups,
   useGetAllArtistsQuery,
 } from "../store/reducers/artist";
+import { AnimatePresence } from "framer-motion";
+import Chip from "../components/Chip";
+import ErrorContent from "../components/Common/ErrorContent";
+import LoadingSpinner from "../components/Common/LoadingSpinner";
+import { usePostFavoriteArtistsMutation } from "../store/reducers/user";
 import { ServerResponseInterface } from "../store/reducers/indexTypes";
 
 export default function Artists() {
   // apis
   const { data, error, isLoading } = useGetAllArtistsQuery();
-
+  const [postFavoriteArtists] = usePostFavoriteArtistsMutation();
   // states
   const search = useSelector((state) => state.artist.search);
   const selectedArtists = useSelector((state) => state.artist.artists);
@@ -36,6 +41,20 @@ export default function Artists() {
   const groupsDTO = data.data;
   const groups = groupsDTO.map((groupDTO) => groupDTO.group);
   const artists = groupsDTO.map((groupDTO) => groupDTO.members).flat();
+
+  // handlers
+  const handleOnClickSave = async () => {
+    try {
+      const payload = await postFavoriteArtists(
+        selectedArtists.map((artist) => {
+          return { artistId: artist.id };
+        })
+      ).unwrap();
+      console.log("fulfilled", payload);
+    } catch (error) {
+      console.error("rejected", error);
+    }
+  };
 
   return (
     <>
@@ -75,7 +94,7 @@ export default function Artists() {
                     onClick={() => dispatch(toggleFavoriteArtist(artist))}
                     clicked={!!selectedArtists.find((e) => e.id === artist.id)}
                     title={artist.name}
-                    img_url={artist.imgUrl}
+                    img_url={artist.img_url}
                   />
                 );
               })}
@@ -88,7 +107,7 @@ export default function Artists() {
                 {selectedArtists.map((artist) => (
                   <MiniImage
                     key={artist.id}
-                    src={artist.imgUrl}
+                    src={artist.img_url}
                     alt="image"
                     onClick={() => {
                       dispatch(toggleFavoriteArtist(artist));
@@ -97,7 +116,7 @@ export default function Artists() {
                 ))}
               </AnimatePresence>
             </div>
-            <Button to="/gacha">저장</Button>
+            <Button onClick={handleOnClickSave}>저장</Button>
           </div>
         </div>
       </main>

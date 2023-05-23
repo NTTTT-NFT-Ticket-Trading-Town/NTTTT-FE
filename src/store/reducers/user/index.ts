@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { SignupInterface, UserInterface, UserState } from "./userTypes";
 import { ServerResponseInterface } from "../indexTypes";
+import { FavoriteArtistInterface } from "../artist/artistTypes";
 
 const getLocalStorageSession = () => {
   return localStorage.getItem("ntttt-user-session");
@@ -37,6 +38,13 @@ export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "/api/user",
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as any).user.session;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     login: builder.mutation<
@@ -51,6 +59,21 @@ export const userApi = createApi({
         };
       },
     }),
+    postFavoriteArtists: builder.mutation<
+      ServerResponseInterface<any>, // ResponseType
+      FavoriteArtistInterface[] // QueryArg
+    >({
+      query(body) {
+        return {
+          url: "/artist",
+          method: "POST",
+          body: body,
+        };
+      },
+      transformErrorResponse: (error) => {
+        console.log(error.data);
+        return error.data;
+      },
     signup: builder.mutation<
       ServerResponseInterface<UserInterface>,
       SignupInterface
@@ -66,4 +89,4 @@ export const userApi = createApi({
   }),
 });
 
-export const { useSignupMutation, useLoginMutation } = userApi;
+export const { useSignupMutation, usePostFavoriteArtistsMutation, useLoginMutation } = userApi;
