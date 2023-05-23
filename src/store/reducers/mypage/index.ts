@@ -3,7 +3,6 @@ import { MypageStateInterface } from "./mypageTypes";
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ServerResponseInterface } from "../indexTypes";
-import { TokenInterface } from "../token/tokenType";
 
 const initialState: MypageStateInterface = {
   category_list: [], // filter gacha_list by category_list
@@ -36,10 +35,17 @@ export const mypageApi = createApi({
   reducerPath: "mypageApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "/api/user/mypage/token",
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as any).user.session;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getMyCollection: builder.query<
-      ServerResponseInterface<TokenInterface>,
+      ServerResponseInterface<MypageStateInterface>,
       void
     >({
       query() {

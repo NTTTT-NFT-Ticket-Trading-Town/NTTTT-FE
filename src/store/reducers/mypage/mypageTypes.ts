@@ -5,4 +5,7 @@ export interface MypageStateInterface {
   gacha_list: GachaInterface[];
 }
 
-type CategoryType = string;
+type CategoryType = {
+  name: string;
+  group: string;
+};
