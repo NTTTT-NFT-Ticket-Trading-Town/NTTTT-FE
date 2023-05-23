@@ -53,6 +53,7 @@ export default function Login() {
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
               />
               <input
+                type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"

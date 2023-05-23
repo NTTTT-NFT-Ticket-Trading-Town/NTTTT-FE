@@ -60,12 +60,14 @@ export default function Signup() {
               />
               <div className="-mb-2 text-gray-1">비밀번호</div>
               <input
+                type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
               />
               <div className="-mb-2 text-gray-1">전화번호</div>
               <input
+                type="tel"
                 onChange={(e) => setPhoneNo(e.target.value)}
                 value={phoneNo}
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
@@ -110,6 +112,17 @@ export default function Signup() {
               {isLoading && " 중..."}
               {isSuccess && " 성공!"}
             </button>
+            <div className="mt-3 flex justify-between brightness-50">
+              <div className="cursor-pointer text-sm">
+                아이디 / 비밀번호 찾기
+              </div>
+              <div
+                onClick={() => navigate("/login")}
+                className="cursor-pointer text-sm"
+              >
+                로그인
+              </div>
+            </div>
           </div>
         </div>
       </main>
