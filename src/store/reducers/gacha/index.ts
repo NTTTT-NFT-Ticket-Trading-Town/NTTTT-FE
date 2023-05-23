@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GachaInterface, GachaStateInterface } from "./gachaTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { ServerResponseInterface } from "../indexTypes";
+import { GachaStateInterface } from "./gachaTypes";
 
 const initialState: GachaStateInterface = {
   chance: 0, // current gacha index
