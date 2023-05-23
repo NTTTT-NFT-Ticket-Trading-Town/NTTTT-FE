@@ -1,18 +1,19 @@
-import Finder from "../components/Finder";
-import MiniTicket from "../components/MiniTicket";
-import Header from "../layout/Header";
-import Button from "../components/Button";
-import MiniImage from "../components/MiniImage";
-import { dispatch, useSelector } from "../store";
-import {
-  toggleFavoriteGroups,
-  toggleFavoriteArtist,
-  useGetAllArtistsQuery,
-} from "../store/reducers/artist";
 import { AnimatePresence } from "framer-motion";
+import Button from "../components/Button";
 import Chip from "../components/Chip";
 import ErrorContent from "../components/Common/ErrorContent";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
+import Finder from "../components/Finder";
+import MiniImage from "../components/MiniImage";
+import MiniTicket from "../components/MiniTicket";
+import Header from "../layout/Header";
+import { dispatch, useSelector } from "../store";
+import {
+  toggleFavoriteArtist,
+  toggleFavoriteGroups,
+  useGetAllArtistsQuery,
+} from "../store/reducers/artist";
+import { ServerResponseInterface } from "../store/reducers/indexTypes";
 
 export default function Artists() {
   // apis
@@ -27,10 +28,10 @@ export default function Artists() {
   if (isLoading) {
     return <LoadingSpinner />;
   }
-  if (error) {
-    console.log("error", error);
+  if (error || !data) {
+    const errorData = (error as any).data as ServerResponseInterface<null>;
+    return <ErrorContent errorMessage={errorData.result.message} />;
   }
-  if (!data) return <ErrorContent />;
 
   const groupsDTO = data.data;
   const groups = groupsDTO.map((groupDTO) => groupDTO.group);
