@@ -16,6 +16,8 @@ import Header from "../layout/Header";
 import { useGetDailyGachaQuery } from "../store/reducers/gacha";
 import { usePostPaymentMutation } from "../store/reducers/payment";
 import { useAmount } from "../utils/currency";
+import { ServerResponseInterface } from "../store/reducers/indexTypes";
+import { GachaInterface } from "../store/reducers/gacha/gachaTypes";
 
 export default function Buy() {
   return (
@@ -27,20 +29,24 @@ export default function Buy() {
 }
 
 function Payment() {
-  const { data, isLoading } = useGetDailyGachaQuery();
+  const { data, isLoading, error } = useGetDailyGachaQuery();
   const [currency, setCurrency] = useState<"won" | "eth">("won");
-  const amount = useAmount(data?.data.price);
+  const amount = useAmount(data?.data?.token?.price);
   const [showModal, setShowModal] = useState(false);
+
+  console.log(data);
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (!data || !data.data) {
-    return <ErrorContent />;
+  if (!data || !data.data || !data.data.token) {
+    const errorData =
+      error as unknown as ServerResponseInterface<GachaInterface>;
+    return <ErrorContent errorMessage={errorData.result.message} />;
   }
 
-  const gacha = data.data;
+  const gacha = data.data.token;
 
   return (
     <>

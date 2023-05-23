@@ -21,6 +21,13 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "signup",
+        async lazy() {
+          const index = await import("./pages/Signup");
+          return { Component: index.default };
+        },
+      },
+      {
         path: "gacha",
         async lazy() {
           const index = await import("./pages/Gacha");

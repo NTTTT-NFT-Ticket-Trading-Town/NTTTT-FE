@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { UserInterface, UserState } from "./userTypes";
+import { SignupInterface, UserInterface, UserState } from "./userTypes";
 import { ServerResponseInterface } from "../indexTypes";
 import { FavoriteArtistInterface } from "../artist/artistTypes";
 
@@ -74,8 +74,19 @@ export const userApi = createApi({
         console.log(error.data);
         return error.data;
       },
+    signup: builder.mutation<
+      ServerResponseInterface<UserInterface>,
+      SignupInterface
+    >({
+      query(userData) {
+        return {
+          url: "/join",
+          method: "POST",
+          body: { ...userData },
+        };
+      },
     }),
   }),
 });
 
-export const { useLoginMutation, usePostFavoriteArtistsMutation } = userApi;
+export const { useSignupMutation, usePostFavoriteArtistsMutation, useLoginMutation } = userApi;

@@ -3,6 +3,8 @@ import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import Ticket from "../components/Ticket/Ticket";
 import Header from "../layout/Header";
+import { GachaInterface } from "../store/reducers/gacha/gachaTypes";
+import { ServerResponseInterface } from "../store/reducers/indexTypes";
 import { useGetMyCollectionQuery } from "../store/reducers/mypage";
 
 export default function MyPage() {
@@ -24,14 +26,21 @@ const useUserQuery = () => {
 };
 
 function MyPageContent() {
-  const { name, tags, profileImage } = useUserQuery();
-  const { data, isLoading } = useGetMyCollectionQuery();
+  const { name, profileImage } = useUserQuery();
+  const { data, isLoading, error } = useGetMyCollectionQuery();
+  const someCategory = data?.data?.category_list.slice(0, 3);
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
-  if (!data || !data.data) {
-    return <ErrorContent />;
+  if (error) {
+    const errorData = (error as any)
+      .data as ServerResponseInterface<GachaInterface>;
+    return <ErrorContent errorMessage={errorData.result.message} />;
+  }
+
+  if (!data || !data.data || !data.data.gacha_list) {
+    return <ErrorContent errorMessage="데이터가 없습니다." />;
   }
 
   return (
@@ -49,15 +58,17 @@ function MyPageContent() {
               {name}
             </h3>
             <div className="flex gap-2">
-              {tags.map((tag) => (
-                <div className="text-gray-400">#{tag}</div>
+              {someCategory?.map((tag) => (
+                <div key={tag.name + tag.group} className="text-gray-400">
+                  #{tag.name}
+                </div>
               ))}
             </div>
           </div>
         </header>
         <section className="pt-10">
           <div className="relative flex flex-col gap-10">
-            {[data.data].map((gacha, index) => {
+            {data?.data?.gacha_list.map((gacha, index) => {
               if (!gacha) return null;
               return (
                 <div
@@ -84,7 +95,6 @@ function MyPageContent() {
                 </div>
               );
             })}
-            <div className="h-[10vh]"></div>
           </div>
         </section>
       </main>

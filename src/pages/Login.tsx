@@ -53,6 +53,7 @@ export default function Login() {
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
               />
               <input
+                type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
@@ -78,6 +79,17 @@ export default function Login() {
               {isLoading && " 중..."}
               {isSuccess && " 성공!"}
             </button>
+            <div className="mt-3 flex justify-between brightness-50">
+              <div className="cursor-pointer text-sm">
+                아이디 / 비밀번호 찾기
+              </div>
+              <div
+                onClick={() => navigate("/signup")}
+                className="cursor-pointer text-sm"
+              >
+                회원가입
+              </div>
+            </div>
           </div>
         </div>
       </main>

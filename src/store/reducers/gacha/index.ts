@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GachaInterface, GachaStateInterface } from "./gachaTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { ServerResponseInterface } from "../indexTypes";
+import { GachaStateInterface } from "./gachaTypes";
 
 const initialState: GachaStateInterface = {
-  refresh_count: 0, // current gacha index
-  gacha: null,
+  chance: 0, // current gacha index
+  token: null,
 };
 
 const gacha = createSlice({
@@ -13,9 +13,9 @@ const gacha = createSlice({
   initialState: initialState,
   reducers: {
     setGachaStateFromDTO: (state, action) => {
-      const { refresh_count, gacha } = action.payload;
-      state.refresh_count = refresh_count;
-      state.gacha = gacha;
+      const { chance, token } = action.payload;
+      state.chance = chance;
+      state.token = token;
     },
   },
 });
@@ -36,6 +36,7 @@ export const gachaApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Gacha"],
   endpoints: (builder) => ({
     postDailyGacha: builder.mutation<
       ServerResponseInterface<GachaStateInterface>,
@@ -51,17 +52,20 @@ export const gachaApi = createApi({
         console.log(error.data);
         return error.data;
       },
+      invalidatesTags: ["Gacha"],
     }),
-    getDailyGacha: builder.query<ServerResponseInterface<GachaInterface>, void>(
-      {
-        query() {
-          return {
-            url: "",
-            method: "GET",
-          };
-        },
-      }
-    ),
+    getDailyGacha: builder.query<
+      ServerResponseInterface<GachaStateInterface>,
+      void
+    >({
+      query() {
+        return {
+          url: "",
+          method: "GET",
+        };
+      },
+      providesTags: ["Gacha"],
+    }),
   }),
 });
 
