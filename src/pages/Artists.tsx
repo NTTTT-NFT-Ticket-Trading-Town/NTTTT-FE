@@ -13,12 +13,8 @@ import {
   toggleFavoriteGroups,
   useGetAllArtistsQuery,
 } from "../store/reducers/artist";
-import { AnimatePresence } from "framer-motion";
-import Chip from "../components/Chip";
-import ErrorContent from "../components/Common/ErrorContent";
-import LoadingSpinner from "../components/Common/LoadingSpinner";
-import { usePostFavoriteArtistsMutation } from "../store/reducers/user";
 import { ServerResponseInterface } from "../store/reducers/indexTypes";
+import { usePostFavoriteArtistsMutation } from "../store/reducers/user";
 
 export default function Artists() {
   // apis
