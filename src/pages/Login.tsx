@@ -78,6 +78,17 @@ export default function Login() {
               {isLoading && " 중..."}
               {isSuccess && " 성공!"}
             </button>
+            <div className="mt-3 flex justify-between brightness-50">
+              <div className="cursor-pointer text-sm">
+                아이디 / 비밀번호 찾기
+              </div>
+              <div
+                onClick={() => navigate("/signup")}
+                className="cursor-pointer text-sm"
+              >
+                회원가입
+              </div>
+            </div>
           </div>
         </div>
       </main>
