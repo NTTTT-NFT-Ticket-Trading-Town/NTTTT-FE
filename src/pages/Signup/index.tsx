@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { setToken, useLoginMutation } from "../store/reducers/user";
+import { setToken, useLoginMutation } from "../../store/reducers/user";
 import { motion } from "framer-motion";
-import metamask from "../assets/metamask.svg";
+import metamask from "../../assets/metamask.svg";
+import { useMetaMask } from "./useMetaMask";
 
 export default function Signup() {
-  const [login, { data, error, isLoading, isSuccess, status }] =
-    useLoginMutation();
-  const response = data;
-  const errorRes = error as any;
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
@@ -17,16 +14,20 @@ export default function Signup() {
   const [walletAddress, setWalletAddress] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isSuccess && response) {
-      dispatch(setToken(response.data));
-      navigate("/gacha");
-    }
-  }, [isSuccess, response]);
+  const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask();
 
-  const onClick = () => {
-    login({ nickname, password });
+  const onClickMetamask = () => {
+    if (!hasProvider) window.open("https://metamask.io", "_blank");
+    connectMetaMask();
   };
+
+  const onClickSignup = () => {
+    console.log("signup");
+  };
+
+  useEffect(() => {
+    setWalletAddress(wallet.accounts[0]);
+  }, [wallet]);
 
   return (
     <>
@@ -80,7 +81,10 @@ export default function Signup() {
                   value={walletAddress}
                   className="absolute block w-full rounded bg-neutral-300/30 px-2 py-2 pr-16"
                 />
-                <div className="absolute right-0 mx-auto block h-10 w-14 cursor-pointer rounded bg-white bg-opacity-25 py-2 text-center">
+                <div
+                  onClick={onClickMetamask}
+                  className="absolute right-0 mx-auto block h-10 w-14 cursor-pointer rounded bg-white bg-opacity-25 py-2 text-center"
+                >
                   <img
                     className="mx-auto transition hover:scale-110"
                     src={metamask}
@@ -92,25 +96,26 @@ export default function Signup() {
                 src={metamask}
               /> */}
               <div className="text-center text-base text-red-500">
-                {status === "rejected" && (
+                {/* {status === "rejected" && (
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                   >
                     {errorRes.data.result.message}
                   </motion.span>
-                )}
+                )} */}
               </div>
             </div>
           </div>
           <div>
             <button
-              onClick={onClick}
+              disabled={isConnecting}
+              onClick={onClickSignup}
               className=" inline-flex w-full items-center justify-center rounded bg-neutral-300/30 py-2 text-center transition-all duration-100 hover:bg-neutral-300/40 active:scale-95 active:bg-neutral-300/50"
             >
               회원가입
-              {isLoading && " 중..."}
-              {isSuccess && " 성공!"}
+              {/* {isLoading && " 중..."} */}
+              {/* {isSuccess && " 성공!"} */}
             </button>
             <div className="mt-3 flex justify-between brightness-50">
               <div className="cursor-pointer text-sm">
