@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   useGetDailyGachaQuery,
@@ -18,6 +18,10 @@ export default function TicketFramedGacha() {
   const [getDailyGacha, { data: response, isLoading, error, isError }] =
     usePostDailyGachaMutation();
   const { data: chancesData } = useGetDailyGachaQuery();
+  const chances = useMemo(() => {
+    if (response?.data.chance) return response.data.chance;
+    return chancesData?.data?.chance ?? 0;
+  }, [response?.data.chance, chancesData?.data]);
 
   const [drawGacha, setDrawGacha] = useState(true);
 
@@ -25,8 +29,9 @@ export default function TicketFramedGacha() {
   const amount = useAmount(gacha?.price);
   const [currency, setCurrency] = useState<"won" | "eth">("won");
 
-  if (drawGacha && chancesData) {
-    const chances = chancesData.data?.chance;
+  console.log(chances);
+
+  if (drawGacha) {
     return (
       <motion.div
         initial={{

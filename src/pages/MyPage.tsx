@@ -26,8 +26,9 @@ const useUserQuery = () => {
 };
 
 function MyPageContent() {
-  const { name, tags, profileImage } = useUserQuery();
+  const { name, profileImage } = useUserQuery();
   const { data, isLoading, error } = useGetMyCollectionQuery();
+  const someCategory = data?.data?.category_list.slice(0, 3);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -37,8 +38,6 @@ function MyPageContent() {
       .data as ServerResponseInterface<GachaInterface>;
     return <ErrorContent errorMessage={errorData.result.message} />;
   }
-
-  console.log(data?.data);
 
   if (!data || !data.data || !data.data.gacha_list) {
     return <ErrorContent errorMessage="데이터가 없습니다." />;
@@ -59,8 +58,10 @@ function MyPageContent() {
               {name}
             </h3>
             <div className="flex gap-2">
-              {data.data.category_list.slice(0, 2).map((tag) => (
-                <div className="text-gray-400">#{tag.name}</div>
+              {someCategory?.map((tag) => (
+                <div key={tag.name + tag.group} className="text-gray-400">
+                  #{tag.name}
+                </div>
               ))}
             </div>
           </div>
