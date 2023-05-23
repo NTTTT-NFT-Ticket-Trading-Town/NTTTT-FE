@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { setToken, useLoginMutation } from "../store/reducers/user";
 import { motion } from "framer-motion";
+import metamask from "../assets/metamask.svg";
 
-export default function Login() {
+export default function Signup() {
   const [login, { data, error, isLoading, isSuccess, status }] =
     useLoginMutation();
   const response = data;
@@ -12,6 +13,8 @@ export default function Login() {
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,24 +43,54 @@ export default function Login() {
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
 
-        <div className="isolate grid grow place-content-evenly justify-center pt-10 text-white">
-          <div className="relative grid gap-2">
-            <h1 className="mx-auto text-6xl font-bold italic">NTTTT</h1>
-            <span className="mx-auto text-2xl font-semibold">
-              아이돌 토큰을 모아보세요!
-            </span>
-            <div className="grid gap-4 pt-4">
+        <div className="isolate grid w-full grow place-content-evenly justify-center pt-5 text-white ">
+          <div className="relative  grid w-full gap-2">
+            <div className="mb-10 flex flex-col justify-center">
+              <h1 className=" mx-auto px-36 text-2xl font-bold italic">
+                NTTTT
+              </h1>
+              <span className="mx-auto text-2xl font-semibold">회원가입</span>
+            </div>
+            <div className=" grid w-full gap-4 pt-4">
+              <div className="-mb-2 text-gray-1">아이디</div>
               <input
                 onChange={(e) => setNickname(e.target.value)}
                 value={nickname}
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
               />
+              <div className="-mb-2 text-gray-1">비밀번호</div>
               <input
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
               />
+              <div className="-mb-2 text-gray-1">전화번호</div>
+              <input
+                type="tel"
+                onChange={(e) => setPhoneNo(e.target.value)}
+                value={phoneNo}
+                className="block w-full rounded bg-neutral-300/30 px-2 py-2"
+              />
+
+              <div className="-mb-2 mt-12 text-gray-1">지갑주소</div>
+              <div className="relative">
+                <input
+                  onChange={(e) => setWalletAddress(e.target.value)}
+                  value={walletAddress}
+                  className="absolute block w-full rounded bg-neutral-300/30 px-2 py-2 pr-16"
+                />
+                <div className="absolute right-0 mx-auto block h-10 w-14 cursor-pointer rounded bg-white bg-opacity-25 py-2 text-center">
+                  <img
+                    className="mx-auto transition hover:scale-110"
+                    src={metamask}
+                  />
+                </div>
+              </div>
+              {/* <img
+                style={{ width: 25, marginRight: "0.5rem" }}
+                src={metamask}
+              /> */}
               <div className="text-center text-base text-red-500">
                 {status === "rejected" && (
                   <motion.span
@@ -73,9 +106,9 @@ export default function Login() {
           <div>
             <button
               onClick={onClick}
-              className="block w-full rounded bg-neutral-300/30 py-2 text-center transition-all duration-100 hover:bg-neutral-300/40 active:scale-95 active:bg-neutral-300/50"
+              className=" inline-flex w-full items-center justify-center rounded bg-neutral-300/30 py-2 text-center transition-all duration-100 hover:bg-neutral-300/40 active:scale-95 active:bg-neutral-300/50"
             >
-              로그인
+              회원가입
               {isLoading && " 중..."}
               {isSuccess && " 성공!"}
             </button>
@@ -84,10 +117,10 @@ export default function Login() {
                 아이디 / 비밀번호 찾기
               </div>
               <div
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate("/login")}
                 className="cursor-pointer text-sm"
               >
-                회원가입
+                로그인
               </div>
             </div>
           </div>
