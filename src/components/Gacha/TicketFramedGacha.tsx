@@ -1,5 +1,10 @@
+import { motion } from "framer-motion";
 import { useState } from "react";
-import { usePostDailyGachaMutation } from "../../store/reducers/gacha";
+import { Link } from "react-router-dom";
+import {
+  useGetDailyGachaQuery,
+  usePostDailyGachaMutation,
+} from "../../store/reducers/gacha";
 import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
 import { ServerResponseInterface } from "../../store/reducers/indexTypes";
 import { useAmount } from "../../utils/currency";
@@ -8,21 +13,20 @@ import ErrorContent from "../Common/ErrorContent";
 import LoadingSpinner from "../Common/LoadingSpinner";
 import ImageWithDetail from "../Ticket/ImageWithDetail";
 import Ticket from "../Ticket/Ticket";
-import { motion } from "framer-motion";
 
 export default function TicketFramedGacha() {
   const [getDailyGacha, { data: response, isLoading, error, isError }] =
     usePostDailyGachaMutation();
-
-  console.log(response);
+  const { data: chancesData } = useGetDailyGachaQuery();
 
   const [drawGacha, setDrawGacha] = useState(true);
 
-  const gacha = response?.data as unknown as GachaInterface;
+  const gacha = response?.data.token;
   const amount = useAmount(gacha?.price);
   const [currency, setCurrency] = useState<"won" | "eth">("won");
 
-  if (drawGacha) {
+  if (drawGacha && chancesData) {
+    const chances = chancesData.data?.chance;
     return (
       <motion.div
         initial={{
@@ -42,20 +46,35 @@ export default function TicketFramedGacha() {
         className="grid w-full place-items-center "
       >
         <div className="grid h-auto scale-150 place-items-center self-end">
-          <div className="absolute animate-pulse text-9xl blur-lg">🔮</div>
-          <div className="absolute text-8xl">🔮</div>
+          <div className="relative grid h-40 w-full place-items-center">
+            <div className="absolute animate-pulse text-9xl blur-lg">🔮</div>
+            <div className="absolute text-8xl">🔮</div>
+          </div>
+          <div className="text-center text-lg font-bold">
+            {chances > 0
+              ? `오늘 ${chances}번 더 뽑을 수 있어요!`
+              : "오늘 더 이상 뽑을 수 없어요!"}
+          </div>
         </div>
-        <div className="relative h-min w-full p-4 sm:p-8">
+        <div className="relative flex h-min w-full flex-col gap-4 p-4 sm:p-8">
           <button
             onClick={() => {
               setDrawGacha(false);
               getDailyGacha();
             }}
-            className="w-full self-end rounded bg-purple-600 py-2 text-center text-xl font-bold text-purple-100 transition-all duration-100 hover:bg-purple-500 active:scale-95 active:bg-purple-700 sm:py-4 sm:text-2xl"
+            disabled={chances <= 0}
+            className="peer w-full self-end rounded border-4 border-purple-600 bg-purple-600 py-2 text-center text-xl font-bold text-purple-100 transition-all duration-100 hover:bg-purple-500 active:scale-95 active:bg-purple-700 disabled:cursor-not-allowed disabled:border-gray-600 disabled:bg-gray-600 disabled:opacity-50 disabled:active:scale-100 sm:py-4 sm:text-2xl"
           >
             오늘의 가챠 뽑기
           </button>
-          <div className="absolute left-0 top-0 -z-10 h-full w-full animate-pulse bg-purple-300 blur-xl sm:inset-2"></div>
+          <div className="absolute left-0 top-0 -z-10 h-full w-full animate-pulse bg-purple-300 blur-xl peer-disabled:bg-gray-300 sm:inset-2"></div>
+          <Link
+            to="/buy"
+            className="w-full self-end rounded border-4 border-purple-600 bg-purple-200 py-2 text-center text-xl font-bold text-purple-900 transition-all duration-100 hover:bg-purple-300 active:scale-95 active:bg-purple-400 sm:py-4 sm:text-2xl"
+          >
+            마지막으로 뽑았던 가챠 구매하기
+          </Link>
+          <div className="absolute left-0 top-0 -z-10 h-full w-full animate-pulse bg-purple-100 blur-xl sm:inset-2"></div>
         </div>
       </motion.div>
     );
@@ -64,15 +83,10 @@ export default function TicketFramedGacha() {
   if (isError || error) {
     const errorData =
       error as unknown as ServerResponseInterface<GachaInterface>;
-
-    if (errorData.result.code === 400002) {
-      console.log(error);
-      return <div>{errorData.result.message}</div>;
-    }
-    if (!gacha) return <ErrorContent />;
+    return <ErrorContent errorMessage={errorData.result.message} />;
   }
 
-  if ((isLoading || !response) && !gacha) {
+  if (isLoading || !response || !gacha) {
     return (
       <button>
         <LoadingSpinner />
@@ -101,7 +115,7 @@ export default function TicketFramedGacha() {
             </div>
             <div className="w-fit place-self-end text-lg font-light text-neutral-400">
               <span className="font-medium text-neutral-800">#{gacha.seq}</span>{" "}
-              / {gacha.event.quantity}
+              / {gacha.event?.quantity}
             </div>
           </div>
           <div>
