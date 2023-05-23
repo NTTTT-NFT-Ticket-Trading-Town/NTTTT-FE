@@ -27,9 +27,9 @@ export default function Test() {
           type="number"
           name="eventId"
           value={data.eventId}
-          onChange={() =>
+          onChange={(e) =>
             setData((prev) => {
-              return { ...prev, eventId: data.eventId };
+              return { ...prev, eventId: e.target.valueAsNumber };
             })
           }
         />
@@ -42,9 +42,9 @@ export default function Test() {
           type="number"
           name="artistId"
           value={data.artistId}
-          onChange={() =>
+          onChange={(e) =>
             setData((prev) => {
-              return { ...prev, artistId: data.artistId };
+              return { ...prev, artistId: e.target.valueAsNumber };
             })
           }
         />
@@ -57,9 +57,9 @@ export default function Test() {
           type="text"
           name="imgUrl"
           value={data.imgUrl}
-          onChange={() =>
+          onChange={(e) =>
             setData((prev) => {
-              return { ...prev, imgUrl: data.imgUrl };
+              return { ...prev, imgUrl: e.target.value };
             })
           }
         />
@@ -72,9 +72,9 @@ export default function Test() {
           type="text"
           name="ratio"
           value={data.ratio}
-          onChange={() =>
+          onChange={(e) =>
             setData((prev) => {
-              return { ...prev, ratio: data.ratio };
+              return { ...prev, ratio: e.target.value };
             })
           }
         />
@@ -87,9 +87,9 @@ export default function Test() {
           type="number"
           name="price"
           value={data.price}
-          onChange={() =>
+          onChange={(e) =>
             setData((prev) => {
-              return { ...prev, price: data.price };
+              return { ...prev, price: e.target.valueAsNumber };
             })
           }
         />
@@ -102,9 +102,9 @@ export default function Test() {
           type="text"
           name="desc"
           value={data.desc}
-          onChange={() =>
+          onChange={(e) =>
             setData((prev) => {
-              return { ...prev, desc: data.desc };
+              return { ...prev, desc: e.target.value };
             })
           }
         />
