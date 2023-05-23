@@ -36,6 +36,7 @@ export const gachaApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Gacha"],
   endpoints: (builder) => ({
     postDailyGacha: builder.mutation<
       ServerResponseInterface<GachaStateInterface>,
@@ -51,6 +52,7 @@ export const gachaApi = createApi({
         console.log(error.data);
         return error.data;
       },
+      invalidatesTags: ["Gacha"],
     }),
     getDailyGacha: builder.query<
       ServerResponseInterface<GachaStateInterface>,
@@ -62,6 +64,7 @@ export const gachaApi = createApi({
           method: "GET",
         };
       },
+      providesTags: ["Gacha"],
     }),
   }),
 });

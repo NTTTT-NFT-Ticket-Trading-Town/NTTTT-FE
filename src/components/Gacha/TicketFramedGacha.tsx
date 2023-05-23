@@ -15,9 +15,9 @@ import ImageWithDetail from "../Ticket/ImageWithDetail";
 import Ticket from "../Ticket/Ticket";
 
 export default function TicketFramedGacha() {
-  const [getDailyGacha, { data: response, isLoading, error, isError }] =
+  const [getDailyGacha, { data: response, isLoading, error }] =
     usePostDailyGachaMutation();
-  const { data: chancesData } = useGetDailyGachaQuery();
+  const { data: chancesData, error: getError } = useGetDailyGachaQuery();
   const chances = useMemo(() => {
     if (response?.data.chance) return response.data.chance;
     return chancesData?.data?.chance ?? 0;
@@ -25,13 +25,14 @@ export default function TicketFramedGacha() {
 
   const [drawGacha, setDrawGacha] = useState(true);
 
-  const gacha = response?.data.token;
+  const gacha = useMemo(() => {
+    if (response?.data.token) return response.data.token;
+    return chancesData?.data?.token;
+  }, [response, chancesData]);
   const amount = useAmount(gacha?.price);
   const [currency, setCurrency] = useState<"won" | "eth">("won");
 
-  console.log(chances);
-
-  if (drawGacha) {
+  if (drawGacha && gacha) {
     return (
       <motion.div
         initial={{
@@ -85,13 +86,33 @@ export default function TicketFramedGacha() {
     );
   }
 
-  if (isError || error) {
-    const errorData =
-      error as unknown as ServerResponseInterface<GachaInterface>;
+  if (error) {
+    const errorData = (error as any)
+      .data as ServerResponseInterface<GachaInterface>;
     return <ErrorContent errorMessage={errorData.result.message} />;
   }
 
-  if (isLoading || !response || !gacha) {
+  if (getError) {
+    const errorData = (getError as any)
+      .data as ServerResponseInterface<GachaInterface>;
+    return (
+      <ErrorContent errorMessage={errorData.result.message}>
+        <button
+          onClick={() => {
+            getDailyGacha();
+          }}
+          className="w-full self-end rounded border-4 border-purple-600 bg-purple-200 py-2 text-center text-xl font-bold text-purple-900 transition-all duration-100 hover:bg-purple-300 active:scale-95 active:bg-purple-400 sm:py-4 sm:text-2xl"
+        >
+          새 토큰 받기
+        </button>
+        <div className="absolute left-0 top-0 -z-10 h-full w-full animate-pulse bg-purple-100 blur-xl sm:inset-2"></div>
+      </ErrorContent>
+    );
+  }
+
+  console.log(isLoading, response, gacha);
+
+  if (isLoading || !response || !gacha || !chancesData) {
     return (
       <button>
         <LoadingSpinner />
