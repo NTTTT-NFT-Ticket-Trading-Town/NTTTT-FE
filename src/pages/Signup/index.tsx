@@ -1,32 +1,49 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { setToken, useLoginMutation } from "../store/reducers/user";
+import { useSignupMutation } from "../../store/reducers/user";
+import metamask from "../../assets/metamask.svg";
+import { useMetaMask } from "./useMetaMask";
 import { motion } from "framer-motion";
-import metamask from "../assets/metamask.svg";
 
 export default function Signup() {
-  const [login, { data, error, isLoading, isSuccess, status }] =
-    useLoginMutation();
-  const response = data;
-  const errorRes = error as any;
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
-  const [walletAddress, setWalletAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [walletAddr, setWalletAddr] = useState("");
   const navigate = useNavigate();
+
+  const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask();
+  const [signup, { data, error, isLoading, isSuccess, status }] =
+    useSignupMutation();
+
+  const response = data;
+  const errorRes = error as any;
+
+  const onClickMetamask = () => {
+    if (!hasProvider) window.open("https://metamask.io", "_blank");
+    connectMetaMask();
+  };
+
+  const onClickSignup = () => {
+    signup({
+      walletAddr,
+      nickname,
+      phoneNumber,
+      password,
+    });
+  };
+
+  useEffect(() => {
+    if (wallet.accounts.length > 0) setWalletAddr(wallet.accounts[0]);
+  }, [wallet]);
 
   useEffect(() => {
     if (isSuccess && response) {
-      dispatch(setToken(response.data));
-      navigate("/gacha");
+      navigate("/login");
     }
   }, [isSuccess, response]);
-
-  const onClick = () => {
-    login({ nickname, password });
-  };
 
   return (
     <>
@@ -43,7 +60,7 @@ export default function Signup() {
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
 
-        <div className="isolate grid w-full grow place-content-evenly justify-center pt-5 text-white ">
+        <div className="isolate grid w-full grow place-content-evenly justify-center pt-2 text-white ">
           <div className="relative  grid w-full gap-2">
             <div className="mb-10 flex flex-col justify-center">
               <h1 className=" mx-auto px-36 text-2xl font-bold italic">
@@ -68,44 +85,40 @@ export default function Signup() {
               <div className="-mb-2 text-gray-1">전화번호</div>
               <input
                 type="tel"
-                onChange={(e) => setPhoneNo(e.target.value)}
-                value={phoneNo}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                value={phoneNumber}
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
               />
-
-              <div className="-mb-2 mt-12 text-gray-1">지갑주소</div>
+              <div className="text-gray-1">지갑주소</div>
               <div className="relative">
                 <input
-                  onChange={(e) => setWalletAddress(e.target.value)}
-                  value={walletAddress}
+                  onChange={(e) => setWalletAddr(e.target.value)}
+                  value={walletAddr}
                   className="absolute block w-full rounded bg-neutral-300/30 px-2 py-2 pr-16"
                 />
-                <div className="absolute right-0 mx-auto block h-10 w-14 cursor-pointer rounded bg-white bg-opacity-25 py-2 text-center">
+                <div
+                  onClick={onClickMetamask}
+                  className="absolute right-0 mx-auto block h-10 w-14 cursor-pointer rounded bg-white bg-opacity-25 py-2 text-center"
+                >
                   <img
                     className="mx-auto transition hover:scale-110"
                     src={metamask}
                   />
                 </div>
               </div>
-              {/* <img
-                style={{ width: 25, marginRight: "0.5rem" }}
-                src={metamask}
-              /> */}
-              <div className="text-center text-base text-red-500">
-                {status === "rejected" && (
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    {errorRes.data.result.message}
-                  </motion.span>
-                )}
-              </div>
             </div>
           </div>
           <div>
+            <div className="mb-5 text-center text-base text-red-500">
+              {status === "rejected" && (
+                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  {errorRes.data.result.message}
+                </motion.span>
+              )}
+            </div>
             <button
-              onClick={onClick}
+              disabled={isConnecting}
+              onClick={onClickSignup}
               className=" inline-flex w-full items-center justify-center rounded bg-neutral-300/30 py-2 text-center transition-all duration-100 hover:bg-neutral-300/40 active:scale-95 active:bg-neutral-300/50"
             >
               회원가입
