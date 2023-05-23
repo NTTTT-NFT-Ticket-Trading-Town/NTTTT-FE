@@ -31,6 +31,6 @@ export interface ImageInterface {
 }
 
 export interface GachaStateInterface {
-  refresh_count: number;
-  gacha: GachaInterface | null;
+  chance: number;
+  token: GachaInterface | null;
 }

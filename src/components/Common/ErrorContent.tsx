@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 
-export default function ErrorContent() {
+export default function ErrorContent({
+  errorMessage,
+}: {
+  errorMessage: string;
+}) {
   const navigate = useNavigate();
   return (
     <motion.div
@@ -20,10 +24,10 @@ export default function ErrorContent() {
       className="flex w-full grow flex-col items-center justify-center gap-6"
     >
       <div className="place-center grid text-9xl">☢️</div>
-      <div className="text-center text-6xl">Error!</div>
+      <div className="text-center text-6xl font-bold">Error!</div>
       <div className="text-center text-2xl">
-        <p>Something wrong happened.</p>
-        <p>Please try again.</p>
+        <p>{errorMessage}</p>
+        <p>다시 시도해주세요.</p>
       </div>
       <div className="relative h-min w-full p-4 sm:p-8">
         <button
