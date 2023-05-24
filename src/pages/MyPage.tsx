@@ -1,7 +1,9 @@
+import { motion, useScroll } from "framer-motion";
+import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorContent from "../components/Common/ErrorContent";
-import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
+import ImageWithDetail from "../components/Ticket/ImageWithDetail";
 import Ticket from "../components/Ticket/Ticket";
 import Header from "../layout/Header";
 import { GachaInterface } from "../store/reducers/gacha/gachaTypes";
@@ -90,35 +92,9 @@ function MyPageContent() {
         <section className="pt-10">
           <div className="relative flex flex-col gap-10">
             {data?.data ? (
-              data.data.gacha_list.map((gacha, index) => {
-                if (!gacha) return null;
-                return (
-                  <div
-                    key={gacha.id}
-                    style={{
-                      top: `${index * 50}px`,
-                      position: "sticky",
-                      width: "80%",
-                      marginInline: "auto",
-                    }}
-                  >
-                    <Ticket getNextToken={() => null}>
-                      <div className="bg-white px-6 pt-4">
-                        <ImageWithSkeleton gacha={gacha.image} />
-                      </div>
-                      <Ticket.Split />
-                      <div className="flex justify-between rounded-b-lg bg-white px-8 pb-8 pt-4 text-xl text-black">
-                        <span className="font-semibold">
-                          {gacha.artist.name}
-                        </span>
-                        <span>
-                          {gacha.seq} / {gacha.event.quantity}
-                        </span>
-                      </div>
-                    </Ticket>
-                  </div>
-                );
-              })
+              data.data.gacha_list.map((gacha, index) => (
+                <CollectionTicket key={index} index={index} gacha={gacha} />
+              ))
             ) : (
               <div className="flex flex-col items-center gap-2">
                 <div className="text-center text-gray-500">
@@ -138,3 +114,53 @@ function MyPageContent() {
     </>
   );
 }
+
+const CollectionTicket = ({
+  gacha,
+  index,
+}: {
+  gacha: GachaInterface;
+  index: number;
+}) => {
+  if (!gacha) return null;
+
+  // this is a function when this gacha has scrolled to the top,
+  // then shrink the size of the ticket
+  // maybe use intersection observer?
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["end center", "end end"],
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      key={gacha.id}
+      style={{
+        top: `${-10 + index * 10}px`,
+        position: "sticky",
+        width: "90%",
+        marginInline: "auto",
+        height: "90vh",
+        backdropFilter: "blur(5px)",
+        scale: scrollYProgress,
+      }}
+    >
+      <Ticket getNextToken={() => null}>
+        <div className="bg-white px-6 pt-4">
+          <ImageWithDetail description={gacha.desc} image={gacha.image} />
+        </div>
+        <Ticket.Split />
+        <div className="flex justify-between rounded-b-lg bg-white px-8 pb-8 pt-4 text-xl text-black">
+          <span className="font-semibold">{gacha.artist.name}</span>
+          <span>
+            #{gacha.seq} / {gacha.event.quantity}
+          </span>
+        </div>
+      </Ticket>
+    </motion.div>
+  );
+};

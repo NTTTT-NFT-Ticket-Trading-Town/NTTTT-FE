@@ -13,7 +13,7 @@ export default function ImageWithDetail({
   image,
   description,
 }: {
-  id: number;
+  id?: number;
   image: ImageInterface;
   description: string;
 }) {
@@ -62,7 +62,7 @@ export default function ImageWithDetail({
           <h3 className="mb-4 text-xl font-bold sm:text-3xl">상세 설명</h3>
           <p className="text-base sm:text-xl">{description}</p>
         </div>
-        <ShowWatchers id={id} />
+        {id && <ShowWatchers id={id} />}
       </motion.div>
     </motion.div>
   );
