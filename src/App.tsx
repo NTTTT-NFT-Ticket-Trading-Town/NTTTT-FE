@@ -62,6 +62,13 @@ const router = createBrowserRouter([
           return { Component: index.default };
         },
       },
+      {
+        path: "*",
+        async lazy() {
+          const index = await import("./pages/NotFound");
+          return { Component: index.default };
+        },
+      },
     ],
   },
 ]);
