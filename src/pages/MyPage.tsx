@@ -6,6 +6,7 @@ import Header from "../layout/Header";
 import { GachaInterface } from "../store/reducers/gacha/gachaTypes";
 import { ServerResponseInterface } from "../store/reducers/indexTypes";
 import { useGetMyCollectionQuery } from "../store/reducers/mypage";
+import { useDetailQuery } from "../store/reducers/user";
 
 export default function MyPage() {
   return (
@@ -16,19 +17,10 @@ export default function MyPage() {
   );
 }
 
-const useUserQuery = () => {
-  return {
-    name: "닉네임",
-    tags: ["윈터", "카리나"],
-    profileImage:
-      "https://cdn141.picsart.com/359814356036201.jpg?to=crop&type=webp&r=1456x1813&q=85",
-  };
-};
-
 function MyPageContent() {
-  const { name, profileImage } = useUserQuery();
+  const { data: userData } = useDetailQuery();
   const { data, isLoading, error } = useGetMyCollectionQuery();
-  const someCategory = data?.data?.category_list.slice(0, 3);
+  const someCategory = data?.data?.category_list.slice(0, 3) || [];
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -39,30 +31,36 @@ function MyPageContent() {
     return <ErrorContent errorMessage={errorData.result.message} />;
   }
 
-  if (!data || !data.data || !data.data.gacha_list) {
+  if (!userData || !data || !data.data || !data.data.gacha_list) {
     return <ErrorContent errorMessage="데이터가 없습니다." />;
   }
+
+  const userDetail = userData.data;
 
   return (
     <>
       <main className="relative mx-auto mb-4 w-full max-w-xl grow px-4">
         <header className="flex items-center gap-4 pt-4">
           <div className="aspect-square w-20 overflow-hidden rounded-full border-4">
-            <img src={profileImage} alt="" className="w-full object-cover" />
+            <img src={"bg-bright.png"} alt="" className="w-full object-cover" />
           </div>
           <div className="flex flex-col">
             <h3
               className="font-smei text-xl
             "
             >
-              {name}
+              {userDetail.nickname}
             </h3>
             <div className="flex gap-2">
-              {someCategory?.map((tag) => (
-                <div key={tag.name + tag.group} className="text-gray-400">
-                  #{tag.name}
-                </div>
-              ))}
+              {someCategory.length > 0 ? (
+                someCategory.map((tag) => (
+                  <div key={tag.name + tag.group} className="text-gray-400">
+                    #{tag.name}
+                  </div>
+                ))
+              ) : (
+                <div className="text-gray-400">아티스트를 선택해주세요!</div>
+              )}
             </div>
           </div>
         </header>

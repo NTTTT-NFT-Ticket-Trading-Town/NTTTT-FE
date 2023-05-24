@@ -29,8 +29,8 @@ export default function ErrorContent({
       <div className="place-center grid text-9xl">☢️</div>
       <div className="text-center text-6xl font-bold">Error!</div>
       <div className="text-center text-2xl">
-        <p>{errorMessage}</p>
-        <p>다시 시도해주세요.</p>
+        <p className="text-sm">{errorMessage}</p>
+        <p className="text-sm">다시 시도해주세요.</p>
       </div>
       <div className="relative flex h-min w-full flex-col gap-4 p-4 sm:p-8">
         <div className="relative">
