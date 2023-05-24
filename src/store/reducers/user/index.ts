@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { SignupInterface, UserInterface, UserState } from "./userTypes";
+import {
+  SignupInterface,
+  UserDetailInterface,
+  UserInterface,
+  UserState,
+} from "./userTypes";
 import { ServerResponseInterface } from "../indexTypes";
 import { FavoriteArtistInterface } from "../artist/artistTypes";
 
@@ -47,6 +52,9 @@ export const userApi = createApi({
     },
   }),
   endpoints: (builder) => ({
+    detail: builder.query<ServerResponseInterface<UserDetailInterface>, void>({
+      query: () => `/detail`,
+    }),
     login: builder.mutation<
       ServerResponseInterface<UserInterface>,
       UserInterface
@@ -91,6 +99,7 @@ export const userApi = createApi({
 });
 
 export const {
+  useDetailQuery,
   useSignupMutation,
   usePostFavoriteArtistsMutation,
   useLoginMutation,
