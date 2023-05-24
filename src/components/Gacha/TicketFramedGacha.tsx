@@ -62,7 +62,7 @@ export default function TicketFramedGacha() {
               : "오늘 더 이상 뽑을 수 없어요!"}
           </div>
         </div>
-        <div className="relative flex h-min w-full flex-col gap-4 p-4 sm:p-8">
+        <div className="relative isolate flex h-min w-full flex-col gap-4 p-4 sm:p-8">
           <button
             onClick={() => {
               setDrawGacha(false);
