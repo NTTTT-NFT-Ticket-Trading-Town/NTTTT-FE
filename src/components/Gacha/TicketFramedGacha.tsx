@@ -122,20 +122,27 @@ export default function TicketFramedGacha() {
     <Ticket key={gacha.image.url} getNextToken={setDrawGacha}>
       <Ticket.Top>
         <ImageWithDetail
+          id={gacha.id}
           image={gacha.image}
           description={gacha.desc}
-          watchers={gacha.watchers}
         />
         <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">
           <div className="text-2xl font-bold sm:text-4xl">
             {gacha.event?.name}
           </div>
           <div className="row-span-2 flex flex-col justify-between">
-            <div className="grid place-content-center justify-end gap-1">
-              <div className="grid aspect-square w-10 place-content-center rounded-full bg-neutral-200 sm:w-12 sm:text-2xl">
+            <div className="grid place-items-center justify-end gap-1">
+              <div
+                onClick={() => {
+                  setDrawGacha(true);
+                }}
+                className="z-10 grid aspect-square w-10 cursor-pointer select-all place-items-center rounded-full border-2 border-gray-700 bg-neutral-300 sm:w-14 sm:text-2xl"
+              >
                 ↻
               </div>
-              <span className="text-center text-xs sm:text-base">1/5</span>
+              <span className="text-center text-xs sm:text-base">
+                {chances}/100
+              </span>
             </div>
             <div className="w-fit place-self-end text-lg font-light text-neutral-400">
               <span className="font-medium text-neutral-800">#{gacha.seq}</span>{" "}

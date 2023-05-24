@@ -10,7 +10,7 @@ export default function Gacha() {
   return (
     <>
       <Header />
-      <main className="relative mx-auto mb-4 flex w-full max-w-xl grow justify-center px-4">
+      <main className="relative mx-auto mb-4 mt-4 flex w-full max-w-xl grow justify-center px-4">
         <AnimatePresence mode={"wait"}>
           <GachaComponent />
         </AnimatePresence>
