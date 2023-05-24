@@ -58,6 +58,13 @@ export const artistsApi = createApi({
   reducerPath: "artistsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "/api/artist",
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as any).user.session;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getAllArtists: builder.query<
