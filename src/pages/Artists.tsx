@@ -55,7 +55,7 @@ export default function Artists() {
   return (
     <>
       <Header />
-      <main className="relative mx-auto mb-4 w-full max-w-xl px-4 flex flex-col flex-grow">
+      <main className="relative mx-auto mb-4 flex w-full max-w-xl flex-grow flex-col px-4">
         {/* article - header */}
         <div className=" text-center text-lg font-bold">
           아티스트를 선택해주세요
@@ -99,8 +99,8 @@ export default function Artists() {
         </div>
 
         {/* article - footer */}
-        <div className="fixed left-0 bottom-0 w-full max-w-[36rem] bg-opacity-10 bg-gradient-to-t from-white to-transparent">
-          <div className="ml-4 mb-4 flex max-w-[calc(100%-200px)] gap-3 overflow-x-scroll scrollbar-hide">
+        <div className="fixed bottom-0 left-0 w-full  bg-opacity-10 bg-gradient-to-t from-white to-transparent">
+          <div className="mb-4 ml-4 flex max-w-[calc(100%-200px)] gap-3 overflow-x-scroll scrollbar-hide">
             <AnimatePresence>
               {selectedArtists.map((artist) => (
                 <MiniImage
