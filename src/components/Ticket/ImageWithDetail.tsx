@@ -6,15 +6,16 @@ import {
   RemoveRedEyeOutlined,
 } from "@mui/icons-material";
 import ImageWithSkeleton from "../Common/ImageWithSkeleton";
+import { useGetWatchersQuery } from "../../store/reducers/gacha";
 
 export default function ImageWithDetail({
+  id,
   image,
   description,
-  watchers = 1,
 }: {
+  id: number;
   image: ImageInterface;
   description: string;
-  watchers: number;
 }) {
   const animationDuration = 0.5;
   const easingFunction = "easeInOut";
@@ -61,15 +62,18 @@ export default function ImageWithDetail({
           <h3 className="mb-4 text-xl font-bold sm:text-3xl">상세 설명</h3>
           <p className="text-base sm:text-xl">{description}</p>
         </div>
-        <ShowWatchers watchers={watchers} />
+        <ShowWatchers id={id} />
       </motion.div>
     </motion.div>
   );
 }
 
-function ShowWatchers({ watchers }: { watchers: number }) {
+function ShowWatchers({ id }: { id: number }) {
   const [showWatchers, setShowWatchers] = useState(false);
   const [blink, setBlink] = useState(true);
+  const { data, isLoading } = useGetWatchersQuery(id, {
+    pollingInterval: 2000,
+  });
 
   const doBlink = () => {
     setTimeout(() => {
@@ -90,6 +94,8 @@ function ShowWatchers({ watchers }: { watchers: number }) {
       clearInterval(blinkInterval);
     };
   }, []);
+
+  console.log("data", data);
 
   return (
     <motion.div
@@ -141,7 +147,7 @@ function ShowWatchers({ watchers }: { watchers: number }) {
           </motion.span>
         )}
       </AnimatePresence>
-      <span>{watchers}</span>
+      <span>{isLoading || !data ? 1 : data.data}</span>
       <AnimatePresence>
         {showWatchers && (
           <motion.span

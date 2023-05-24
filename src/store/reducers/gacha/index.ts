@@ -66,7 +66,20 @@ export const gachaApi = createApi({
       },
       providesTags: ["Gacha"],
     }),
+    getWatchers: builder.query<ServerResponseInterface<number>, number>({
+      query(id) {
+        return {
+          url: `/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["Gacha"],
+    }),
   }),
 });
 
-export const { usePostDailyGachaMutation, useGetDailyGachaQuery } = gachaApi;
+export const {
+  usePostDailyGachaMutation,
+  useGetDailyGachaQuery,
+  useGetWatchersQuery,
+} = gachaApi;

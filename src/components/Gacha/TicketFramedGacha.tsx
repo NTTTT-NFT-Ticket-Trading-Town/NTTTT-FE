@@ -122,9 +122,9 @@ export default function TicketFramedGacha() {
     <Ticket key={gacha.image.url} getNextToken={setDrawGacha}>
       <Ticket.Top>
         <ImageWithDetail
+          id={gacha.id}
           image={gacha.image}
           description={gacha.desc}
-          watchers={gacha.watchers}
         />
         <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">
           <div className="text-2xl font-bold sm:text-4xl">
