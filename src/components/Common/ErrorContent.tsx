@@ -24,7 +24,7 @@ export default function ErrorContent({
         opacity: 0,
         scale: 0.9,
       }}
-      className="flex w-full grow flex-col items-center justify-center gap-6"
+      className="isolate flex w-full grow flex-col items-center justify-center gap-6"
     >
       <div className="place-center grid text-9xl">☢️</div>
       <div className="text-center text-6xl font-bold">Error!</div>

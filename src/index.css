@@ -6,6 +6,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  background-color: rgb(245 245 245 / 1);
+}
+
 body {
   @apply flex w-full justify-center bg-neutral-100;
 }

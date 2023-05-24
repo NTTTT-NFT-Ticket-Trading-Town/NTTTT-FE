@@ -15,7 +15,7 @@ import ImageWithDetail from "../Ticket/ImageWithDetail";
 import Ticket from "../Ticket/Ticket";
 
 export default function TicketFramedGacha() {
-  const [getDailyGacha, { data: response, isLoading, error }] =
+  const [getDailyGacha, { data: response, isLoading, error: postError }] =
     usePostDailyGachaMutation();
   const { data: chancesData, error: getError } = useGetDailyGachaQuery();
   const chances = useMemo(() => {
@@ -86,9 +86,9 @@ export default function TicketFramedGacha() {
     );
   }
 
-  if (error) {
-    const errorData = (error as any)
-      .data as ServerResponseInterface<GachaInterface>;
+  if (postError) {
+    const errorData =
+      postError as any as ServerResponseInterface<GachaInterface>;
     return <ErrorContent errorMessage={errorData.result.message} />;
   }
 
@@ -109,8 +109,6 @@ export default function TicketFramedGacha() {
       </ErrorContent>
     );
   }
-
-  console.log(isLoading, response, gacha);
 
   if (isLoading || !response || !gacha || !chancesData) {
     return (
