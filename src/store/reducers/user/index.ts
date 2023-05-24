@@ -54,6 +54,7 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     detail: builder.query<ServerResponseInterface<UserDetailInterface>, void>({
       query: () => `/detail`,
+      forceRefetch: () => true,
     }),
     login: builder.mutation<
       ServerResponseInterface<UserInterface>,

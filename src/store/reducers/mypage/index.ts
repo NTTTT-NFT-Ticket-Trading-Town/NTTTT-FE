@@ -54,6 +54,7 @@ export const mypageApi = createApi({
           method: "GET",
         };
       },
+      forceRefetch: () => true,
     }),
   }),
 });

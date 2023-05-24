@@ -65,12 +65,14 @@ export const artistsApi = createApi({
       void
     >({
       query: () => `/all`,
+      forceRefetch: () => true,
     }),
     getMatchingArtists: builder.query<
       ServerResponseInterface<GroupInterface[]>,
       SearchType
     >({
       query: (search) => `/${search}`,
+      forceRefetch: () => true,
     }),
   }),
 });
