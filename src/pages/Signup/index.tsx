@@ -61,7 +61,7 @@ export default function Signup() {
         <div className="isolate grid w-full grow place-content-evenly justify-center pt-2 text-white ">
           <div className="relative  grid w-full gap-2">
             <div className="mb-10 flex flex-col justify-center">
-              <h1 className=" mx-auto px-36 text-2xl font-bold italic">
+              <h1 className=" mx-auto text-2xl font-bold italic xs:px-24 sm:px-32 ">
                 NTTTT
               </h1>
               <span className="mx-auto text-2xl font-semibold">회원가입</span>
@@ -71,7 +71,7 @@ export default function Signup() {
               <input
                 onChange={(e) => setNickname(e.target.value)}
                 value={nickname}
-                className="block w-full rounded bg-neutral-300/30 px-2 py-2"
+                className="block w-full rounded bg-neutral-300/30 px-2 py-2 "
               />
               <div className="-mb-2 text-gray-1">비밀번호</div>
               <input
