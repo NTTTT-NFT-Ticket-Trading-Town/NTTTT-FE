@@ -41,7 +41,7 @@ export default function Login() {
         </div>
 
         <div className="relative isolate mx-auto h-full w-full max-w-md grow p-8 pt-10 text-white">
-          <div className="absolute left-0 right-0 top-1/4 gap-2">
+          <div className="absolute left-8 right-8 top-[20%] gap-2">
             <h1 className="mx-auto text-center text-6xl font-bold italic">
               NTTTT
             </h1>
@@ -54,7 +54,7 @@ export default function Login() {
               </div>
             </div>
           </div>
-          <div className="absolute bottom-1/4 left-0 right-0 flex flex-col justify-center">
+          <div className="absolute bottom-[20%] left-8 right-8 flex flex-col justify-center">
             <div className="mt-4 grid gap-4 pt-4">
               <input
                 onChange={(e) => setNickname(e.target.value)}
