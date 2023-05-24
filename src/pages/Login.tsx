@@ -15,6 +15,15 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("ntttt-user-session");
+
+    if (token) {
+      alert("이미 로그인 되어 있습니다.");
+      navigate("/gacha");
+    }
+  }, []);
+
+  useEffect(() => {
     if (isSuccess && response) {
       dispatch(setToken(response.data));
       navigate("/gacha");
