@@ -15,6 +15,7 @@ import {
 } from "../store/reducers/artist";
 import { ServerResponseInterface } from "../store/reducers/indexTypes";
 import { usePostFavoriteArtistsMutation } from "../store/reducers/user";
+import { useNavigate } from "react-router";
 
 export default function Artists() {
   // apis
@@ -24,6 +25,9 @@ export default function Artists() {
   const search = useSelector((state) => state.artist.search);
   const selectedArtists = useSelector((state) => state.artist.artists);
   const selectedGroups = useSelector((state) => state.artist.groups);
+
+  // hooks
+  const navigate = useNavigate();
 
   // preprocess
   if (isLoading) {
@@ -41,14 +45,14 @@ export default function Artists() {
   // handlers
   const handleOnClickSave = async () => {
     try {
-      const payload = await postFavoriteArtists(
+      await postFavoriteArtists(
         selectedArtists.map((artist) => {
           return { artistId: artist.id };
         })
       ).unwrap();
-      console.log("fulfilled", payload);
+      navigate("/gacha");
     } catch (error) {
-      console.error("rejected", error);
+      console.log("rejected", error);
     }
   };
 
