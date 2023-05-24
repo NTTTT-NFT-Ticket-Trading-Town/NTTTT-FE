@@ -16,7 +16,7 @@ export default function Home() {
       </div>
 
       <div className="relative isolate mx-auto h-full w-full max-w-md grow p-8 pt-10 text-white">
-        <div className="absolute left-0 right-0 top-1/4 gap-2">
+        <div className="absolute left-8 right-8 top-[20%] gap-2">
           <h1 className="mx-auto text-center text-6xl font-bold italic">
             NTTTT
           </h1>
@@ -29,7 +29,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-1/4 left-0 right-0 w-full">
+        <div className="absolute bottom-[20%] left-8 right-8">
           <Link
             to="/login"
             className="block w-full rounded bg-black/50 py-2 text-center transition-all duration-100 hover:bg-black/60 active:scale-95 active:bg-black/80"
