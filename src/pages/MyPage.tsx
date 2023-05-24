@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ErrorContent from "../components/Common/ErrorContent";
 import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
@@ -40,7 +41,7 @@ function MyPageContent() {
   return (
     <>
       <main className="relative mx-auto mb-4 w-full max-w-xl grow px-4">
-        <header className="flex items-center gap-4 pt-4">
+        <header className="flex items-center justify-between gap-2 pt-4">
           <div className="aspect-square w-20 overflow-hidden rounded-full border-4">
             <img src={"bg-bright.png"} alt="" className="w-full object-cover" />
           </div>
@@ -63,36 +64,60 @@ function MyPageContent() {
               )}
             </div>
           </div>
+          <div>
+            <Link
+              to="/artists"
+              className="w-min rounded bg-gray-300 p-1 text-xs"
+            >
+              아티스트 수정
+            </Link>
+          </div>
         </header>
         <section className="pt-10">
           <div className="relative flex flex-col gap-10">
-            {data?.data?.gacha_list.map((gacha, index) => {
-              if (!gacha) return null;
-              return (
-                <div
-                  key={gacha.id}
-                  style={{
-                    top: `${index * 50}px`,
-                    position: "sticky",
-                    width: "80%",
-                    marginInline: "auto",
-                  }}
-                >
-                  <Ticket getNextToken={() => null}>
-                    <div className="bg-white px-6 pt-4">
-                      <ImageWithSkeleton gacha={gacha.image} />
-                    </div>
-                    <Ticket.Split />
-                    <div className="flex justify-between rounded-b-lg bg-white px-8 pb-8 pt-4 text-xl text-black">
-                      <span className="font-semibold">{gacha.artist.name}</span>
-                      <span>
-                        {gacha.seq} / {gacha.event.quantity}
-                      </span>
-                    </div>
-                  </Ticket>
+            {data?.data ? (
+              data.data.gacha_list.map((gacha, index) => {
+                if (!gacha) return null;
+                return (
+                  <div
+                    key={gacha.id}
+                    style={{
+                      top: `${index * 50}px`,
+                      position: "sticky",
+                      width: "80%",
+                      marginInline: "auto",
+                    }}
+                  >
+                    <Ticket getNextToken={() => null}>
+                      <div className="bg-white px-6 pt-4">
+                        <ImageWithSkeleton gacha={gacha.image} />
+                      </div>
+                      <Ticket.Split />
+                      <div className="flex justify-between rounded-b-lg bg-white px-8 pb-8 pt-4 text-xl text-black">
+                        <span className="font-semibold">
+                          {gacha.artist.name}
+                        </span>
+                        <span>
+                          {gacha.seq} / {gacha.event.quantity}
+                        </span>
+                      </div>
+                    </Ticket>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="flex flex-col items-center gap-2">
+                <div className="text-center text-gray-500">
+                  보유한 티켓이 없습니다.
                 </div>
-              );
-            })}
+                <Link
+                  className="rounded bg-purple-600 px-4 py-2 text-white"
+                  to="/gacha"
+                >
+                  구매하러 가기
+                </Link>
+              </div>
+            )}
           </div>
         </section>
       </main>
