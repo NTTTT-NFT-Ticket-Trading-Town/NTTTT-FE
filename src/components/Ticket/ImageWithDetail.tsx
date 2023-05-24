@@ -10,7 +10,7 @@ import ImageWithSkeleton from "../Common/ImageWithSkeleton";
 export default function ImageWithDetail({
   image,
   description,
-  watchers,
+  watchers = 1,
 }: {
   image: ImageInterface;
   description: string;

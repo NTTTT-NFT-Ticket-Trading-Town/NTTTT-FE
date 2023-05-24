@@ -14,7 +14,7 @@ export default function Header() {
       <nav className="relative z-10 flex items-center">
         <div className="flex w-full justify-between px-6 py-4 sm:py-4">
           <div
-            className="flex items-center text-gray-500"
+            className="flex cursor-pointer items-center text-gray-500"
             onClick={handleClickBackBtn}
           >
             <svg

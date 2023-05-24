@@ -39,7 +39,7 @@ export default function Signup() {
 
   useEffect(() => {
     if (isSuccess && response) {
-      navigate("/login");
+      navigate("/artists");
     }
   }, [isSuccess, response]);
 
@@ -61,7 +61,10 @@ export default function Signup() {
         <div className="isolate grid w-full grow place-content-evenly justify-center pt-2 text-white ">
           <div className="relative  grid w-full gap-2">
             <div className="mb-10 flex flex-col justify-center">
-              <h1 className=" mx-auto text-2xl font-bold italic xs:px-24 sm:px-32 ">
+              <h1
+                onClick={() => navigate("/login")}
+                className=" mx-auto cursor-pointer text-2xl font-bold italic xs:px-24 sm:px-32 "
+              >
                 NTTTT
               </h1>
               <span className="mx-auto text-2xl font-semibold">회원가입</span>
