@@ -76,17 +76,18 @@ export default function Artists() {
           </div>
 
           {/* article - body */}
-          <div className="grid grid-cols-3 gap-3 xs:gap-0">
+          <div className="grid gap-3 xs:grid-cols-3 xs:gap-0 sm:grid-cols-4 sm:gap-2">
             {artists
               .filter((artist) => artist.name.includes(search))
               .filter((artist) => {
                 if (selectedGroups.length === 0) return true;
                 return selectedGroups.includes(artist.group);
               })
-              .map((artist) => {
+              .map((artist, idx) => {
                 return (
                   <MiniTicket
                     key={artist.id}
+                    delay={idx}
                     onClick={() => dispatch(toggleFavoriteArtist(artist))}
                     clicked={!!selectedArtists.find((e) => e.id === artist.id)}
                     title={artist.name}
