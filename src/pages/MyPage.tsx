@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ErrorContent from "../components/Common/ErrorContent";
 import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
@@ -22,6 +22,7 @@ function MyPageContent() {
   const { data: userData } = useDetailQuery();
   const { data, isLoading, error } = useGetMyCollectionQuery();
   const someCategory = data?.data?.category_list.slice(0, 3) || [];
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -42,35 +43,48 @@ function MyPageContent() {
     <>
       <main className="relative mx-auto mb-4 w-full max-w-xl grow px-4">
         <header className="flex items-center justify-between gap-2 pt-4">
-          <div className="aspect-square w-20 overflow-hidden rounded-full border-4">
-            <img src={"bg-bright.png"} alt="" className="w-full object-cover" />
-          </div>
-          <div className="flex flex-col">
-            <h3
-              className="font-smei text-xl
+          <div className="flex flex-row items-center gap-2">
+            <div className="aspect-square w-20 overflow-hidden rounded-full border-4">
+              <img
+                src={"bg-bright.png"}
+                alt=""
+                className="w-full object-cover"
+              />
+            </div>
+            <div className="flex flex-col">
+              <h3
+                className="font-smei text-xl
             "
-            >
-              {userDetail.nickname}
-            </h3>
-            <div className="flex gap-2">
-              {someCategory.length > 0 ? (
-                someCategory.map((tag) => (
-                  <div key={tag.name + tag.group} className="text-gray-400">
-                    #{tag.name}
-                  </div>
-                ))
-              ) : (
-                <div className="text-gray-400">아티스트를 선택해주세요!</div>
-              )}
+              >
+                {userDetail.nickname}
+              </h3>
+              <div className="flex gap-2">
+                {someCategory.length > 0 ? (
+                  someCategory.map((tag) => (
+                    <div key={tag.name + tag.group} className="text-gray-400">
+                      #{tag.name}
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-gray-400">아티스트를 선택해주세요!</div>
+                )}
+              </div>
             </div>
           </div>
-          <div>
-            <Link
-              to="/artists"
-              className="w-min rounded bg-gray-300 p-1 text-xs"
-            >
+
+          <div className="flex flex-col gap-2">
+            <Link to="/artists" className="rounded bg-gray-300 p-2 text-xs">
               아티스트 수정
             </Link>
+            <button
+              onClick={() => {
+                localStorage.removeItem("ntttt-user-session");
+                navigate("/login");
+              }}
+              className="rounded bg-gray-300 p-2 text-center text-xs"
+            >
+              로그아웃
+            </button>
           </div>
         </header>
         <section className="pt-10">
