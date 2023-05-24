@@ -50,7 +50,7 @@ function Payment() {
 
   return (
     <>
-      <main className="relative mx-auto mb-4 w-full max-w-xl grow px-4">
+      <main className="relative mx-auto mb-4 mt-4 w-full max-w-xl grow px-4">
         <ImageWithSkeleton gacha={gacha.image} />
         <div className="flex w-full flex-col gap-6 py-6">
           <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">
