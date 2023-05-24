@@ -23,11 +23,12 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["icon.png"],
       manifest: {
+        display: "fullscreen",
         name: "NTTTT",
         short_name: "NTTTT",
         description: "Non-Fungible-Team-NFT-Project",
         start_url: "/",
-        theme_color: "#ffffff",
+        theme_color: "#000000",
         icons: [
           {
             src: "icon.png",
