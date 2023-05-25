@@ -3,3 +3,5 @@ export interface ModalStateInterface {
   hp: number;
   message: string;
 }
+
+export type ModalPayload = Omit<ModalStateInterface, "showModal">;

@@ -49,6 +49,7 @@ export default function Artists() {
 
   // handlers
   const handleOnClickSave = async () => {
+    if (selectedArtists.length <= 0) alert("최소한 한명은 선택해 주세요!");
     try {
       await postFavoriteArtists(
         selectedArtists.map((artist) => {
@@ -56,7 +57,7 @@ export default function Artists() {
         })
       ).unwrap();
     } catch (error) {
-      console.log("rejected", error);
+      alert("에러");
     }
   };
 
