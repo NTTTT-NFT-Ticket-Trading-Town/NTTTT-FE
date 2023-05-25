@@ -14,6 +14,7 @@ export default function ImageWithSkeleton({
       style={{
         aspectRatio: imageRatio,
         width: "100%",
+        translate: "0 0 0px",
       }}
     >
       <Skeleton />
