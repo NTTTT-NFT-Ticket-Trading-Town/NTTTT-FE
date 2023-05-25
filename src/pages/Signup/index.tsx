@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { useSignupMutation } from "../../store/reducers/user";
+import {
+  setToken,
+  useLoginMutation,
+  useSignupMutation,
+} from "../../store/reducers/user";
 import metamask from "../../assets/metamask.svg";
 import { useMetaMask } from "./useMetaMask";
 import { motion } from "framer-motion";
-
+import { dispatch } from "../../store";
 export default function Signup() {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +20,7 @@ export default function Signup() {
   const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask();
   const [signup, { data, error, isLoading, isSuccess, status }] =
     useSignupMutation();
+  const [login] = useLoginMutation();
 
   const response = data;
   const errorRes = error as any;
@@ -51,8 +56,18 @@ export default function Signup() {
   }, [wallet]);
 
   useEffect(() => {
+    const loginRightAfterSignup = async () => {
+      try {
+        const loginData = await login({ nickname, password }).unwrap();
+        dispatch(setToken(loginData.data));
+        navigate("/artists");
+      } catch (e) {
+        throw e;
+      }
+    };
+
     if (isSuccess && response) {
-      navigate("/artists");
+      loginRightAfterSignup();
     }
   }, [isSuccess, response]);
 
