@@ -38,7 +38,8 @@ export default function Login() {
     <>
       <main className="relative flex w-full max-w-xl grow">
         <div className="absolute isolate w-full max-w-xl overflow-hidden">
-          <img
+          <motion.img
+            
             src="/bg-dark.png"
             alt=""
             width={800}

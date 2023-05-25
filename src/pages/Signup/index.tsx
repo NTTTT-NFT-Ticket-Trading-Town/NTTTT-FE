@@ -10,6 +10,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [walletAddr, setWalletAddr] = useState("");
+  const [validationErrorMessage, setValidationErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask();
@@ -25,13 +26,25 @@ export default function Signup() {
   };
 
   const onClickSignup = () => {
-    signup({
-      walletAddr,
-      nickname,
-      phoneNumber,
-      password,
-    });
+    if (!walletAddr || !nickname || !phoneNumber || !password)
+      return setValidationErrorMessage("모든 정보를 입력해주세요.");
+    else
+      signup({
+        walletAddr,
+        nickname,
+        phoneNumber,
+        password,
+      });
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("ntttt-user-session");
+
+    if (token) {
+      alert("이미 로그인 되어 있습니다.");
+      navigate("/gacha");
+    }
+  }, []);
 
   useEffect(() => {
     if (wallet.accounts.length > 0) setWalletAddr(wallet.accounts[0]);
@@ -111,9 +124,10 @@ export default function Signup() {
           </div>
           <div>
             <div className="mb-5 text-center text-base text-red-500">
-              {status === "rejected" && (
+              {(status === "rejected" || validationErrorMessage) && (
                 <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  {errorRes.data.result.message}
+                  {status === "rejected" && errorRes.data.result.message}
+                  {validationErrorMessage}
                 </motion.span>
               )}
             </div>
