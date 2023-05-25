@@ -1,4 +1,4 @@
-import { motion, useScroll } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorContent from "../components/Common/ErrorContent";
@@ -54,12 +54,7 @@ function MyPageContent() {
               />
             </div>
             <div className="flex flex-col">
-              <h3
-                className="font-smei text-xl
-            "
-              >
-                {userDetail.nickname}
-              </h3>
+              <h3 className="font-smei text-xl">{userDetail.nickname}</h3>
               <div className="flex gap-2">
                 {someCategory.length > 0 ? (
                   someCategory.map((tag) => (
@@ -135,6 +130,11 @@ const CollectionTicket = ({
     offset: ["end center", "end end"],
   });
 
+  const springScrollYProgress = useSpring(scrollYProgress, {
+    damping: 100,
+    stiffness: 1000,
+  });
+
   return (
     <motion.div
       ref={ref}
@@ -143,11 +143,9 @@ const CollectionTicket = ({
         top: `${-10 + index * 10}px`,
         position: "sticky",
         width: "90%",
-        marginInline: "auto",
-        height: "90vh",
-        backdropFilter: "blur(5px)",
-        scale: scrollYProgress,
+        scale: springScrollYProgress,
       }}
+      className="mx-auto h-[90vh] backdrop-blur"
     >
       <Ticket getNextToken={() => null}>
         <div className="bg-white px-6 pt-4">
