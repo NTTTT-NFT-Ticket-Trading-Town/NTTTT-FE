@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorContent from "../components/Common/ErrorContent";
@@ -84,39 +84,35 @@ function MyPageContent() {
             </button>
           </div>
         </header>
-        <section className="pt-10">
-          <div className="relative flex flex-col gap-10">
-            {data?.data ? (
-              data.data.gacha_list.map((gacha, index) => (
-                <CollectionTicket key={index} index={index} gacha={gacha} />
-              ))
-            ) : (
-              <div className="flex flex-col items-center gap-2">
-                <div className="text-center text-gray-500">
-                  보유한 티켓이 없습니다.
-                </div>
-                <Link
-                  className="rounded bg-purple-600 px-4 py-2 text-white"
-                  to="/gacha"
-                >
-                  구매하러 가기
-                </Link>
+        <section className="gap-100 relative flex flex-col pt-4 sm:pt-8">
+          {data?.data.gacha_list.length !== 0 ? (
+            <>
+              {data.data.gacha_list.map((gacha, index) => {
+                console.log(gacha);
+                return <CollectionTicket key={index} gacha={gacha} />;
+              })}
+              <div key="invisible-padding" className="h-[50vh] w-full"></div>
+            </>
+          ) : (
+            <div className="flex flex-col items-center gap-2">
+              <div className="text-center text-gray-500">
+                보유한 티켓이 없습니다.
               </div>
-            )}
-          </div>
+              <Link
+                className="rounded bg-purple-600 px-4 py-2 text-white"
+                to="/gacha"
+              >
+                구매하러 가기
+              </Link>
+            </div>
+          )}
         </section>
       </main>
     </>
   );
 }
 
-const CollectionTicket = ({
-  gacha,
-  index,
-}: {
-  gacha: GachaInterface;
-  index: number;
-}) => {
+const CollectionTicket = ({ gacha }: { gacha: GachaInterface }) => {
   if (!gacha) return null;
 
   // this is a function when this gacha has scrolled to the top,
@@ -127,12 +123,21 @@ const CollectionTicket = ({
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["end center", "end end"],
+    offset: ["start 85px", "start 100px"],
   });
 
-  const springScrollYProgress = useSpring(scrollYProgress, {
-    damping: 100,
+  const scrollYProgressRange = [-1, 1];
+  const scaleRange = [0.8, 1];
+
+  const yValue = useTransform(
+    scrollYProgress,
+    scrollYProgressRange,
+    scaleRange
+  );
+
+  const springScrollYProgress = useSpring(yValue, {
     stiffness: 1000,
+    damping: 100,
   });
 
   return (
@@ -140,19 +145,16 @@ const CollectionTicket = ({
       ref={ref}
       key={gacha.id}
       style={{
-        top: `${-10 + index * 10}px`,
-        position: "sticky",
-        width: "90%",
         scale: springScrollYProgress,
       }}
-      className="mx-auto h-[90vh] backdrop-blur"
+      className="sticky top-16 mx-auto w-[80%] origin-center"
     >
       <Ticket getNextToken={() => null}>
         <div className="bg-white px-6 pt-4">
           <ImageWithDetail description={gacha.desc} image={gacha.image} />
         </div>
         <Ticket.Split />
-        <div className="flex justify-between rounded-b-lg bg-white px-8 pb-8 pt-4 text-xl text-black">
+        <div className="flex justify-between rounded-b-lg bg-white px-6 pb-6 pt-4 text-xl text-black sm:px-8 sm:pb-8">
           <span className="font-semibold">{gacha.artist.name}</span>
           <span>
             #{gacha.seq} / {gacha.event.quantity}
