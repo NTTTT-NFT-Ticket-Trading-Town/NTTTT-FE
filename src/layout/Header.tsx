@@ -37,7 +37,7 @@ export default function Header() {
             </div>
           </Link>
           <Link to="/mypage">
-            <div className="relative grid place-items-center text-gray-500">
+            <div className="relative -mt-1 grid place-items-center text-gray-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
