@@ -56,6 +56,7 @@ export default function ImageWithDetail({
           <p className="text-base sm:text-xl">{description}</p>
         </div>
         <img
+          loading="lazy"
           draggable={false}
           src={image.url}
           alt=""

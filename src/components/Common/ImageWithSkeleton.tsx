@@ -19,6 +19,7 @@ export default function ImageWithSkeleton({
     >
       <Skeleton />
       <img
+        loading="lazy"
         draggable={false}
         src={gacha.url}
         alt=""
