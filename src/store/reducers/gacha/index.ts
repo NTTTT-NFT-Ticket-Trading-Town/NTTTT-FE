@@ -65,6 +65,7 @@ export const gachaApi = createApi({
         };
       },
       providesTags: ["Gacha"],
+      forceRefetch: () => true,
     }),
     getWatchers: builder.query<ServerResponseInterface<number>, number>({
       query(id) {

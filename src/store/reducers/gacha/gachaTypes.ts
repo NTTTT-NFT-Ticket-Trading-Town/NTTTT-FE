@@ -21,7 +21,7 @@ export interface GachaInterface {
   image: ImageInterface;
   watchers: number;
   desc: string;
-  paymentState: string;
+  payment_state: string;
   publishedAt: string;
 }
 

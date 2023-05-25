@@ -31,6 +31,7 @@ export default function TicketFramedGacha() {
   }, [response, chancesData]);
   const amount = useAmount(gacha?.price);
   const [currency, setCurrency] = useState<"won" | "eth">("won");
+  const isSoldOut = gacha?.payment_state === "SOLD_OUT";
 
   if (drawGacha && gacha) {
     return (
@@ -74,13 +75,17 @@ export default function TicketFramedGacha() {
             오늘의 가챠 뽑기
           </button>
           <div className="absolute -inset-2 -z-10 animate-pulse bg-purple-300 blur-xl peer-disabled:bg-gray-300 sm:-inset-4"></div>
-          <Link
-            to="/buy"
-            className="w-full self-end rounded border-4 border-purple-600 bg-purple-200 py-2 text-center text-xl font-bold text-purple-900 transition-all duration-100 hover:bg-purple-300 active:scale-95 active:bg-purple-400 sm:py-4 sm:text-2xl"
-          >
-            마지막으로 뽑았던 가챠 구매하기
-          </Link>
-          <div className="absolute -inset-2 -z-10 animate-pulse bg-purple-100 blur-xl sm:-inset-4"></div>
+          {!isSoldOut && (
+            <>
+              <Link
+                to="/buy"
+                className="w-full self-end rounded border-4 border-purple-600 bg-purple-200 py-2 text-center text-xl font-bold text-purple-900 transition-all duration-100 hover:bg-purple-300 active:scale-95 active:bg-purple-400 sm:py-4 sm:text-2xl"
+              >
+                마지막으로 뽑았던 가챠 구매하기
+              </Link>
+              <div className="absolute -inset-2 -z-10 animate-pulse bg-purple-100 blur-xl sm:-inset-4"></div>
+            </>
+          )}
         </div>
       </motion.div>
     );
