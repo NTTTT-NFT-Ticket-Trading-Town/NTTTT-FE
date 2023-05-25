@@ -89,14 +89,14 @@ export default function TicketFramedGacha() {
   if (postError) {
     const errorData =
       postError as any as ServerResponseInterface<GachaInterface>;
-    return <ErrorContent errorMessage={errorData.result.message} />;
+    return <ErrorContent errorMessage={errorData?.result?.message} />;
   }
 
   if (getError) {
     const errorData = (getError as any)
       .data as ServerResponseInterface<GachaInterface>;
     return (
-      <ErrorContent errorMessage={errorData.result.message}>
+      <ErrorContent errorMessage={errorData?.result?.message}>
         <button
           onClick={() => {
             getDailyGacha();

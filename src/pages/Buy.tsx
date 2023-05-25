@@ -14,10 +14,10 @@ import ImageWithSkeleton from "../components/Common/ImageWithSkeleton";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
 import Header from "../layout/Header";
 import { useGetDailyGachaQuery } from "../store/reducers/gacha";
+import { GachaInterface } from "../store/reducers/gacha/gachaTypes";
+import { ServerResponseInterface } from "../store/reducers/indexTypes";
 import { usePostPaymentMutation } from "../store/reducers/payment";
 import { useAmount } from "../utils/currency";
-import { ServerResponseInterface } from "../store/reducers/indexTypes";
-import { GachaInterface } from "../store/reducers/gacha/gachaTypes";
 
 export default function Buy() {
   return (
@@ -33,25 +33,42 @@ function Payment() {
   const [currency, setCurrency] = useState<"won" | "eth">("won");
   const amount = useAmount(data?.data?.token?.price);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
-  console.log(data);
+  const gacha = data?.data.token;
+
+  const isSoldOut = gacha?.payment_state === "SOLD_OUT";
+
+  useEffect(() => {
+    if (isSoldOut) {
+      setTimeout(() => {
+        alert("이미 매진된 토큰입니다.");
+        navigate("/gacha", { replace: true });
+      }, 500);
+    }
+  }, [isSoldOut]);
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (!data || !data.data || !data.data.token) {
+  if (!data || !data.data || !data.data.token || !gacha) {
     const errorData =
       error as unknown as ServerResponseInterface<GachaInterface>;
-    return <ErrorContent errorMessage={errorData.result.message} />;
+    return <ErrorContent errorMessage={errorData?.result?.message} />;
   }
-
-  const gacha = data.data.token;
 
   return (
     <>
       <main className="relative mx-auto mb-4 mt-4 w-full max-w-xl grow px-4">
-        <ImageWithSkeleton gacha={gacha.image} />
+        <div className="relative">
+          <ImageWithSkeleton gacha={gacha.image} />
+          {isSoldOut && (
+            <div className="absolute inset-4 isolate mx-auto grid -rotate-6 place-items-center rounded-lg border-8 border-dashed border-black bg-yellow-300/90 px-8 py-4 text-center text-5xl">
+              판매 완료
+            </div>
+          )}
+        </div>
         <div className="flex w-full flex-col gap-6 py-6">
           <div className="grid grow grid-cols-[auto_80px] gap-4 sm:gap-8">
             <div className="col-span-2 text-2xl font-bold sm:text-4xl">
@@ -174,16 +191,17 @@ function Payment() {
         </div>
       </main>
 
-      <div className="group sticky bottom-0 flex grow flex-col justify-center pt-4 sm:gap-8">
+      <div className="sticky bottom-0 flex grow flex-col justify-center pt-4 sm:gap-8">
         <button
           onClick={() => setShowModal(true)}
-          className="w-full self-end rounded-t-lg bg-purple-600 pb-6 pt-3 text-center text-2xl font-bold text-purple-100 transition-all duration-100  hover:bg-purple-500 active:bg-purple-700 sm:pt-3"
+          disabled={isSoldOut}
+          className="group peer w-full self-end rounded-t-lg bg-purple-600 pb-6 pt-3 text-center text-2xl font-bold text-purple-100 transition-all duration-100  hover:bg-purple-500 active:bg-purple-700 disabled:bg-gray-400 disabled:text-gray-100 sm:pt-3"
         >
           <p className="select-none transition-transform group-active:scale-90">
-            {amount[currency]} 결제하기
+            {!isSoldOut ? `${amount[currency]} 결제하기` : "판매 완료"}
           </p>
         </button>
-        <div className="absolute -inset-0 -z-10 animate-pulse bg-purple-300 blur-xl"></div>
+        <div className="absolute -inset-0 -z-10 animate-pulse bg-purple-300 blur-xl peer-disabled:bg-gray-400"></div>
       </div>
       {showModal && <BuyModal tokenId={gacha.id} setShowModal={setShowModal} />}
     </>

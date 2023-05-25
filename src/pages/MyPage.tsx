@@ -32,7 +32,7 @@ function MyPageContent() {
   if (error) {
     const errorData = (error as any)
       .data as ServerResponseInterface<GachaInterface>;
-    return <ErrorContent errorMessage={errorData.result.message} />;
+    return <ErrorContent errorMessage={errorData?.result?.message} />;
   }
 
   if (!userData || !data || !data.data || !data.data.gacha_list) {

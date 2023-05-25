@@ -40,7 +40,7 @@ export default function Artists() {
   }
   if (error || !data) {
     const errorData = (error as any).data as ServerResponseInterface<null>;
-    return <ErrorContent errorMessage={errorData.result.message} />;
+    return <ErrorContent errorMessage={errorData?.result?.message} />;
   }
 
   const groupsDTO = data.data;

@@ -6,7 +6,7 @@ export default function ErrorContent({
   errorMessage,
   children,
 }: {
-  errorMessage: string;
+  errorMessage: string | undefined;
   children?: ReactNode;
 }) {
   const navigate = useNavigate();
@@ -29,7 +29,9 @@ export default function ErrorContent({
       <div className="place-center grid text-9xl">☢️</div>
       <div className="text-center text-6xl font-bold">Error!</div>
       <div className="text-center text-2xl">
-        <p className="text-sm">{errorMessage}</p>
+        <p className="text-sm">
+          {errorMessage ?? "예기치 못한 에러가 발생했습니다."}
+        </p>
         <p className="text-sm">다시 시도해주세요.</p>
       </div>
       <div className="relative flex h-min w-full flex-col gap-4 p-4 sm:p-8">
