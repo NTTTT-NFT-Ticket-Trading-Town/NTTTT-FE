@@ -60,10 +60,10 @@ export default function Signup() {
     }
   }, []);
 
-  // TODO: Testnet is not working yet
-  // useEffect(() => {
-  //   if (wallet.accounts.length > 0) setWalletAddr(wallet.accounts[0]);
-  // }, [wallet]);
+  useEffect(() => {
+    // TODO: Testnet is not working yet
+    // if (wallet.accounts.length > 0) setWalletAddr(wallet.accounts[0]);
+  }, [wallet]);
 
   useEffect(() => {
     const loginRightAfterSignup = async () => {
