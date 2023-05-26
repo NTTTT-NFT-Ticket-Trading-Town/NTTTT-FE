@@ -35,7 +35,11 @@
           console.log("");
           console.log("[window ready] : [접속 모바일] : " + "[아이폰]");
           console.log("");
-          // 아이폰의 경우 현재 방법이 막혔습니다..
+          var useragt = navigator.userAgent.toLowerCase();
+          var target_url = "https://test.projectbuildup.io/";
+          if (useragt.match(/kakaotalk/i)) {
+            location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(target_url);
+          }
         }
         else { // 안드로이드 접속 경우
           console.log("");
