@@ -5,16 +5,19 @@ import {
   useLoginMutation,
   useSignupMutation,
 } from "../../store/reducers/user";
-import metamask from "../../assets/metamask.svg";
 import { useMetaMask } from "./useMetaMask";
 import { motion } from "framer-motion";
 import { dispatch } from "../../store";
+import MetamaskImage from "./Metamask";
+import { getRandomWalletAddr } from "../../utils";
+
 export default function Signup() {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [walletAddr, setWalletAddr] = useState("");
   const [validationErrorMessage, setValidationErrorMessage] = useState("");
+  const [isRotating, setIsRotating] = useState(false);
   const navigate = useNavigate();
 
   const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask();
@@ -26,6 +29,12 @@ export default function Signup() {
   const errorRes = error as any;
 
   const onClickMetamask = () => {
+    setIsRotating(true);
+    setTimeout(() => {
+      setWalletAddr(getRandomWalletAddr());
+      setIsRotating(false);
+    }, 1000);
+    return; // TODO: Testnet is not working yet
     if (!hasProvider) window.open("https://metamask.io", "_blank");
     connectMetaMask();
   };
@@ -51,9 +60,10 @@ export default function Signup() {
     }
   }, []);
 
-  useEffect(() => {
-    if (wallet.accounts.length > 0) setWalletAddr(wallet.accounts[0]);
-  }, [wallet]);
+  // TODO: Testnet is not working yet
+  // useEffect(() => {
+  //   if (wallet.accounts.length > 0) setWalletAddr(wallet.accounts[0]);
+  // }, [wallet]);
 
   useEffect(() => {
     const loginRightAfterSignup = async () => {
@@ -121,17 +131,18 @@ export default function Signup() {
               <div className="text-gray-1">지갑주소</div>
               <div className="relative">
                 <input
-                  onChange={(e) => setWalletAddr(e.target.value)}
+                  placeholder="메타마스크 주소를 연동하세요"
+                  disabled
                   value={walletAddr}
-                  className="absolute block w-full rounded bg-neutral-300/30 px-2 py-2 pr-16"
+                  className=" absolute block w-full rounded bg-neutral-300/30 px-2 py-2 pr-16"
                 />
                 <div
                   onClick={onClickMetamask}
                   className="absolute right-0 mx-auto block h-10 w-14 cursor-pointer rounded bg-white bg-opacity-25 py-2 text-center"
                 >
-                  <img
-                    className="mx-auto transition hover:scale-110"
-                    src={metamask}
+                  <MetamaskImage
+                    isRotating={isRotating}
+                    onAnimationComplete={() => setIsRotating(false)}
                   />
                 </div>
               </div>
