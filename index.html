@@ -2,10 +2,61 @@
 <html lang="en">
 
 <head>
+  <script>
+
+    /* [브라우저 ready 상태 정의 : 최초 호출 상태] */
+    document.addEventListener("DOMContentLoaded", ready);
+    function ready() {
+      console.log("");
+      console.log("[window ready] : [start]");
+      console.log("");
+
+      // [현재 접속된 url 정보 및 접속 브라우저 확인]
+      // [카카오톡 인앱 브라우저 >> 안드로이드 모바일 기종 인 경우 >> 크롬 브라우저 이동 실시]
+      var Url = location.href;
+      var Agent = navigator.userAgent.toLowerCase();
+      console.log("");
+      console.log("[window ready] : [접속 Url] : " + Url);
+      console.log("[window ready] : [접속 Agent] : " + Agent);
+      console.log("");
+
+      //alert(Agent);
+      // if (Agent.includes("kakao")) { // 카카오, 인스타 인앱 브라우저로 실행 시킨 경우
+      if ((Agent.indexOf("kakao") > -1) || Agent.indexOf('instagram') > -1) {
+        // 먼저, 카카오 인앱 브라우저 닫기
+        if (Agent.includes("kakao")) {
+          location.href = 'kakaotalk://inappbrowser/close';
+        }
+        // 인스타 인앱 브라우저 닫기
+        else if (Agent.includes("instagram")) {
+          location.href = 'instagram://inappbrowser/close';
+        }
+        if (navigator.userAgent.match(/iPhone|iPad/i)) { // 아이폰 접속 경우
+          console.log("");
+          console.log("[window ready] : [접속 모바일] : " + "[아이폰]");
+          console.log("");
+          // 아이폰의 경우 현재 방법이 막혔습니다..
+        }
+        else { // 안드로이드 접속 경우
+          console.log("");
+          console.log("[window ready] : [접속 모바일] : " + "[안드로이드]");
+          console.log("");
+          // 크롬으로 새창 열기
+          location.href = 'intent://' + location.href.replace(/https?:\/\//i, '') + '#Intent;scheme=http;package=com.android.chrome;end';
+        }
+      }
+    };
+  </script>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NTTTT</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta property="og:title" content="NTTTT" />
+  <meta property="og:description" content="나만의 아이돌 NFT" />
+  <meta property="og:url" content="https://ntttt.dxworks.co.kr/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ntttt.dxworks.co.kr/splashscreens/ipad_splash.png" />
   <link href="splashscreens/iphone5_splash.png"
     media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
     rel="apple-touch-startup-image" />
