@@ -13,7 +13,8 @@ export default function Test() {
   });
   return (
     <form
-      onSubmit={() => {
+      onSubmit={(e) => {
+        e.preventDefault();
         makeToken(data);
       }}
       className="flex flex-col gap-4 p-8"

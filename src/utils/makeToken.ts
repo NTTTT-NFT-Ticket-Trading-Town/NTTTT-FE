@@ -24,11 +24,11 @@ export const makeToken = ({
   price,
   desc,
 }: makeTokenProps) => {
-  fetch("http://localhost:3000/api/token", {
+  fetch("https://ntttt.dxworks.co.kr/api/token", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authoration: "Bearer" + localStorage.getItem("token"),
+      Authoration: "Bearer " + localStorage.getItem("ntttt-user-session"),
     },
     body: JSON.stringify({
       eventId,
