@@ -18,7 +18,6 @@ export default function Login() {
     const token = localStorage.getItem("ntttt-user-session");
 
     if (token) {
-      alert("이미 로그인 되어 있습니다.");
       navigate("/gacha");
     }
   }, []);
@@ -39,7 +38,6 @@ export default function Login() {
       <main className="relative flex w-full max-w-xl grow">
         <div className="absolute isolate w-full max-w-xl overflow-hidden">
           <motion.img
-            
             src="/bg-dark.png"
             alt=""
             width={800}
