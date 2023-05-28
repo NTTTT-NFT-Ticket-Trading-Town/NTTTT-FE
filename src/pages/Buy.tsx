@@ -18,6 +18,8 @@ import { GachaInterface } from "../store/reducers/gacha/gachaTypes";
 import { ServerResponseInterface } from "../store/reducers/indexTypes";
 import { usePostPaymentMutation } from "../store/reducers/payment";
 import { useAmount } from "../utils/currency";
+import { useDetailQuery } from "../store/reducers/user";
+import MetamaskImage from "./Signup/Metamask";
 
 export default function Buy() {
   return (
@@ -30,10 +32,13 @@ export default function Buy() {
 
 function Payment() {
   const { data, isLoading, error } = useGetDailyGachaQuery();
+  const { data: userData } = useDetailQuery();
   const [currency, setCurrency] = useState<"won" | "eth">("won");
   const amount = useAmount(data?.data?.token?.price);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const [checked, setChecked] = useState(false);
+  const checkboxRef = useRef<HTMLInputElement>(null);
 
   const gacha = data?.data.token;
 
@@ -53,6 +58,17 @@ function Payment() {
   }
 
   if (!data || !data.data || !data.data.token || !gacha) {
+    const errorData =
+      error as unknown as ServerResponseInterface<GachaInterface>;
+    return <ErrorContent errorMessage={errorData?.result?.message} />;
+  }
+
+  if (
+    !userData ||
+    !userData.data ||
+    !userData.data.wallet_addr ||
+    !userData.data.phone_number
+  ) {
     const errorData =
       error as unknown as ServerResponseInterface<GachaInterface>;
     return <ErrorContent errorMessage={errorData?.result?.message} />;
@@ -143,27 +159,45 @@ function Payment() {
           <input
             type="text"
             placeholder="+82 010-0000-0000"
+            value={userData.data.phone_number}
             className="flex w-full cursor-text justify-between rounded-lg bg-gray-300 px-4 py-4 outline-2 outline-purple-700 transition-colors"
+            readOnly={!!userData.data.phone_number}
           />
 
           <div className="border-[1.5px] border-dashed border-neutral-300" />
 
           <div className="text-2xl font-semibold">지갑 주소</div>
 
-          <input
-            type="text"
-            placeholder="ZC42EWOU32SDFV431"
-            className="flex w-full cursor-text justify-between rounded-lg bg-gray-300 px-4 py-4 outline-2 outline-purple-700 transition-colors"
-          />
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="ZC42EWOU32SDFV431"
+              value={userData.data.wallet_addr}
+              className="flex w-full cursor-text justify-between rounded-lg bg-gray-300 px-4 py-4 outline-2 outline-purple-700 transition-colors"
+              readOnly={!!userData.data.wallet_addr}
+            />
+            <div className="absolute right-0 top-0 mx-auto block h-14 w-16 bg-white bg-opacity-50 py-4 text-center">
+              <MetamaskImage
+                isRotating={false}
+                onAnimationComplete={() => {}}
+              />
+            </div>
+          </div>
 
-          <div>
-            <div className="flex items-center">
+          <div className="focus-within:ring-4 focus-within:ring-red-600">
+            <div className="flex items-center ">
               <input
+                ref={checkboxRef}
                 type="checkbox"
                 id="check"
                 className="h-6 w-6 accent-purple-600"
+                checked={checked}
+                onChange={() => setChecked(!checked)}
               />
-              <label htmlFor="check" className="ml-2 text-lg font-semibold">
+              <label
+                htmlFor="check"
+                className="ml-2 text-lg font-semibold peer-focus-within:border-2 peer-focus-within:border-red-600"
+              >
                 다음의 약관에 동의하며, 주문을 진행합니다.
               </label>
             </div>
@@ -193,7 +227,15 @@ function Payment() {
 
       <div className="sticky bottom-0 flex grow flex-col justify-center pt-4 sm:gap-8">
         <button
-          onClick={() => setShowModal(true)}
+          onClick={() => {
+            if (checked) {
+              setShowModal(true);
+            } else {
+              alert("약관에 동의해주세요.");
+              checkboxRef.current?.focus();
+              checkboxRef.current?.scrollIntoView();
+            }
+          }}
           disabled={isSoldOut}
           className="group peer w-full self-end rounded-t-lg bg-purple-600 pb-6 pt-3 text-center text-2xl font-bold text-purple-100 transition-all duration-100  hover:bg-purple-500 active:bg-purple-700 disabled:bg-gray-400 disabled:text-gray-100 sm:pt-3"
         >

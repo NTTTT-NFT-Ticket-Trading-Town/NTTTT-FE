@@ -5,10 +5,10 @@ export type RoleType = string;
 
 export interface UserDetailInterface {
   id: number;
-  walletAddr: string;
+  wallet_addr: string;
   nickname: string;
   password: string;
-  phoneNumber: string;
+  phone_number: string;
   authorities: RoleType[];
   grantedAuthority: any[];
 }
