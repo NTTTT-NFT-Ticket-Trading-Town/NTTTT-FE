@@ -96,8 +96,6 @@ function ShowWatchers({ id }: { id: number }) {
     };
   }, []);
 
-  console.log("data", data);
-
   return (
     <motion.div
       style={{ translate: "0 0 30px" }}
