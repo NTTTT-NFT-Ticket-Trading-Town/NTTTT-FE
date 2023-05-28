@@ -28,11 +28,11 @@ function Ticket({
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
       dragElastic={{ top: 0, bottom: 0, right: 1, left: 1 }}
       onDragEnd={(_, info) => {
-        if (info.offset.x > 200) {
+        if (info.offset.x > 100) {
           setLeaveX(x.get() + x.getVelocity() * OUT_ANIMATION_DURATION);
           getNextToken(true);
         }
-        if (info.offset.x < -200) {
+        if (info.offset.x < -100) {
           setLeaveX(x.get() - x.getVelocity() * OUT_ANIMATION_DURATION);
           getNextToken(true);
         }
