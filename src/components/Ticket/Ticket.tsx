@@ -1,7 +1,7 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from "react";
-import TicketTop from "../svg/TicketTop";
-import TicketSplit from "../svg/TicketSplit";
 import { motion, useMotionValue } from "framer-motion";
+import { ReactNode, useState } from "react";
+import TicketSplit from "../svg/TicketSplit";
+import TicketTop from "../svg/TicketTop";
 
 interface Children {
   children: ReactNode;
@@ -9,11 +9,9 @@ interface Children {
 
 function Ticket({
   children,
-  gachaId,
   getNextToken,
 }: {
   children: ReactNode;
-  gachaId: string;
   getNextToken: () => void;
 }) {
   const x = useMotionValue(0);
@@ -22,7 +20,6 @@ function Ticket({
 
   return (
     <motion.div
-      key={gachaId}
       drag="x"
       dragDirectionLock
       dragSnapToOrigin

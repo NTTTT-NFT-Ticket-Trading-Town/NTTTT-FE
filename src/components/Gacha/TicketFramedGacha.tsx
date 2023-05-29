@@ -70,11 +70,7 @@ export default function TicketFramedGacha() {
   if (!show) return <motion.div key="empty"></motion.div>;
 
   return (
-    <Ticket
-      key={gacha.image.url}
-      gachaId={gacha.image.url}
-      getNextToken={getNextToken}
-    >
+    <Ticket key={gacha.image.url} getNextToken={getNextToken}>
       <Ticket.Top>
         <ImageWithDetail
           id={gacha.id}
