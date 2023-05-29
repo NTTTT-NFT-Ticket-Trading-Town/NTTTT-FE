@@ -27,7 +27,7 @@ export default function ImageWithDetail({
       style={{
         perspective: "800px",
       }}
-      onTap={() => {
+      onClick={() => {
         setShowDetail((prev) => !prev);
       }}
     >
@@ -106,13 +106,9 @@ function ShowWatchers({ id }: { id: number }) {
       onMouseLeave={() => {
         setShowWatchers(false);
       }}
-      onTap={(e) => {
+      onClick={(e) => {
         e.stopPropagation();
-        setShowWatchers(true);
-      }}
-      onTapCancel={(e) => {
-        e.stopPropagation();
-        setShowWatchers(false);
+        setShowWatchers(!showWatchers);
       }}
     >
       <>
