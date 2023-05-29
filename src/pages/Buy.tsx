@@ -48,7 +48,7 @@ function Payment() {
     if (isSoldOut) {
       setTimeout(() => {
         alert("이미 매진된 토큰입니다.");
-        navigate("/gacha", { replace: true });
+        navigate("/draw", { replace: true });
       }, 500);
     }
   }, [isSoldOut]);
