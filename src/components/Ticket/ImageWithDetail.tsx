@@ -100,12 +100,6 @@ function ShowWatchers({ id }: { id: number }) {
     <motion.div
       style={{ translate: "0 0 30px" }}
       className="absolute left-3 top-4 flex items-center rounded-full bg-black/40 px-3 py-2 text-sm text-white sm:left-6 sm:top-6 sm:text-base"
-      onMouseOver={() => {
-        setShowWatchers(true);
-      }}
-      onMouseLeave={() => {
-        setShowWatchers(false);
-      }}
       onClick={(e) => {
         e.stopPropagation();
         setShowWatchers(!showWatchers);
