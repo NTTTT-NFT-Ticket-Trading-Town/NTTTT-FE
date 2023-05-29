@@ -168,15 +168,15 @@ function Payment() {
 
           <div className="text-2xl font-semibold">지갑 주소</div>
 
-          <div className="relative">
+          <div className="relative overflow-hidden rounded-lg">
             <input
               type="text"
               placeholder="ZC42EWOU32SDFV431"
               value={userData.data.wallet_addr}
-              className="flex w-full cursor-text justify-between rounded-lg bg-gray-300 px-4 py-4 outline-2 outline-purple-700 transition-colors"
+              className="flex w-full cursor-text justify-between bg-gray-300 px-4 py-4 outline-2 outline-purple-700 transition-colors"
               readOnly={!!userData.data.wallet_addr}
             />
-            <div className="absolute right-0 top-0 mx-auto block h-14 w-16 bg-white bg-opacity-50 py-4 text-center">
+            <div className="absolute right-0 top-0 mx-auto block h-14 w-16 bg-gray-200 py-4 text-center">
               <MetamaskImage
                 isRotating={false}
                 onAnimationComplete={() => {}}
