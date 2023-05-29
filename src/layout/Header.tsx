@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -7,6 +9,24 @@ export default function Header() {
   const handleClickBackBtn = () => {
     navigate(-1);
   };
+
+  const [isMypage, setIsMypage] = useState(false);
+
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  useEffect(() => {
+    if (currentPath === "/mypage") {
+      setTimeout(() => {
+        setIsMypage(true);
+      }, 2000);
+      setTimeout(() => {
+        setIsMypage(false);
+      }, 5000);
+    } else {
+      setIsMypage(false);
+    }
+  }, [currentPath]);
 
   return (
     <header className="sticky top-0 isolate z-20 mx-auto w-full max-w-xl bg-transparent backdrop-blur sm:mb-2">
@@ -35,6 +55,8 @@ export default function Header() {
             <div className="absolute left-0 right-0 top-4 z-10 mx-auto grid w-40 place-items-center py-1 text-xl font-extrabold italic text-gray-500 sm:text-2xl">
               <p>NTTTT</p>
             </div>
+
+            {isMypage && <Ping />}
           </Link>
           <Link to="/mypage">
             <div className="relative -mt-1 grid place-items-center text-gray-500">
@@ -60,3 +82,14 @@ export default function Header() {
     </header>
   );
 }
+
+const Ping = () => {
+  return (
+    <div className=" translate-x-14">
+      <span className="relative flex h-3 w-3">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
+        <span className="relative inline-flex h-3 w-3 rounded-full bg-primary/50"></span>
+      </span>
+    </div>
+  );
+};
