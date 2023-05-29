@@ -9,18 +9,20 @@ interface Children {
 
 function Ticket({
   children,
+  gachaId,
   getNextToken,
 }: {
   children: ReactNode;
-  getNextToken: Dispatch<SetStateAction<boolean>>;
+  gachaId: string;
+  getNextToken: () => void;
 }) {
   const x = useMotionValue(0);
   const [leaveX, setLeaveX] = useState(0);
-  const rotate = Math.random() > 0.5 ? " rotate-12 " : " -rotate-12 ";
   const OUT_ANIMATION_DURATION = 0.2;
 
   return (
     <motion.div
+      key={gachaId}
       drag="x"
       dragDirectionLock
       dragSnapToOrigin
@@ -30,11 +32,11 @@ function Ticket({
       onDragEnd={(_, info) => {
         if (info.offset.x > 100) {
           setLeaveX(x.get() + x.getVelocity() * OUT_ANIMATION_DURATION);
-          getNextToken(true);
+          getNextToken();
         }
         if (info.offset.x < -100) {
           setLeaveX(x.get() - x.getVelocity() * OUT_ANIMATION_DURATION);
-          getNextToken(true);
+          getNextToken();
         }
       }}
       initial={{
@@ -53,10 +55,7 @@ function Ticket({
         scale: 0.5,
         transition: { duration: OUT_ANIMATION_DURATION },
       }}
-      className={
-        "relative mx-auto h-fit w-full cursor-grab select-none pb-8 drop-shadow-2xl active:cursor-grabbing" +
-        rotate
-      }
+      className="relative mx-auto h-fit w-full cursor-grab select-none pb-8 drop-shadow-2xl active:cursor-grabbing"
       style={{ x }}
     >
       <TicketTop className="-mb-1 w-full" />

@@ -51,7 +51,7 @@ export default function Header() {
               />
             </svg>
           </div>
-          <Link to="/gacha">
+          <Link to="/draw">
             <div className="absolute left-0 right-0 top-4 z-10 mx-auto grid w-40 place-items-center py-1 text-xl font-extrabold italic text-gray-500 sm:text-2xl">
               <p>NTTTT</p>
             </div>

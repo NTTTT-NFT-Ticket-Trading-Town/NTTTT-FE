@@ -28,6 +28,13 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "draw",
+        async lazy() {
+          const index = await import("./pages/Draw");
+          return { Component: index.default };
+        },
+      },
+      {
         path: "gacha",
         async lazy() {
           const index = await import("./pages/Gacha");

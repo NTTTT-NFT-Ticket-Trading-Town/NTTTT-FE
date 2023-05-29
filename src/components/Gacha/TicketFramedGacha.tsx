@@ -1,10 +1,6 @@
-import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  useGetDailyGachaQuery,
-  usePostDailyGachaMutation,
-} from "../../store/reducers/gacha";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useGetDailyGachaQuery } from "../../store/reducers/gacha";
 import { GachaInterface } from "../../store/reducers/gacha/gachaTypes";
 import { ServerResponseInterface } from "../../store/reducers/indexTypes";
 import { useAmount } from "../../utils/currency";
@@ -13,111 +9,39 @@ import ErrorContent from "../Common/ErrorContent";
 import LoadingSpinner from "../Common/LoadingSpinner";
 import ImageWithDetail from "../Ticket/ImageWithDetail";
 import Ticket from "../Ticket/Ticket";
+import { motion } from "framer-motion";
 
 export default function TicketFramedGacha() {
-  const [getDailyGacha, { data: response, isLoading, error: postError }] =
-    usePostDailyGachaMutation();
-  const { data: chancesData, error: getError } = useGetDailyGachaQuery();
-  const chances = useMemo(() => {
-    if (response?.data.chance) return response.data.chance;
-    return chancesData?.data?.chance ?? 0;
-  }, [response?.data.chance, chancesData?.data]);
+  const {
+    data: chancesData,
+    isLoading: isGetLoading,
+    error: getError,
+  } = useGetDailyGachaQuery();
+  const chances = useMemo(
+    () => chancesData?.data?.chance ?? 0,
+    [chancesData?.data]
+  );
+  const navigate = useNavigate();
 
-  const [drawGacha, setDrawGacha] = useState(true);
+  const [show, setShow] = useState(true);
 
-  const gacha = useMemo(() => {
-    if (response?.data.token) return response.data.token;
-    return chancesData?.data?.token;
-  }, [response, chancesData]);
+  const getNextToken = () => {
+    navigate("/draw");
+    setShow(false);
+    setTimeout(() => {
+      setShow(true);
+    }, 500);
+  };
+
+  const gacha = useMemo(() => chancesData?.data?.token, [chancesData]);
   const amount = useAmount(gacha?.price);
   const [currency, setCurrency] = useState<"won" | "eth">("won");
-  const isSoldOut = gacha?.payment_state === "SOLD_OUT";
 
-  if (drawGacha && gacha) {
-    return (
-      <motion.div
-        initial={{
-          scale: 0.8,
-          opacity: 0,
-        }}
-        animate={{
-          x: 0,
-          opacity: 1,
-          scale: 1,
-          transition: { duration: 0.3, type: "spring" },
-        }}
-        exit={{
-          scale: 0.8,
-          opacity: 0,
-        }}
-        className="grid w-full place-items-center "
-      >
-        <div className="grid h-auto scale-150 place-items-center self-end">
-          <div className="relative grid h-40 w-full place-items-center">
-            <div className="absolute animate-pulse text-9xl blur-lg">🔮</div>
-            <div className="absolute text-8xl">🔮</div>
-          </div>
-          <div className="text-center text-lg font-bold">
-            {chances > 0
-              ? `오늘 ${chances}번 더 뽑을 수 있어요!`
-              : "오늘 더 이상 뽑을 수 없어요!"}
-          </div>
-        </div>
-        <div className="relative isolate flex h-min w-full flex-col gap-4 p-4 sm:p-8">
-          <button
-            onClick={() => {
-              setDrawGacha(false);
-              getDailyGacha();
-            }}
-            disabled={chances <= 0}
-            className="peer w-full self-end rounded border-4 border-purple-600 bg-purple-600 py-2 text-center text-xl font-bold text-purple-100 transition-all duration-100 hover:bg-purple-500 active:scale-95 active:bg-purple-700 disabled:cursor-not-allowed disabled:border-gray-600 disabled:bg-gray-600 disabled:opacity-50 disabled:active:scale-100 sm:py-4 sm:text-2xl"
-          >
-            오늘의 가챠 뽑기
-          </button>
-          <div className="absolute -inset-2 -z-10 animate-pulse bg-purple-300 blur-xl peer-disabled:bg-gray-300 sm:-inset-4"></div>
-          {!isSoldOut && (
-            <>
-              <Link
-                to="/buy"
-                className="w-full self-end rounded border-4 border-purple-600 bg-purple-200 py-2 text-center text-xl font-bold text-purple-900 transition-all duration-100 hover:bg-purple-300 active:scale-95 active:bg-purple-400 sm:py-4 sm:text-2xl"
-              >
-                마지막으로 뽑았던 가챠 구매하기
-              </Link>
-              <div className="absolute -inset-2 -z-10 animate-pulse bg-purple-100 blur-xl sm:-inset-4"></div>
-            </>
-          )}
-        </div>
-      </motion.div>
-    );
-  }
+  useEffect(() => {
+    setShow(true);
+  }, []);
 
-  if (postError) {
-    const errorData =
-      postError as any as ServerResponseInterface<GachaInterface>;
-    return <ErrorContent errorMessage={errorData?.result?.message} />;
-  }
-
-  if (getError) {
-    const errorData = (getError as any)
-      .data as ServerResponseInterface<GachaInterface>;
-    return (
-      <ErrorContent errorMessage={errorData?.result?.message}>
-        {!errorData?.result?.message.includes("선택") && (
-          <button
-            onClick={() => {
-              getDailyGacha();
-            }}
-            className="w-full self-end rounded border-4 border-purple-600 bg-purple-200 py-2 text-center text-xl font-bold text-purple-900 transition-all duration-100 hover:bg-purple-300 active:scale-95 active:bg-purple-400 sm:py-4 sm:text-2xl"
-          >
-            새 토큰 받기
-          </button>
-        )}
-        <div className="absolute -inset-2 -z-10 animate-pulse bg-purple-100 blur-xl sm:-inset-4"></div>
-      </ErrorContent>
-    );
-  }
-
-  if (isLoading || !response || !gacha || !chancesData) {
+  if (isGetLoading && !gacha) {
     return (
       <button>
         <LoadingSpinner />
@@ -125,8 +49,32 @@ export default function TicketFramedGacha() {
     );
   }
 
+  if (getError || !chancesData || !gacha) {
+    const errorData = (getError as any)
+      .data as ServerResponseInterface<GachaInterface>;
+    return (
+      <ErrorContent errorMessage={errorData?.result?.message}>
+        <button
+          onClick={() => {
+            navigate("/draw");
+          }}
+          className="w-full self-end rounded border-4 border-purple-600 bg-purple-200 py-2 text-center text-xl font-bold text-purple-900 transition-all duration-100 hover:bg-purple-300 active:scale-95 active:bg-purple-400 sm:py-4 sm:text-2xl"
+        >
+          가챠 뽑기로 돌아가기
+        </button>
+        <div className="absolute -inset-2 -z-10 animate-pulse bg-purple-100 blur-xl sm:-inset-4"></div>
+      </ErrorContent>
+    );
+  }
+
+  if (!show) return <motion.div key="empty"></motion.div>;
+
   return (
-    <Ticket key={gacha.image.url} getNextToken={setDrawGacha}>
+    <Ticket
+      key={gacha.image.url}
+      gachaId={gacha.image.url}
+      getNextToken={getNextToken}
+    >
       <Ticket.Top>
         <ImageWithDetail
           id={gacha.id}
@@ -140,10 +88,8 @@ export default function TicketFramedGacha() {
           <div className="row-span-2 flex flex-col justify-between">
             <div className="grid place-items-center justify-end gap-1">
               <div
-                onClick={() => {
-                  setDrawGacha(true);
-                }}
-                className="z-10 grid aspect-square w-10 cursor-pointer select-all place-items-center rounded-full border-2 border-gray-700 bg-neutral-300 sm:w-14 sm:text-2xl"
+                onClick={getNextToken}
+                className="z-10 grid aspect-square w-12 cursor-pointer select-all place-items-center rounded-full border-2 border-gray-700 bg-neutral-300 text-xl sm:w-12 sm:text-2xl"
               >
                 ↻
               </div>
