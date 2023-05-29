@@ -54,8 +54,8 @@ export default function Login() {
               NTTTT
             </h1>
             <div className="mt-4 grid w-full grid-cols-2 gap-2 border-b-4 text-3xl sm:text-4xl">
-              <div className="py-2 text-end font-thin">내 손 안에</div>
-              <div className="overflow-visible px-2 py-2 text-start font-bold">
+              <div className="-mr-4 py-2 text-end font-thin">내 손 안에</div>
+              <div className="ml-4 overflow-visible px-2 py-2 text-start font-bold">
                 <AnimatePresence>
                   <Artist />
                 </AnimatePresence>
@@ -120,13 +120,12 @@ export const Artist = () => {
     "카리나",
     "지수",
     "닝닝",
-    "뷔",
+    "다니엘",
     "제니",
     "로제",
     "리사",
     "채원",
     "민지",
-    "다니엘",
   ];
   const [index, setIndex] = useState(0);
 

@@ -21,8 +21,8 @@ export default function Home() {
             NTTTT
           </h1>
           <div className="mt-4 grid w-full grid-cols-2 gap-2 border-b-4 text-3xl sm:text-4xl">
-            <div className="py-2 text-end font-thin">내 손 안에</div>
-            <div className="overflow-visible px-2 py-2 text-start font-bold">
+            <div className="-mr-4 py-2 text-end font-thin">내 손 안에</div>
+            <div className="ml-4 overflow-visible px-2 py-2 text-start font-bold">
               <AnimatePresence>
                 <Artist />
               </AnimatePresence>
