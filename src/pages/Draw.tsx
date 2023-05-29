@@ -21,7 +21,7 @@ export default function Draw() {
 }
 
 function DrawComponent() {
-  const [getDailyGacha, { data: response }] = usePostDailyGachaMutation();
+  const [postDailyGacha, { data: response }] = usePostDailyGachaMutation();
   const { data: chancesData } = useGetDailyGachaQuery();
   const chances = useMemo(() => {
     if (response?.data.chance) return response.data.chance;
@@ -53,35 +53,29 @@ function DrawComponent() {
         scale: 0.8,
         opacity: 0,
       }}
-      className="grid w-full place-items-center "
+      className="grid w-full place-items-center"
     >
       <div className="relative grid h-auto place-items-center self-end">
-        <div className="relative grid aspect-square w-72 place-items-center">
+        <div className="relative grid aspect-square w-72 place-items-center sm:w-80">
           {noChance ? (
             <>
               <img
                 src="/see-1.png"
-                className="absolute aspect-square w-full scale-110 animate-pulse py-2 blur-lg"
+                className="absolute aspect-square w-full scale-110 animate-pulse blur-lg"
               />
-              <img
-                src="/see-1.png"
-                className="absolute aspect-square w-full py-2"
-              />
+              <img src="/see-1.png" className="absolute aspect-square w-full" />
             </>
           ) : (
             <>
               <img
                 src="/see-2.png"
-                className="absolute aspect-square w-full scale-110 animate-pulse py-2 blur-lg"
+                className="absolute aspect-square w-full scale-110 animate-pulse blur-lg"
               />
-              <img
-                src="/see-2.png"
-                className="absolute aspect-square w-full py-2"
-              />
+              <img src="/see-2.png" className="absolute aspect-square w-full" />
             </>
           )}
         </div>
-        <div className="py-2 text-center text-2xl font-bold">
+        <div className="pt-6 text-center text-2xl font-bold sm:pt-8 sm:text-3xl">
           {!noChance
             ? `오늘 ${chances}번 더 뽑을 수 있어요!`
             : "오늘 더 이상 뽑을 수 없어요!"}
@@ -89,8 +83,8 @@ function DrawComponent() {
       </div>
       <div className="relative isolate flex h-min w-full flex-col gap-4 p-4 sm:p-8">
         <button
-          onClick={() => {
-            getDailyGacha();
+          onClick={async () => {
+            await postDailyGacha().unwrap();
             navigate("/gacha");
           }}
           disabled={noChance}

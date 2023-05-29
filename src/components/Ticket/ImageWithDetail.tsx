@@ -99,7 +99,7 @@ function ShowWatchers({ id }: { id: number }) {
   return (
     <motion.div
       style={{ translate: "0 0 30px" }}
-      className="absolute left-3 top-4 flex items-center rounded-full bg-black/40 px-3 py-2 text-sm text-white sm:left-6 sm:top-6 sm:text-base"
+      className="absolute left-3 top-4 flex items-center rounded-full bg-black/50 px-3 py-2 text-sm text-white sm:left-7 sm:top-7 sm:text-base"
       onClick={(e) => {
         e.stopPropagation();
         setShowWatchers(!showWatchers);
@@ -124,7 +124,7 @@ function ShowWatchers({ id }: { id: number }) {
         {showWatchers && (
           <motion.span
             key="left-text"
-            className="overflow-hidden whitespace-nowrap text-gray-400"
+            className="overflow-hidden whitespace-nowrap text-gray-300"
             initial={{ opacity: 0, width: 0, margin: 0 }}
             transition={{
               duration: 0.3,
@@ -141,7 +141,7 @@ function ShowWatchers({ id }: { id: number }) {
         {showWatchers && (
           <motion.span
             key="right-text"
-            className="overflow-hidden whitespace-nowrap text-gray-400"
+            className="overflow-hidden whitespace-nowrap text-gray-300"
             initial={{ opacity: 0, width: 0, margin: 0 }}
             transition={{
               duration: 0.3,
@@ -153,7 +153,7 @@ function ShowWatchers({ id }: { id: number }) {
             }}
             exit={{ opacity: 0, width: 0, margin: 0 }}
           >
-            명이 보고 있습니다.
+            명이 보고 있습니다
           </motion.span>
         )}
       </AnimatePresence>
