@@ -63,7 +63,13 @@ export default function Login() {
               </div>
             </div>
           </div>
-          <div className="absolute bottom-[20%] left-8 right-8 flex flex-col justify-center">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onClick();
+            }}
+            className="absolute bottom-[20%] left-8 right-8 flex flex-col justify-center"
+          >
             <div className="mt-4 grid gap-4 pt-4">
               <input
                 onChange={(e) => setNickname(e.target.value)}
@@ -89,7 +95,7 @@ export default function Login() {
               </div>
             </div>
             <button
-              onClick={onClick}
+              type="submit"
               className="block w-full rounded bg-neutral-300/30 py-2 text-center transition-all duration-100 hover:bg-neutral-300/40 active:scale-95 active:bg-neutral-300/50"
             >
               로그인
@@ -107,7 +113,7 @@ export default function Login() {
                 회원가입
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </main>
     </>
