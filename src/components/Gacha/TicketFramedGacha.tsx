@@ -26,8 +26,8 @@ export default function TicketFramedGacha() {
   const [show, setShow] = useState(true);
 
   const getNextToken = () => {
-    navigate("/draw");
     setShow(false);
+    navigate("/draw");
     setTimeout(() => {
       setShow(true);
     }, 500);
