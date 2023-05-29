@@ -56,12 +56,18 @@ function DrawComponent() {
       className="grid w-full place-items-center "
     >
       <div className="relative grid h-auto place-items-center self-end">
-        <div className="relative grid aspect-square h-64 w-64 place-items-center">
+        <div className="relative grid aspect-square w-72 place-items-center">
           {noChance ? (
-            <img
-              src="/see-1.png"
-              className="absolute aspect-square w-full py-2"
-            />
+            <>
+              <img
+                src="/see-1.png"
+                className="absolute aspect-square w-full scale-110 animate-pulse py-2 blur-lg"
+              />
+              <img
+                src="/see-1.png"
+                className="absolute aspect-square w-full py-2"
+              />
+            </>
           ) : (
             <>
               <img
