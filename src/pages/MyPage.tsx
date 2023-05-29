@@ -29,8 +29,11 @@ function MyPageContent() {
         <header className="flex items-center justify-between gap-2 pt-4">
           <Profile />
 
-          <div className="flex flex-col gap-2">
-            <Link to="/artists" className="rounded bg-gray-300 p-2 text-xs">
+          <div className="flex shrink-0 flex-col gap-2">
+            <Link
+              to="/artists"
+              className="shrink-0 rounded bg-gray-300 p-2 text-xs"
+            >
               아티스트 수정
             </Link>
             <button
@@ -44,7 +47,7 @@ function MyPageContent() {
             </button>
           </div>
         </header>
-        <section className="gap-100 relative flex flex-col pt-4 sm:pt-8">
+        <section className="relative flex min-h-[50vh] grow flex-col pt-4 sm:pt-8">
           <CollectionList />
         </section>
       </main>
@@ -62,10 +65,10 @@ const Profile = () => {
   const moreArtist = data?.data?.category_list.slice(maxArtist).length || 0;
 
   const userDetail = userData?.data;
-  
+
   return (
     <div className="flex flex-row items-center gap-2">
-      <div className="aspect-square w-20 overflow-hidden rounded-full border-4">
+      <div className="aspect-square w-20 shrink-0 overflow-hidden rounded-full border-4">
         <img src={"bg-bright.png"} alt="" className="w-full object-cover" />
       </div>
       <div className="flex flex-col">
@@ -74,7 +77,7 @@ const Profile = () => {
             ? "로딩 중.."
             : userDetail?.nickname ?? "데이터가 없습니다"}
         </h3>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2 gap-y-0">
           {someCategory.length > 0 ? (
             [
               ...someCategory.map((tag) => (
@@ -125,7 +128,7 @@ const CollectionList = () => {
           <div key="invisible-padding" className="h-[50vh] w-full"></div>
         </>
       ) : (
-        <div className="flex flex-col items-center gap-2">
+        <div className="mt-8 flex flex-col items-center gap-2">
           <div className="text-center text-gray-500">
             보유한 티켓이 없습니다.
           </div>
