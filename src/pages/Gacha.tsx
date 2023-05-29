@@ -11,14 +11,16 @@ export default function Gacha() {
     <>
       <Header />
       <main className="relative mx-auto mb-4 mt-4 flex w-full max-w-xl grow justify-center px-4">
-        <AnimatePresence mode={"wait"}>
-          <GachaComponent />
-        </AnimatePresence>
+        <GachaComponent />
       </main>
     </>
   );
 }
 
 function GachaComponent() {
-  return <TicketFramedGacha />;
+  return (
+    <AnimatePresence mode={"wait"}>
+      <TicketFramedGacha />
+    </AnimatePresence>
+  );
 }
