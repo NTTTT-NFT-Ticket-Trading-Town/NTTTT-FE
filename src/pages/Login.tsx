@@ -30,6 +30,7 @@ export default function Login() {
   }, [isSuccess, response]);
 
   const onClick = () => {
+    if (!nickname || !password) return alert("모든 정보를 입력해주세요.");
     login({ nickname, password });
   };
 
@@ -75,7 +76,7 @@ export default function Login() {
                 value={password}
                 className="block w-full rounded bg-neutral-300/30 px-2 py-2"
               />
-              <div className="mt-8 text-center text-base text-red-500">
+              <div className="mt-8 text-center text-base text-red-500 mb-4">
                 {status === "rejected" && (
                   <motion.span
                     initial={{ opacity: 0 }}
@@ -116,15 +117,16 @@ export default function Login() {
 export const Artist = () => {
   const artistList = [
     "사쿠라",
-    "윈터",
+    "채원",
     "카리나",
     "지수",
+    "카즈하",
     "닝닝",
+    "윈터",
     "다니엘",
     "제니",
     "로제",
     "리사",
-    "채원",
     "민지",
   ];
   const [index, setIndex] = useState(0);
