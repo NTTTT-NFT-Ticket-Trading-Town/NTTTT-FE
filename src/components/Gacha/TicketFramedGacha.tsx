@@ -102,14 +102,16 @@ export default function TicketFramedGacha() {
       .data as ServerResponseInterface<GachaInterface>;
     return (
       <ErrorContent errorMessage={errorData?.result?.message}>
-        <button
-          onClick={() => {
-            getDailyGacha();
-          }}
-          className="w-full self-end rounded border-4 border-purple-600 bg-purple-200 py-2 text-center text-xl font-bold text-purple-900 transition-all duration-100 hover:bg-purple-300 active:scale-95 active:bg-purple-400 sm:py-4 sm:text-2xl"
-        >
-          새 토큰 받기
-        </button>
+        {!errorData?.result?.message.includes("선택") && (
+          <button
+            onClick={() => {
+              getDailyGacha();
+            }}
+            className="w-full self-end rounded border-4 border-purple-600 bg-purple-200 py-2 text-center text-xl font-bold text-purple-900 transition-all duration-100 hover:bg-purple-300 active:scale-95 active:bg-purple-400 sm:py-4 sm:text-2xl"
+          >
+            새 토큰 받기
+          </button>
+        )}
         <div className="absolute -inset-2 -z-10 animate-pulse bg-purple-100 blur-xl sm:-inset-4"></div>
       </ErrorContent>
     );

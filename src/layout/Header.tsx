@@ -19,10 +19,10 @@ export default function Header() {
     if (currentPath === "/mypage") {
       setTimeout(() => {
         setIsMypage(true);
-      }, 2000);
+      }, 4000);
       setTimeout(() => {
         setIsMypage(false);
-      }, 5000);
+      }, 8000);
     } else {
       setIsMypage(false);
     }
