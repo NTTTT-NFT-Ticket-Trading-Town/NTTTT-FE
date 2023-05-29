@@ -53,13 +53,16 @@ function MyPageContent() {
 }
 
 const Profile = () => {
-  const { data: userData } = useDetailQuery();
-  const { data } = useGetMyCollectionQuery();
+  const { data: userData, isLoading: isUserLoading } = useDetailQuery();
+  const { data, isLoading: isCategoryLoading } = useGetMyCollectionQuery();
 
-  const someCategory = data?.data?.category_list.slice(0, 3) || [];
+  const maxArtist = 3;
+
+  const someCategory = data?.data?.category_list.slice(0, maxArtist) || [];
+  const moreArtist = data?.data?.category_list.slice(maxArtist).length || 0;
 
   const userDetail = userData?.data;
-
+  
   return (
     <div className="flex flex-row items-center gap-2">
       <div className="aspect-square w-20 overflow-hidden rounded-full border-4">
@@ -67,17 +70,28 @@ const Profile = () => {
       </div>
       <div className="flex flex-col">
         <h3 className="font-smei text-xl">
-          {userDetail?.nickname ?? "데이터 없음"}
+          {isUserLoading
+            ? "로딩 중.."
+            : userDetail?.nickname ?? "데이터가 없습니다"}
         </h3>
         <div className="flex gap-2">
           {someCategory.length > 0 ? (
-            someCategory.map((tag) => (
-              <div key={tag.name + tag.group} className="text-gray-400">
-                #{tag.name}
-              </div>
-            ))
+            [
+              ...someCategory.map((tag) => (
+                <div key={tag.name + tag.group} className="text-gray-400">
+                  #{tag.name}
+                </div>
+              )),
+              moreArtist > 0 && (
+                <div key="more-artist" className="text-gray-400">
+                  외 {moreArtist}명
+                </div>
+              ),
+            ]
           ) : (
-            <div className="text-gray-400">아티스트를 선택해주세요!</div>
+            <div className="text-gray-400">
+              {isCategoryLoading ? "로딩 중.." : "아티스트를 선택해주세요!"}
+            </div>
           )}
         </div>
       </div>
