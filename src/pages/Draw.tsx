@@ -35,6 +35,7 @@ function DrawComponent() {
     return chancesData?.data?.token;
   }, [response, chancesData]);
   const isSoldOut = gacha?.payment_state === "SOLD_OUT";
+  const noChance = chances <= 0;
 
   return (
     <motion.div
@@ -54,13 +55,28 @@ function DrawComponent() {
       }}
       className="grid w-full place-items-center "
     >
-      <div className="grid h-auto scale-150 place-items-center self-end">
-        <div className="relative grid h-40 w-full place-items-center">
-          <div className="absolute animate-pulse text-9xl blur-lg">🔮</div>
-          <div className="absolute text-8xl">🔮</div>
+      <div className="relative grid h-auto place-items-center self-end">
+        <div className="relative grid aspect-square h-64 w-64 place-items-center">
+          {noChance ? (
+            <img
+              src="/see-1.png"
+              className="absolute aspect-square w-full py-2"
+            />
+          ) : (
+            <>
+              <img
+                src="/see-2.png"
+                className="absolute aspect-square w-full scale-110 animate-pulse py-2 blur-lg"
+              />
+              <img
+                src="/see-2.png"
+                className="absolute aspect-square w-full py-2"
+              />
+            </>
+          )}
         </div>
-        <div className="text-center text-lg font-bold">
-          {chances > 0
+        <div className="py-2 text-center text-2xl font-bold">
+          {!noChance
             ? `오늘 ${chances}번 더 뽑을 수 있어요!`
             : "오늘 더 이상 뽑을 수 없어요!"}
         </div>
@@ -71,7 +87,7 @@ function DrawComponent() {
             getDailyGacha();
             navigate("/gacha");
           }}
-          disabled={chances <= 0}
+          disabled={noChance}
           className="peer w-full self-end rounded border-4 border-purple-600 bg-purple-600 py-2 text-center text-xl font-bold text-purple-100 transition-all duration-100 hover:bg-purple-500 active:scale-95 active:bg-purple-700 disabled:cursor-not-allowed disabled:border-gray-600 disabled:bg-gray-600 disabled:opacity-50 disabled:active:scale-100 sm:py-4 sm:text-2xl"
         >
           오늘의 가챠 뽑기
