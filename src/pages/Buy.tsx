@@ -277,7 +277,7 @@ const SwipeToPay: FC<{ tokenId: number }> = ({ tokenId }) => {
   const [boxWidth, setBoxWidth] = useState(0);
   const navigate = useNavigate();
   const [status, setStatus] = useState("오른쪽으로 미세요");
-  const [processPayment, { isSuccess }] = usePostPaymentMutation();
+  const [processPayment, { isSuccess, isError }] = usePostPaymentMutation();
 
   const x = useMotionValue(0);
   const background = useTransform(x, [0, boxWidth], ["#7700ff", "#ff008c"]);
@@ -300,8 +300,11 @@ const SwipeToPay: FC<{ tokenId: number }> = ({ tokenId }) => {
   useEffect(() => {
     if (isSuccess) {
       navigate("/mypage");
+    } else if (isError) {
+      alert("이미 판매된 토큰입니다.");
+      navigate(0);
     }
-  }, [isSuccess]);
+  }, [isSuccess, isError]);
 
   const buyToken = () => {
     if (status === "놓아서 결제 완료") {

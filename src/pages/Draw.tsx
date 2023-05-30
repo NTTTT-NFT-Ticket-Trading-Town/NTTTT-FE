@@ -84,8 +84,13 @@ function DrawComponent() {
       <div className="relative isolate flex h-min w-full flex-col gap-4 p-4 sm:p-8">
         <button
           onClick={async () => {
-            await postDailyGacha().unwrap();
-            navigate("/gacha");
+            try {
+              await postDailyGacha().unwrap();
+              navigate("/gacha");
+            } catch (e: any) {
+              alert(e.result.message + " " + "다른 아티스트를 선택해주세요!");
+              navigate("/artists");
+            }
           }}
           disabled={noChance}
           className="peer w-full self-end rounded border-4 border-purple-600 bg-purple-600 py-2 text-center text-xl font-bold text-purple-100 transition-all duration-100 hover:bg-purple-500 active:scale-95 active:bg-purple-700 disabled:cursor-not-allowed disabled:border-gray-600 disabled:bg-gray-600 disabled:opacity-50 disabled:active:scale-100 sm:py-4 sm:text-2xl"
