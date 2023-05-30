@@ -20,8 +20,8 @@ export default function MiniTicket(props: MiniticketPropsInterface) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: delay / 10 }}
-      onClick={onClick}
-      className="transition-all duration-100 hover:scale-95 active:scale-90"
+      onTap={onClick}
+      className="cursor-pointer  transition-all active:scale-90"
       style={{
         display: "flex",
         flexDirection: "column",
