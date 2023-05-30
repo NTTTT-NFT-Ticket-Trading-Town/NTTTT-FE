@@ -50,7 +50,7 @@ export default function ImageWithDetail({
             translate: "0 0 -10px",
             backfaceVisibility: "hidden",
           }}
-          className="absolute top-0 h-full w-full overflow-y-scroll rounded-md bg-black/60 p-6 text-xl text-white sm:p-8"
+          className=" absolute top-0 h-full w-full overflow-y-scroll rounded-md bg-black/60 p-6 text-xl text-white scrollbar-hide sm:p-8"
         >
           <h3 className="mb-4 text-xl font-bold sm:text-3xl">상세 설명</h3>
           <p className="text-base sm:text-xl">{description}</p>
