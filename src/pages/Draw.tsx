@@ -61,17 +61,23 @@ function DrawComponent() {
             <>
               <img
                 src="/see-1.png"
-                className="absolute aspect-square w-full scale-110 animate-pulse blur-lg"
+                className="absolute z-50 aspect-square w-full scale-110 animate-pulse blur-lg"
               />
-              <img src="/see-1.png" className="absolute aspect-square w-full" />
+              <img
+                src="/see-1.png"
+                className="absolute z-50 aspect-square w-full"
+              />
             </>
           ) : (
             <>
               <img
                 src="/see-2.png"
-                className="absolute aspect-square w-full scale-110 animate-pulse blur-lg"
+                className="absolute z-50 aspect-square w-full scale-110 animate-pulse blur-lg"
               />
-              <img src="/see-2.png" className="absolute aspect-square w-full" />
+              <img
+                src="/see-2.png"
+                className="absolute z-50 aspect-square w-full"
+              />
             </>
           )}
         </div>
