@@ -1,3 +1,18 @@
+### Preview
+
+<div
+  style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    "
+>
+
+![preview](./public/NTTTT_시연영상.gif)
+
+</div>
+
 ### Start
 
 - Dev mode: `npm run dev`
